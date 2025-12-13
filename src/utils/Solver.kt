@@ -9,7 +9,7 @@ class Solver<T, U>(
             val result = solver(it.fileName)
 
             check(result == it.expectedResult) {
-                "Test ${it.fileName} failed: expected result = ${it.expectedResult}, actual result = $result"
+                "Test '${it.fileName}' failed: expected result = ${it.expectedResult}, actual result = $result"
             }
         }
 

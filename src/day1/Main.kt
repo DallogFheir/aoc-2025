@@ -5,20 +5,31 @@ import utils.Solver
 import utils.TestCase
 
 fun main() {
-    DayRunner<Int, Nothing>(
+    DayRunner(
         dayNumber = 1,
         part1Solver = ::part1,
-        part2Solver = null,
+        part2Solver = ::part2,
     ).run()
 }
 
 private fun part1(): Int {
     val testCases = listOf(
-        TestCase(fileName = "test-part1", expectedResult = 3),
+        TestCase(fileName = "test", expectedResult = 3),
     )
 
     return Solver(
         testCases = testCases,
         solver = Part1::solve
+    ).solve()
+}
+
+private fun part2(): Int {
+    val testCases = listOf(
+        TestCase(fileName = "test", expectedResult = 6),
+    )
+
+    return Solver(
+        testCases = testCases,
+        solver = Part2::solve
     ).solve()
 }
