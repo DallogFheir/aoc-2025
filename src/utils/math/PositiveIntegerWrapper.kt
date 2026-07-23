@@ -25,4 +25,16 @@ class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
 
         return factors.sorted().toList()
     }
+
+    override fun withAppendedDigit(digit: Int): PositiveIntegerWrapper {
+        val result = super.withAppendedDigit(digit)
+
+        return PositiveIntegerWrapper(result.number)
+    }
+
+    override fun toShiftedRight(): PositiveIntegerWrapper {
+        val result = super.toShiftedRight()
+
+        return PositiveIntegerWrapper(result.number)
+    }
 }

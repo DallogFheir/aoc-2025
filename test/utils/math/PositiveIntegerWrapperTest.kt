@@ -1,7 +1,7 @@
 package utils.math
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -92,5 +92,23 @@ class PositiveIntegerWrapperTest {
         val result = cut.factorize()
 
         assertEquals(expected, result, "factorize for $number should return $expected, got $result")
+    }
+
+    @Test
+    fun `withAppendedDigits returns PositiveIntegerWrapper`() {
+        val cut = PositiveIntegerWrapper(1)
+
+        val result = cut.withAppendedDigit(2)
+
+        assertInstanceOf(PositiveIntegerWrapper::class.java, result)
+    }
+
+    @Test
+    fun `toShiftedRight returns PositiveIntegerWrapper`() {
+        val cut = PositiveIntegerWrapper(12)
+
+        val result = cut.toShiftedRight()
+
+        assertInstanceOf(PositiveIntegerWrapper::class.java, result)
     }
 }
