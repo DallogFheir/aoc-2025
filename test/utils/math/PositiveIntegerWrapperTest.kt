@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.MethodSource
 class PositiveIntegerWrapperTest {
     companion object {
         @JvmStatic
-        fun constructorCases() = listOf(-1, 0)
+        fun constructorInvalidCases() = listOf(-1, 0)
 
         @JvmStatic
         fun factorizeCases() = listOf(
@@ -75,7 +75,7 @@ class PositiveIntegerWrapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("constructorCases")
+    @MethodSource("constructorInvalidCases")
     fun `throws if initialized with non-positive integer`(number: Int) {
         assertThrows(IllegalArgumentException::class.java) {
             PositiveIntegerWrapper(number)
