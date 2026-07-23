@@ -1,5 +1,7 @@
 package day1.rotation
 
+private val ROTATION_PATTERN = Regex("""^([LR])(\d+)$""")
+
 data class Rotation(val direction: RotationDirection, val step: Int) {
     fun toInt(): Int {
         val signMultiplier = when (direction) {
