@@ -1,9 +1,12 @@
 package utils
 
+private const val MINIMUM_DAY_NUMBER = 0
+private const val MAXIMUM_DAY_NUMBER = 12
+
 class DayRunner<T, U>(
     private val dayNumber: Int,
-    private val part1Solver: (() -> T),
-    private val part2Solver: (() -> U)?,
+    private val part1Solver: ((dayNumber: Int) -> T),
+    private val part2Solver: ((dayNumber: Int) -> U)?,
 ) {
     init {
         require(dayNumber in MINIMUM_DAY_NUMBER..MAXIMUM_DAY_NUMBER)
@@ -12,19 +15,14 @@ class DayRunner<T, U>(
     fun run() {
         println("DAY $dayNumber")
 
-        val part1Result = part1Solver()
+        val part1Result = part1Solver(dayNumber)
         println("Part 1: $part1Result")
 
         if (part2Solver == null) {
             return
         }
 
-        val part2Result = part2Solver()
+        val part2Result = part2Solver(dayNumber)
         println("Part 2: $part2Result")
-    }
-
-    companion object {
-        const val MINIMUM_DAY_NUMBER = 0
-        const val MAXIMUM_DAY_NUMBER = 12
     }
 }

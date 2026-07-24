@@ -12,23 +12,25 @@ fun main() {
     ).run()
 }
 
-private fun part1(): Int {
+private fun part1(dayNumber: Int): Int {
     val testCases = listOf(
         TestCase(fileName = "test", expectedResult = 3),
     )
 
     return Solver(
+        dayNumber = dayNumber,
         testCases = testCases,
         solver = Part1::solve
     ).solve()
 }
 
-private fun part2(): Int {
+private fun part2(dayNumber: Int): Int {
     val testCases = listOf(
         TestCase(fileName = "test", expectedResult = 6),
     )
 
     return Solver(
+        dayNumber = dayNumber,
         testCases = testCases,
         solver = Part2::solve
     ).solve()
