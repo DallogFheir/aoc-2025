@@ -1,11 +1,24 @@
 package utils.math
 
 import kotlin.math.floor
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
     init {
         require(number > 0) { "Number must be positive, got $number" }
+    }
+
+    override fun withAppendedDigit(digit: Int): PositiveIntegerWrapper {
+        val result = super.withAppendedDigit(digit)
+
+        return PositiveIntegerWrapper(result.number)
+    }
+
+    override fun toShiftedRight(): PositiveIntegerWrapper {
+        val result = super.toShiftedRight()
+
+        return PositiveIntegerWrapper(result.number)
     }
 
     fun factorize(): List<Int> {
@@ -26,15 +39,24 @@ class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
         return factors.sorted().toList()
     }
 
-    override fun withAppendedDigit(digit: Int): PositiveIntegerWrapper {
-        val result = super.withAppendedDigit(digit)
+    fun divideDigitsIntoEqualGroups(groupSize: Int): List<Int> {
+        if (groupSize <= 0) {
+            throw IllegalArgumentException("Group size must be positive, got $groupSize")
+        }
+        if (length % groupSize != 0) {
+            throw IllegalArgumentException("Group size $groupSize must be a factor of digit count $length, got $groupSize")
+        }
 
-        return PositiveIntegerWrapper(result.number)
-    }
+        val result = mutableListOf<Int>()
+        val divisor = 10.0.pow(groupSize).toInt()
 
-    override fun toShiftedRight(): PositiveIntegerWrapper {
-        val result = super.toShiftedRight()
+        var n = number
+        while (n > 0) {
+            result.add(n % divisor)
 
-        return PositiveIntegerWrapper(result.number)
+            n /= divisor
+        }
+
+        return result.reversed()
     }
 }

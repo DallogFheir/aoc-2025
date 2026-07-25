@@ -9,9 +9,10 @@ class RangeTest {
     companion object {
         @JvmStatic
         fun constructorInvalidCases() = listOf(
-            Pair(-1, 0),
-            Pair(-2, -1),
-            Pair(0, -1),
+            Pair(-1, 1),
+            Pair(0, 1),
+            Pair(1, -1),
+            Pair(1, 0),
             Pair(3, 1),
         )
 

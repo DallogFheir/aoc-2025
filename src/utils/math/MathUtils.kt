@@ -3,20 +3,20 @@ package utils.math
 import kotlin.math.pow
 
 object MathUtils {
-    fun getFirstNumberForDigitCount(digitCount: Int): Int {
+    fun getFirstNumberForDigitCount(digitCount: Int): Long {
         ensureDigitCountPositive(digitCount)
 
         if (digitCount == 1) {
             return 0
         }
 
-        return 10.0.pow(digitCount - 1).toInt()
+        return 10.0.pow(digitCount - 1).toLong()
     }
 
-    fun getLastNumberForDigitCount(digitCount: Int): Int {
+    fun getLastNumberForDigitCount(digitCount: Int): Long {
         ensureDigitCountPositive(digitCount)
 
-        return 10.0.pow(digitCount).toInt() - 1
+        return 10.0.pow(digitCount).toLong() - 1
     }
 
     private fun ensureDigitCountPositive(digitCount: Int) {

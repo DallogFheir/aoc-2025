@@ -72,6 +72,26 @@ class PositiveIntegerWrapperTest {
                 )
             )
         )
+
+        @JvmStatic
+        fun divideDigitsIntoEqualGroupsValidCases() = listOf(
+            Triple(123, 1, listOf(1, 2, 3)),
+            Triple(123, 3, listOf(123)),
+            Triple(123456, 2, listOf(12, 34, 56)),
+            Triple(123456, 3, listOf(123, 456))
+        )
+
+        @JvmStatic
+        fun divideDigitsIntoEqualGroupsInvalidGroupSizeCases() = listOf(
+            -1,
+            0,
+        )
+
+        @JvmStatic
+        fun divideDigitsIntoEqualGroupsGroupSizeNotFactorCases() = listOf(
+            Pair(123, 2),
+            Pair(123456, 4),
+        )
     }
 
     @ParameterizedTest
@@ -80,18 +100,6 @@ class PositiveIntegerWrapperTest {
         assertThrows(IllegalArgumentException::class.java) {
             PositiveIntegerWrapper(number)
         }
-    }
-
-    @ParameterizedTest
-    @MethodSource("factorizeCases")
-    fun `factorizes correctly`(case: Pair<Int, List<Int>>) {
-        val (number, expected) = case
-
-        val cut = PositiveIntegerWrapper(number)
-
-        val result = cut.factorize()
-
-        assertEquals(expected, result, "factorize for $number should return $expected, got $result")
     }
 
     @Test
@@ -110,5 +118,51 @@ class PositiveIntegerWrapperTest {
         val result = cut.toShiftedRight()
 
         assertInstanceOf(PositiveIntegerWrapper::class.java, result)
+    }
+
+    @ParameterizedTest
+    @MethodSource("factorizeCases")
+    fun `factorizes correctly`(case: Pair<Int, List<Int>>) {
+        val (number, expected) = case
+
+        val cut = PositiveIntegerWrapper(number)
+
+        val result = cut.factorize()
+
+        assertEquals(expected, result, "factorize for $number should return $expected, got $result")
+    }
+
+    @ParameterizedTest
+    @MethodSource("divideDigitsIntoEqualGroupsValidCases")
+    fun `divides digits into groups correctly`(case: Triple<Int, Int, List<Int>>) {
+        val (number, groupSize, expected) = case
+
+        val cut = PositiveIntegerWrapper(number)
+
+        val result = cut.divideDigitsIntoEqualGroups(groupSize)
+
+        assertEquals(expected, result, "divideDigitsIntoEqualGroups for $number should return $expected, got $result")
+    }
+
+    @ParameterizedTest
+    @MethodSource("divideDigitsIntoEqualGroupsInvalidGroupSizeCases")
+    fun `throws if trying to divide into non-positive group size`(groupSize: Int) {
+        val cut = PositiveIntegerWrapper(1)
+
+        assertThrows(IllegalArgumentException::class.java) {
+            cut.divideDigitsIntoEqualGroups(groupSize)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("divideDigitsIntoEqualGroupsGroupSizeNotFactorCases")
+    fun `throws if trying to divide into group size that isn't a factor of digit count`(case: Pair<Int, Int>) {
+        val (number, groupSize) = case
+
+        val cut = PositiveIntegerWrapper(number)
+
+        assertThrows(IllegalArgumentException::class.java) {
+            cut.divideDigitsIntoEqualGroups(groupSize)
+        }
     }
 }

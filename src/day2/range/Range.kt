@@ -5,7 +5,7 @@ import utils.math.MathUtils
 private const val SEPARATOR = "-"
 private const val ID_RANGE_PARTS_COUNT = 2
 
-open class Range(val start: Int, val end: Int) {
+open class Range(val start: Long, val end: Long) {
     protected val startDigitCount: Int
     protected val endDigitCount: Int
 
@@ -49,7 +49,7 @@ open class Range(val start: Int, val end: Int) {
                 throw IllegalArgumentException("Invalid string for a range: $string")
             }
 
-            val (start, end) = parts.map { it.toInt() }
+            val (start, end) = parts.map { it.toLong() }
 
             return Range(start = start, end = end)
         }
