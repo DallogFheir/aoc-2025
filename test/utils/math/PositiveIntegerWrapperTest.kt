@@ -8,95 +8,95 @@ import org.junit.jupiter.params.provider.MethodSource
 class PositiveIntegerWrapperTest {
     companion object {
         @JvmStatic
-        fun constructorInvalidCases() = listOf(-1, 0)
+        fun constructorInvalidCases() = listOf(-1L, 0L)
 
         @JvmStatic
         fun factorizeCases() = listOf(
-            Pair(1, listOf(1)),
-            Pair(2, listOf(1, 2)),
-            Pair(6, listOf(1, 2, 3, 6)),
-            Pair(2147483647, listOf(1, 2147483647)),
+            Pair(1L, listOf(1L)),
+            Pair(2L, listOf(1L, 2L)),
+            Pair(6L, listOf(1L, 2L, 3L, 6L)),
+            Pair(2147483647L, listOf(1L, 2147483647L)),
             Pair(
-                30000,
+                30000L,
                 listOf(
-                    1,
-                    2,
-                    3,
-                    4,
-                    5,
-                    6,
-                    8,
-                    10,
-                    12,
-                    15,
-                    16,
-                    20,
-                    24,
-                    25,
-                    30,
-                    40,
-                    48,
-                    50,
-                    60,
-                    75,
-                    80,
-                    100,
-                    120,
-                    125,
-                    150,
-                    200,
-                    240,
-                    250,
-                    300,
-                    375,
-                    400,
-                    500,
-                    600,
-                    625,
-                    750,
-                    1000,
-                    1200,
-                    1250,
-                    1500,
-                    1875,
-                    2000,
-                    2500,
-                    3000,
-                    3750,
-                    5000,
-                    6000,
-                    7500,
-                    10000,
-                    15000,
-                    30000,
+                    1L,
+                    2L,
+                    3L,
+                    4L,
+                    5L,
+                    6L,
+                    8L,
+                    10L,
+                    12L,
+                    15L,
+                    16L,
+                    20L,
+                    24L,
+                    25L,
+                    30L,
+                    40L,
+                    48L,
+                    50L,
+                    60L,
+                    75L,
+                    80L,
+                    100L,
+                    120L,
+                    125L,
+                    150L,
+                    200L,
+                    240L,
+                    250L,
+                    300L,
+                    375L,
+                    400L,
+                    500L,
+                    600L,
+                    625L,
+                    750L,
+                    1000L,
+                    1200L,
+                    1250L,
+                    1500L,
+                    1875L,
+                    2000L,
+                    2500L,
+                    3000L,
+                    3750L,
+                    5000L,
+                    6000L,
+                    7500L,
+                    10000L,
+                    15000L,
+                    30000L,
                 )
             )
         )
 
         @JvmStatic
-        fun divideDigitsIntoEqualGroupsValidCases() = listOf(
-            Triple(123, 1, listOf(1, 2, 3)),
-            Triple(123, 3, listOf(123)),
-            Triple(123456, 2, listOf(12, 34, 56)),
-            Triple(123456, 3, listOf(123, 456))
+        fun divideDigitsIntoEqualGroupsCases() = listOf(
+            Triple(123L, 1, listOf(1L, 2L, 3L)),
+            Triple(123L, 3, listOf(123L)),
+            Triple(123456L, 2, listOf(12L, 34L, 56L)),
+            Triple(123456L, 3, listOf(123L, 456L))
         )
 
         @JvmStatic
-        fun divideDigitsIntoEqualGroupsInvalidGroupSizeCases() = listOf(
+        fun invalidGroupSizeDivideDigitsIntoEqualGroupsCases() = listOf(
             -1,
             0,
         )
 
         @JvmStatic
-        fun divideDigitsIntoEqualGroupsGroupSizeNotFactorCases() = listOf(
-            Pair(123, 2),
-            Pair(123456, 4),
+        fun invalidGroupSizeNotFactorDivideDigitsIntoEqualGroupsCases() = listOf(
+            Pair(123L, 2),
+            Pair(123456L, 4),
         )
     }
 
     @ParameterizedTest
     @MethodSource("constructorInvalidCases")
-    fun `throws if initialized with non-positive integer`(number: Int) {
+    fun `throws if initialized with non-positive integer`(number: Long) {
         assertThrows(IllegalArgumentException::class.java) {
             PositiveIntegerWrapper(number)
         }
@@ -104,7 +104,7 @@ class PositiveIntegerWrapperTest {
 
     @Test
     fun `withAppendedDigits returns PositiveIntegerWrapper`() {
-        val cut = PositiveIntegerWrapper(1)
+        val cut = PositiveIntegerWrapper(1L)
 
         val result = cut.withAppendedDigit(2)
 
@@ -113,7 +113,7 @@ class PositiveIntegerWrapperTest {
 
     @Test
     fun `toShiftedRight returns PositiveIntegerWrapper`() {
-        val cut = PositiveIntegerWrapper(12)
+        val cut = PositiveIntegerWrapper(12L)
 
         val result = cut.toShiftedRight()
 
@@ -122,7 +122,7 @@ class PositiveIntegerWrapperTest {
 
     @ParameterizedTest
     @MethodSource("factorizeCases")
-    fun `factorizes correctly`(case: Pair<Int, List<Int>>) {
+    fun `factorizes correctly`(case: Pair<Long, List<Long>>) {
         val (number, expected) = case
 
         val cut = PositiveIntegerWrapper(number)
@@ -133,8 +133,8 @@ class PositiveIntegerWrapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("divideDigitsIntoEqualGroupsValidCases")
-    fun `divides digits into groups correctly`(case: Triple<Int, Int, List<Int>>) {
+    @MethodSource("divideDigitsIntoEqualGroupsCases")
+    fun `divides digits into groups correctly`(case: Triple<Long, Int, List<Long>>) {
         val (number, groupSize, expected) = case
 
         val cut = PositiveIntegerWrapper(number)
@@ -145,9 +145,9 @@ class PositiveIntegerWrapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("divideDigitsIntoEqualGroupsInvalidGroupSizeCases")
+    @MethodSource("invalidGroupSizeDivideDigitsIntoEqualGroupsCases")
     fun `throws if trying to divide into non-positive group size`(groupSize: Int) {
-        val cut = PositiveIntegerWrapper(1)
+        val cut = PositiveIntegerWrapper(1L)
 
         assertThrows(IllegalArgumentException::class.java) {
             cut.divideDigitsIntoEqualGroups(groupSize)
@@ -155,8 +155,8 @@ class PositiveIntegerWrapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("divideDigitsIntoEqualGroupsGroupSizeNotFactorCases")
-    fun `throws if trying to divide into group size that isn't a factor of digit count`(case: Pair<Int, Int>) {
+    @MethodSource("invalidGroupSizeNotFactorDivideDigitsIntoEqualGroupsCases")
+    fun `throws if trying to divide into group size that isn't a factor of digit count`(case: Pair<Long, Int>) {
         val (number, groupSize) = case
 
         val cut = PositiveIntegerWrapper(number)

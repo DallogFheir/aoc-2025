@@ -3,16 +3,16 @@ package utils.math
 import kotlin.math.abs
 import kotlin.math.pow
 
-open class IntegerWrapper(val number: Int) {
+open class IntegerWrapper(val number: Long) {
     val length: Int = abs(number).toString().length
-    val firstDigit: Int = abs(number) / (10.0.pow(length - 1).toInt())
+    val firstDigit: Int = (abs(number) / (10.0.pow(length - 1).toLong())).toInt()
 
-    fun isDivisibleBy(n: Int): Boolean {
-        if (n == 0) {
+    fun isDivisibleBy(n: Long): Boolean {
+        if (n == 0L) {
             throw IllegalArgumentException("Cannot divide by 0")
         }
 
-        return number % n == 0
+        return number % n == 0L
     }
 
     open fun withAppendedDigit(digit: Int): IntegerWrapper {

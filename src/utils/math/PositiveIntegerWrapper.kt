@@ -4,7 +4,7 @@ import kotlin.math.floor
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
+class PositiveIntegerWrapper(number: Long) : IntegerWrapper(number) {
     init {
         require(number > 0) { "Number must be positive, got $number" }
     }
@@ -21,12 +21,12 @@ class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
         return PositiveIntegerWrapper(result.number)
     }
 
-    fun factorize(): List<Int> {
-        val factors = mutableListOf<Int>()
-        val lastPossibleFactor = floor(sqrt(number.toDouble())).toInt()
+    fun factorize(): List<Long> {
+        val factors = mutableListOf<Long>()
+        val lastPossibleFactor = floor(sqrt(number.toDouble())).toLong()
 
         (1..lastPossibleFactor).forEach { factor ->
-            if (number % factor == 0) {
+            if (number % factor == 0L) {
                 factors.add(factor)
 
                 val otherFactor = number / factor
@@ -39,7 +39,7 @@ class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
         return factors.sorted().toList()
     }
 
-    fun divideDigitsIntoEqualGroups(groupSize: Int): List<Int> {
+    fun divideDigitsIntoEqualGroups(groupSize: Int): List<Long> {
         if (groupSize <= 0) {
             throw IllegalArgumentException("Group size must be positive, got $groupSize")
         }
@@ -47,8 +47,8 @@ class PositiveIntegerWrapper(number: Int) : IntegerWrapper(number) {
             throw IllegalArgumentException("Group size $groupSize must be a factor of digit count $length, got $groupSize")
         }
 
-        val result = mutableListOf<Int>()
-        val divisor = 10.0.pow(groupSize).toInt()
+        val result = mutableListOf<Long>()
+        val divisor = 10.0.pow(groupSize).toLong()
 
         var n = number
         while (n > 0) {

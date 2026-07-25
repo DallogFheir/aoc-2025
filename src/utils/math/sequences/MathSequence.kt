@@ -1,7 +1,7 @@
 package utils.math.sequences
 
-abstract class MathSequence(val firstElement: Long) {
-    fun getNthElement(n: Int): Long {
+abstract class MathSequence(val firstElement: Double) {
+    fun getNthElement(n: Int): Double {
         if (n <= 0) {
             throw IllegalArgumentException("n must be positive, got $n")
         }
@@ -9,9 +9,9 @@ abstract class MathSequence(val firstElement: Long) {
         return doGetNthElement(n)
     }
 
-    protected abstract fun doGetNthElement(n: Int): Long
+    protected abstract fun doGetNthElement(n: Int): Double
 
-    fun getNFirstElementsSum(n: Int): Long {
+    fun getNFirstElementsSum(n: Int): Double {
         if (n <= 0) {
             throw IllegalArgumentException("n must be positive, got $n")
         }
@@ -19,5 +19,5 @@ abstract class MathSequence(val firstElement: Long) {
         return doGetNFirstElementsSum(n)
     }
 
-    protected abstract fun doGetNFirstElementsSum(n: Int): Long
+    protected abstract fun doGetNFirstElementsSum(n: Int): Double
 }

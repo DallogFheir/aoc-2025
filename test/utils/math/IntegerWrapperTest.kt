@@ -10,60 +10,60 @@ class IntegerWrapperTest {
     companion object {
         @JvmStatic
         fun firstDigitCases() = listOf(
-            Pair(-1, 1),
-            Pair(0, 0),
-            Pair(1, 1),
-            Pair(4231, 4)
+            Pair(-1L, 1),
+            Pair(0L, 0),
+            Pair(1L, 1),
+            Pair(4231L, 4)
         )
 
         @JvmStatic
         fun lengthCases() = listOf(
-            Pair(0, 1),
-            Pair(-1, 1),
-            Pair(1, 1),
-            Pair(10, 2),
-            Pair(42_100, 5),
+            Pair(0L, 1),
+            Pair(-1L, 1),
+            Pair(1L, 1),
+            Pair(10L, 2),
+            Pair(42_100L, 5),
         )
 
         @JvmStatic
         fun isDivisibleByCases() = listOf(
-            Triple(-2, 2, true),
-            Triple(2, 2, true),
-            Triple(1, 2, false),
-            Triple(3, 2, false),
-            Triple(3, -2, false),
-            Triple(0, 3, true),
+            Triple(-2L, 2L, true),
+            Triple(2L, 2L, true),
+            Triple(1L, 2L, false),
+            Triple(3L, 2L, false),
+            Triple(3L, -2L, false),
+            Triple(0L, 3L, true),
         )
 
         @JvmStatic
-        fun withAppendedDigitValidCases() = listOf(
-            Triple(-2, 1, -21),
-            Triple(2, 1, 21),
-            Triple(123, 4, 1234),
-            Triple(0, 2, 2),
+        fun withAppendedDigitCases() = listOf(
+            Triple(-2L, 1, -21L),
+            Triple(2L, 1, 21L),
+            Triple(123L, 4, 1234L),
+            Triple(0L, 2, 2L),
         )
 
         @JvmStatic
-        fun withAppendedDigitInvalidCases() = listOf(
-            Pair(1, -1),
-            Pair(1, 11),
+        fun invalidWithAppendedDigitCases() = listOf(
+            Pair(1L, -1),
+            Pair(1L, 11),
         )
 
         @JvmStatic
         fun toShiftedRightCases() = listOf(
-            Pair(0, 0),
-            Pair(1, 0),
-            Pair(12, 2),
-            Pair(1234, 234),
-            Pair(-1, 0),
-            Pair(-12, -2),
-            Pair(-1234, -234),
+            Pair(0L, 0L),
+            Pair(1L, 0L),
+            Pair(12L, 2L),
+            Pair(1234L, 234L),
+            Pair(-1L, 0L),
+            Pair(-12L, -2L),
+            Pair(-1234L, -234L),
         )
     }
 
     @ParameterizedTest
     @MethodSource("firstDigitCases")
-    fun `gets first digit correctly`(case: Pair<Int, Int>) {
+    fun `gets first digit correctly`(case: Pair<Long, Int>) {
         val (number, expected) = case
 
         val cut = IntegerWrapper(number)
@@ -75,7 +75,7 @@ class IntegerWrapperTest {
 
     @ParameterizedTest
     @MethodSource("lengthCases")
-    fun `gets length correctly`(case: Pair<Int, Int>) {
+    fun `gets length correctly`(case: Pair<Long, Int>) {
         val (number, expected) = case
 
         val cut = IntegerWrapper(number)
@@ -87,7 +87,7 @@ class IntegerWrapperTest {
 
     @ParameterizedTest
     @MethodSource("isDivisibleByCases")
-    fun `returns if number is divisible by factor correctly`(case: Triple<Int, Int, Boolean>) {
+    fun `returns if number is divisible by factor correctly`(case: Triple<Long, Long, Boolean>) {
         val (number, factor, expected) = case
 
         val cut = IntegerWrapper(number)
@@ -111,8 +111,8 @@ class IntegerWrapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("withAppendedDigitValidCases")
-    fun `appends digit correctly`(case: Triple<Int, Int, Int>) {
+    @MethodSource("withAppendedDigitCases")
+    fun `appends digit correctly`(case: Triple<Long, Int, Long>) {
         val (number, digit, expected) = case
 
         val cut = IntegerWrapper(number)
@@ -127,8 +127,8 @@ class IntegerWrapperTest {
     }
 
     @ParameterizedTest
-    @MethodSource("withAppendedDigitInvalidCases")
-    fun `throws if trying to append an invalid digit`(case: Pair<Int, Int>) {
+    @MethodSource("invalidWithAppendedDigitCases")
+    fun `throws if trying to append an invalid digit`(case: Pair<Long, Int>) {
         val (number, digit) = case
 
         val cut = IntegerWrapper(number)
@@ -140,7 +140,7 @@ class IntegerWrapperTest {
 
     @ParameterizedTest
     @MethodSource("toShiftedRightCases")
-    fun `shifts right correctly`(case: Pair<Int, Int>) {
+    fun `shifts right correctly`(case: Pair<Long, Long>) {
         val (number, expected) = case
 
         val cut = IntegerWrapper(number)

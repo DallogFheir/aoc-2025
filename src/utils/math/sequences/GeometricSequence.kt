@@ -2,16 +2,16 @@ package utils.math.sequences
 
 import kotlin.math.pow
 
-class GeometricSequence(firstElement: Long, val ratio: Long) : MathSequence(firstElement = firstElement) {
-    override fun doGetNthElement(n: Int): Long {
-        return firstElement * ratio.toDouble().pow(n - 1).toLong()
+class GeometricSequence(firstElement: Double, val ratio: Double) : MathSequence(firstElement = firstElement) {
+    override fun doGetNthElement(n: Int): Double {
+        return firstElement * ratio.pow(n - 1)
     }
 
-    override fun doGetNFirstElementsSum(n: Int): Long {
-        if (ratio == 1L) {
+    override fun doGetNFirstElementsSum(n: Int): Double {
+        if (ratio == 1.0) {
             return firstElement * n
         }
 
-        return firstElement * (1 - ratio.toDouble().pow(n).toLong()) / (1 - ratio)
+        return firstElement * (1 - ratio.pow(n)) / (1 - ratio)
     }
 }

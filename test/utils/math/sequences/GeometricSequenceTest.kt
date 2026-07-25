@@ -5,10 +5,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 data class GeometricSequenceTestCase(
-    val firstElement: Long,
-    val ratio: Long,
+    val firstElement: Double,
+    val ratio: Double,
     val n: Int,
-    val expected: Long? = null,
+    val expected: Double? = null,
 )
 
 class GeometricSequenceTest {
@@ -16,92 +16,92 @@ class GeometricSequenceTest {
         @JvmStatic
         fun getNthElementCases() = listOf(
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
+                firstElement = 2.0,
+                ratio = 3.0,
                 n = 1,
-                expected = 2,
+                expected = 2.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
+                firstElement = 2.0,
+                ratio = 3.0,
                 n = 2,
-                expected = 6,
+                expected = 6.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
+                firstElement = 2.0,
+                ratio = 3.0,
                 n = 5,
-                expected = 162,
+                expected = 162.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 5,
-                ratio = 1,
+                firstElement = 5.0,
+                ratio = 1.0,
                 n = 10,
-                expected = 5,
+                expected = 5.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 3,
-                ratio = 0,
+                firstElement = 3.0,
+                ratio = 0.0,
                 n = 1,
-                expected = 3,
+                expected = 3.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 3,
-                ratio = 0,
+                firstElement = 3.0,
+                ratio = 0.0,
                 n = 4,
-                expected = 0,
+                expected = 0.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = -2,
+                firstElement = 2.0,
+                ratio = -2.0,
                 n = 4,
-                expected = -16,
+                expected = -16.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = -3,
-                ratio = 2,
+                firstElement = -3.0,
+                ratio = 2.0,
                 n = 4,
-                expected = -24,
+                expected = -24.0,
             ),
         )
 
         @JvmStatic
         fun getNFirstElementsSumCases() = listOf(
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
+                firstElement = 2.0,
+                ratio = 3.0,
                 n = 1,
-                expected = 2,
+                expected = 2.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
+                firstElement = 2.0,
+                ratio = 3.0,
                 n = 4,
-                expected = 80,
+                expected = 80.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 5,
-                ratio = 1,
+                firstElement = 5.0,
+                ratio = 1.0,
                 n = 4,
-                expected = 20,
+                expected = 20.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 3,
-                ratio = 0,
+                firstElement = 3.0,
+                ratio = 0.0,
                 n = 5,
-                expected = 3,
+                expected = 3.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = -2,
+                firstElement = 2.0,
+                ratio = -2.0,
                 n = 4,
-                expected = -10,
+                expected = -10.0,
             ),
             GeometricSequenceTestCase(
-                firstElement = -3,
-                ratio = 2,
+                firstElement = -3.0,
+                ratio = 2.0,
                 n = 4,
-                expected = -45,
+                expected = -45.0,
             ),
         )
     }

@@ -5,10 +5,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
 data class ArithmeticSequenceTestCase(
-    val firstElement: Long,
-    val difference: Long,
+    val firstElement: Double,
+    val difference: Double,
     val n: Int,
-    val expected: Long? = null,
+    val expected: Double? = null,
 )
 
 class ArithmeticSequenceTest {
@@ -16,74 +16,74 @@ class ArithmeticSequenceTest {
         @JvmStatic
         fun getNthElementCases() = listOf(
             ArithmeticSequenceTestCase(
-                firstElement = 2,
-                difference = 3,
+                firstElement = 2.0,
+                difference = 3.0,
                 n = 1,
-                expected = 2,
+                expected = 2.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 2,
-                difference = 3,
+                firstElement = 2.0,
+                difference = 3.0,
                 n = 2,
-                expected = 5,
+                expected = 5.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 2,
-                difference = 3,
+                firstElement = 2.0,
+                difference = 3.0,
                 n = 5,
-                expected = 14,
+                expected = 14.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 5,
-                difference = 0,
+                firstElement = 5.0,
+                difference = 0.0,
                 n = 10,
-                expected = 5,
+                expected = 5.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 3,
-                difference = -2,
+                firstElement = 3.0,
+                difference = -2.0,
                 n = 4,
-                expected = -3,
+                expected = -3.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = -3,
-                difference = 2,
+                firstElement = -3.0,
+                difference = 2.0,
                 n = 4,
-                expected = 3,
+                expected = 3.0,
             ),
         )
 
         @JvmStatic
         fun getNFirstElementsSumCases() = listOf(
             ArithmeticSequenceTestCase(
-                firstElement = 2,
-                difference = 3,
+                firstElement = 2.0,
+                difference = 3.0,
                 n = 1,
-                expected = 2,
+                expected = 2.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 2,
-                difference = 3,
+                firstElement = 2.0,
+                difference = 3.0,
                 n = 4,
-                expected = 26,
+                expected = 26.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 5,
-                difference = 0,
+                firstElement = 5.0,
+                difference = 0.0,
                 n = 4,
-                expected = 20,
+                expected = 20.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = 3,
-                difference = -2,
+                firstElement = 3.0,
+                difference = -2.0,
                 n = 5,
-                expected = -5,
+                expected = -5.0,
             ),
             ArithmeticSequenceTestCase(
-                firstElement = -3,
-                difference = 2,
+                firstElement = -3.0,
+                difference = 2.0,
                 n = 4,
-                expected = 0,
+                expected = 0.0,
             ),
         )
     }
