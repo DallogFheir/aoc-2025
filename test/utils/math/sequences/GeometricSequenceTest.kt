@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
-data class TestCase(
+data class GeometricSequenceTestCase(
     val firstElement: Long,
     val ratio: Long,
     val n: Int,
@@ -16,49 +16,49 @@ class GeometricSequenceTest {
     companion object {
         @JvmStatic
         fun getNthNumberCases() = listOf(
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 1,
                 expected = 2,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 2,
                 expected = 6,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 5,
                 expected = 162,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 5,
                 ratio = 1,
                 n = 10,
                 expected = 5,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 3,
                 ratio = 0,
                 n = 1,
                 expected = 3,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 3,
                 ratio = 0,
                 n = 4,
                 expected = 0,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = -2,
                 n = 4,
                 expected = -16,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = -3,
                 ratio = 2,
                 n = 4,
@@ -68,12 +68,12 @@ class GeometricSequenceTest {
 
         @JvmStatic
         fun invalidGetNthNumberCases() = listOf(
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 0,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = -1,
@@ -82,37 +82,37 @@ class GeometricSequenceTest {
 
         @JvmStatic
         fun getNFirstNumbersSumCases() = listOf(
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 1,
                 expected = 2,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 4,
                 expected = 80,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 5,
                 ratio = 1,
                 n = 4,
                 expected = 20,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 3,
                 ratio = 0,
                 n = 5,
                 expected = 3,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = -2,
                 n = 4,
                 expected = -10,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = -3,
                 ratio = 2,
                 n = 4,
@@ -122,12 +122,12 @@ class GeometricSequenceTest {
 
         @JvmStatic
         fun invalidGetFirstNumbersSumCases() = listOf(
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = 0,
             ),
-            TestCase(
+            GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
                 n = -1,
@@ -137,7 +137,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getNthNumberCases")
-    fun `gets nth number correctly`(case: TestCase) {
+    fun `gets nth number correctly`(case: GeometricSequenceTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
@@ -154,7 +154,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("invalidGetNthNumberCases")
-    fun `throws if nth number index is not positive`(case: TestCase) {
+    fun `throws if nth number index is not positive`(case: GeometricSequenceTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
@@ -167,7 +167,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getNFirstNumbersSumCases")
-    fun `gets sum of first n numbers correctly`(case: TestCase) {
+    fun `gets sum of first n numbers correctly`(case: GeometricSequenceTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
@@ -185,7 +185,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("invalidGetFirstNumbersSumCases")
-    fun `throws if number of elements to sum is not positive`(case: TestCase) {
+    fun `throws if number of elements to sum is not positive`(case: GeometricSequenceTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,

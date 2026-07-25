@@ -2,20 +2,12 @@ package utils.math.sequences
 
 import kotlin.math.pow
 
-class GeometricSequence(val firstElement: Long, val ratio: Long) : MathSequence {
-    override fun getNthNumber(n: Int): Long {
-        if (n <= 0) {
-            throw IllegalArgumentException("n must be positive, got $n")
-        }
-
+class GeometricSequence(firstElement: Long, val ratio: Long) : MathSequence(firstElement = firstElement) {
+    override fun doGetNthNumber(n: Int): Long {
         return firstElement * ratio.toDouble().pow(n - 1).toLong()
     }
 
-    override fun getNFirstNumbersSum(n: Int): Long {
-        if (n <= 0) {
-            throw IllegalArgumentException("n must be positive, got $n")
-        }
-
+    override fun doGetNFirstNumbersSum(n: Int): Long {
         if (ratio == 1L) {
             return firstElement * n
         }
