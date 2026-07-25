@@ -14,7 +14,7 @@ data class ArithmeticSequenceTestCase(
 class ArithmeticSequenceTest {
     companion object {
         @JvmStatic
-        fun getNthNumberCases() = listOf(
+        fun getNthElementCases() = listOf(
             ArithmeticSequenceTestCase(
                 firstElement = 2,
                 difference = 3,
@@ -54,7 +54,7 @@ class ArithmeticSequenceTest {
         )
 
         @JvmStatic
-        fun getNFirstNumbersSumCases() = listOf(
+        fun getNFirstElementsSumCases() = listOf(
             ArithmeticSequenceTestCase(
                 firstElement = 2,
                 difference = 3,
@@ -89,36 +89,36 @@ class ArithmeticSequenceTest {
     }
 
     @ParameterizedTest
-    @MethodSource("getNthNumberCases")
-    fun `gets nth number correctly`(case: ArithmeticSequenceTestCase) {
+    @MethodSource("getNthElementCases")
+    fun `gets nth element correctly`(case: ArithmeticSequenceTestCase) {
         val cut = ArithmeticSequence(
             firstElement = case.firstElement,
             difference = case.difference,
         )
 
-        val result = cut.getNthNumber(case.n)
+        val result = cut.getNthElement(case.n)
 
         assertEquals(
             case.expected,
             result,
-            "getNthNumber for first element ${case.firstElement}, difference ${case.difference} and n ${case.n} should return ${case.expected}, got $result",
+            "getNthElement for first element ${case.firstElement}, difference ${case.difference} and n ${case.n} should return ${case.expected}, got $result",
         )
     }
 
     @ParameterizedTest
-    @MethodSource("getNFirstNumbersSumCases")
-    fun `gets sum of first n numbers correctly`(case: ArithmeticSequenceTestCase) {
+    @MethodSource("getNFirstElementsSumCases")
+    fun `gets sum of first n elements correctly`(case: ArithmeticSequenceTestCase) {
         val cut = ArithmeticSequence(
             firstElement = case.firstElement,
             difference = case.difference,
         )
 
-        val result = cut.getNFirstNumbersSum(case.n)
+        val result = cut.getNFirstElementsSum(case.n)
 
         assertEquals(
             case.expected,
             result,
-            "getNFirstNumbersSum for first element ${case.firstElement}, difference ${case.difference} and n ${case.n} should return ${case.expected}, got $result",
+            "getNFirstElementsSum for first element ${case.firstElement}, difference ${case.difference} and n ${case.n} should return ${case.expected}, got $result",
         )
     }
 }

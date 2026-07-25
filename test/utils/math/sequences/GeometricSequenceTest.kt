@@ -1,7 +1,6 @@
 package utils.math.sequences
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -15,7 +14,7 @@ data class GeometricSequenceTestCase(
 class GeometricSequenceTest {
     companion object {
         @JvmStatic
-        fun getNthNumberCases() = listOf(
+        fun getNthElementCases() = listOf(
             GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
@@ -67,21 +66,7 @@ class GeometricSequenceTest {
         )
 
         @JvmStatic
-        fun invalidGetNthNumberCases() = listOf(
-            GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
-                n = 0,
-            ),
-            GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
-                n = -1,
-            ),
-        )
-
-        @JvmStatic
-        fun getNFirstNumbersSumCases() = listOf(
+        fun getNFirstElementsSumCases() = listOf(
             GeometricSequenceTestCase(
                 firstElement = 2,
                 ratio = 3,
@@ -119,80 +104,39 @@ class GeometricSequenceTest {
                 expected = -45,
             ),
         )
-
-        @JvmStatic
-        fun invalidGetFirstNumbersSumCases() = listOf(
-            GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
-                n = 0,
-            ),
-            GeometricSequenceTestCase(
-                firstElement = 2,
-                ratio = 3,
-                n = -1,
-            ),
-        )
     }
 
     @ParameterizedTest
-    @MethodSource("getNthNumberCases")
-    fun `gets nth number correctly`(case: GeometricSequenceTestCase) {
+    @MethodSource("getNthElementCases")
+    fun `gets nth element correctly`(case: GeometricSequenceTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
         )
 
-        val result = cut.getNthNumber(case.n)
+        val result = cut.getNthElement(case.n)
 
         assertEquals(
             case.expected,
             result,
-            "getNthNumber for first element ${case.firstElement}, ratio ${case.ratio} and n ${case.n} should return ${case.expected}, got $result",
+            "getNthElement for first element ${case.firstElement}, ratio ${case.ratio} and n ${case.n} should return ${case.expected}, got $result",
         )
     }
 
     @ParameterizedTest
-    @MethodSource("invalidGetNthNumberCases")
-    fun `throws if nth number index is not positive`(case: GeometricSequenceTestCase) {
+    @MethodSource("getNFirstElementsSumCases")
+    fun `gets sum of first n elements correctly`(case: GeometricSequenceTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
         )
 
-        assertThrows(IllegalArgumentException::class.java) {
-            cut.getNthNumber(case.n)
-        }
-    }
-
-    @ParameterizedTest
-    @MethodSource("getNFirstNumbersSumCases")
-    fun `gets sum of first n numbers correctly`(case: GeometricSequenceTestCase) {
-        val cut = GeometricSequence(
-            firstElement = case.firstElement,
-            ratio = case.ratio,
-        )
-
-        val result = cut.getNFirstNumbersSum(case.n)
+        val result = cut.getNFirstElementsSum(case.n)
 
         assertEquals(
             case.expected,
             result,
-            "getNFirstNumbersSum for first element ${case.firstElement}, ratio ${case.ratio} and n ${case.n} should return ${case.expected}, got $result",
+            "getNFirstElementsSum for first element ${case.firstElement}, ratio ${case.ratio} and n ${case.n} should return ${case.expected}, got $result",
         )
-    }
-
-
-    @ParameterizedTest
-    @MethodSource("invalidGetFirstNumbersSumCases")
-    fun `throws if number of elements to sum is not positive`(case: GeometricSequenceTestCase) {
-        val cut = GeometricSequence(
-            firstElement = case.firstElement,
-            ratio = case.ratio,
-        )
-
-        assertThrows(IllegalArgumentException::class.java) {
-            cut.getNFirstNumbersSum(case.n)
-        }
     }
 }
