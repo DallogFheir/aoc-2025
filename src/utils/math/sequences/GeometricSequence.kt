@@ -1,6 +1,5 @@
-package utils.math
+package utils.math.sequences
 
-import utils.math.sequences.MathSequence
 import kotlin.math.pow
 
 class GeometricSequence(val firstElement: Long, val ratio: Long) : MathSequence {

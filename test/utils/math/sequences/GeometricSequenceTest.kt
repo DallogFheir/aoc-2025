@@ -1,4 +1,4 @@
-package utils.math
+package utils.math.sequences
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
