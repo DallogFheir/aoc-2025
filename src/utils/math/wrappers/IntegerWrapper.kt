@@ -1,4 +1,4 @@
-package utils.math
+package utils.math.wrappers
 
 import kotlin.math.abs
 import kotlin.math.pow

@@ -1,4 +1,4 @@
-package utils.math
+package utils.math.wrappers
 
 import kotlin.math.floor
 import kotlin.math.pow
