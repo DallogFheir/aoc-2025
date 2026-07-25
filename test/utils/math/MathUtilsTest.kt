@@ -9,18 +9,18 @@ class MathUtilsTest {
     companion object {
         @JvmStatic
         fun getFirstNumberForDigitCountCases() = listOf(
-            Pair(1, 0),
-            Pair(2, 10),
-            Pair(3, 100),
-            Pair(5, 10_000)
+            Pair(1, 0L),
+            Pair(2, 10L),
+            Pair(3, 100L),
+            Pair(5, 10_000L)
         )
 
         @JvmStatic
         fun getLastNumberForDigitCountCases() = listOf(
-            Pair(1, 9),
-            Pair(2, 99),
-            Pair(3, 999),
-            Pair(5, 99_999)
+            Pair(1, 9L),
+            Pair(2, 99L),
+            Pair(3, 999L),
+            Pair(5, 99_999L)
         )
 
         @JvmStatic
@@ -31,7 +31,7 @@ class MathUtilsTest {
 
     @ParameterizedTest
     @MethodSource("getFirstNumberForDigitCountCases")
-    fun `gets first number for digit count correctly`(case: Pair<Int, Int>) {
+    fun `gets first number for digit count correctly`(case: Pair<Int, Long>) {
         val (digitCount, expected) = case
 
         val result = MathUtils.getFirstNumberForDigitCount(digitCount)
@@ -53,7 +53,7 @@ class MathUtilsTest {
 
     @ParameterizedTest
     @MethodSource("getLastNumberForDigitCountCases")
-    fun `gets last number for digit count correctly`(case: Pair<Int, Int>) {
+    fun `gets last number for digit count correctly`(case: Pair<Int, Long>) {
         val (digitCount, expected) = case
 
         val result = MathUtils.getLastNumberForDigitCount(digitCount)

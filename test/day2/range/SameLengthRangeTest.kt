@@ -15,7 +15,7 @@ class SameLengthRangeTest {
 
     @ParameterizedTest
     @MethodSource("constructorInvalidCases")
-    fun `raises if initialized with invalid range ends`(case: Pair<Int, Int>) {
+    fun `raises if initialized with invalid range ends`(case: Pair<Long, Long>) {
         val (start, end) = case
 
         assertThrows(IllegalArgumentException::class.java) {

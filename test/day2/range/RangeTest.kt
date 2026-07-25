@@ -40,7 +40,7 @@ class RangeTest {
 
     @ParameterizedTest
     @MethodSource("constructorInvalidCases")
-    fun `raises if initialized with invalid range ends`(case: Pair<Int, Int>) {
+    fun `raises if initialized with invalid range ends`(case: Pair<Long, Long>) {
         val (start, end) = case
 
         assertThrows(IllegalArgumentException::class.java) {
@@ -50,7 +50,7 @@ class RangeTest {
 
     @ParameterizedTest
     @MethodSource("fromStringValidCases")
-    fun `initializes from string correctly`(case: Triple<String, Int, Int>) {
+    fun `initializes from string correctly`(case: Triple<String, Long, Long>) {
         val (string, start, end) = case
 
         val cut = Range.fromString(string)
@@ -77,7 +77,7 @@ class RangeTest {
 
     @ParameterizedTest
     @MethodSource("divideIntoSameLengthSubrangesCases")
-    fun `divides into same length subranges correctly`(case: Triple<Int, Int, List<Pair<Int, Int>>>) {
+    fun `divides into same length subranges correctly`(case: Triple<Long, Long, List<Pair<Long, Long>>>) {
         val (start, end, expectedSubrangeBounds) = case
 
         val cut = Range(start = start, end = end)
