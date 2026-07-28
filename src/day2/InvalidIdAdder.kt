@@ -1,7 +1,6 @@
 package day2
 
 import day2.range.SameLengthRange
-import utils.math.sequences.ArithmeticSequence
 import utils.math.sequences.GeometricSequence
 import utils.math.wrappers.PositiveIntegerWrapper
 import kotlin.math.pow
@@ -12,10 +11,18 @@ class InvalidIdAdder(range: SameLengthRange) {
     private val digitCount = rangeStart.length
 
     fun sumUp(): Long {
-        val rangeLengthFactors = PositiveIntegerWrapper(digitCount.toLong()).factorize()
+        val factors = getFactors(rangeStart.number)
+
+        return factors.sumOf { sumUpForGroupSize(it.toInt()) }
+    }
+
+    private fun getFactors(number: Long): List<Long> {
+        val numberWrapper = PositiveIntegerWrapper(number)
+
+        val rangeLengthFactors = PositiveIntegerWrapper(numberWrapper.length.toLong()).factorize()
         val rangeLengthFactorsWithoutNumberItself = rangeLengthFactors.dropLast(1)
 
-        return rangeLengthFactorsWithoutNumberItself.sumOf { sumUpForGroupSize(it.toInt()) }
+        return rangeLengthFactorsWithoutNumberItself
     }
 
     private fun sumUpForGroupSize(groupSize: Int): Long {
@@ -36,25 +43,28 @@ class InvalidIdAdder(range: SameLengthRange) {
 
         var result = betweenCombinationsSum
 
-        val firstSmallerDigit = rangeStartRemainingDigitGroups.indexOfFirst { rangeStartFirstGroup > it }
-        val firstLargerDigit = rangeStartRemainingDigitGroups.indexOfFirst { rangeStartFirstGroup < it }
-        val firstSmallerIdx = if (firstSmallerDigit == -1) Long.MAX_VALUE else firstSmallerDigit.toLong()
-        val firstLargerIdx = if (firstLargerDigit == -1) Long.MAX_VALUE else firstLargerDigit.toLong()
-        val isRangeStartFirstGroupValid = firstSmallerIdx <= firstLargerIdx
-
-        val firstSmallerDigit2 = rangeEndRemainingDigitGroups.indexOfFirst { rangeEndFirstGroup > it }
-        val firstLargerDigit2 = rangeEndRemainingDigitGroups.indexOfFirst { rangeEndFirstGroup < it }
-        val firstSmallerIdx2 = if (firstSmallerDigit2 == -1) Long.MAX_VALUE else firstSmallerDigit2.toLong()
-        val firstLargerIdx2 = if (firstLargerDigit2 == -1) Long.MAX_VALUE else firstLargerDigit2.toLong()
-        val isRangeEndFirstGroupValid = firstLargerIdx2 <= firstSmallerIdx2
+        val isRangeStartFirstGroupValid = isDigitGroupValid(
+            remainingDigitGroups = rangeStartRemainingDigitGroups,
+            firstDigitGroup = rangeStartFirstGroup,
+            smallerToLargerDigitIndexComparator = { a, b -> a <= b })
+        val isRangeEndFirstGroupValid = isDigitGroupValid(
+            remainingDigitGroups = rangeEndRemainingDigitGroups,
+            firstDigitGroup = rangeEndFirstGroup,
+            smallerToLargerDigitIndexComparator = { a, b -> a >= b })
 
         if (rangeStartFirstGroup == rangeEndFirstGroup) {
             val areBothGroupsValid = isRangeStartFirstGroupValid && isRangeEndFirstGroupValid
 
-            result += if (areBothGroupsValid && !isNumRepeated(rangeStartFirstGroup)) constructNumberFromDigitGroup(digitGroup = rangeStartFirstGroup) else 0
+            result += if (areBothGroupsValid && !isNumberRepeated(rangeStartFirstGroup)) constructNumberFromDigitGroup(
+                digitGroup = rangeStartFirstGroup
+            ) else 0
         } else {
-            result += if (isRangeStartFirstGroupValid && !isNumRepeated(rangeStartFirstGroup)) constructNumberFromDigitGroup(rangeStartFirstGroup) else 0
-            result += if (isRangeEndFirstGroupValid && !isNumRepeated(rangeEndFirstGroup)) constructNumberFromDigitGroup(rangeEndFirstGroup) else 0
+            result += if (isRangeStartFirstGroupValid && !isNumberRepeated(rangeStartFirstGroup)) constructNumberFromDigitGroup(
+                rangeStartFirstGroup
+            ) else 0
+            result += if (isRangeEndFirstGroupValid && !isNumberRepeated(rangeEndFirstGroup)) constructNumberFromDigitGroup(
+                rangeEndFirstGroup
+            ) else 0
         }
 
         return result
@@ -66,22 +76,30 @@ class InvalidIdAdder(range: SameLengthRange) {
         }
 
         var sum = 0L
-        for (i in rangeStartGroup..rangeEndGroup) {
-            val isRepeated = isNumRepeated(i)
-
-            if (!isRepeated) {
-                sum += i
+        for (number in rangeStartGroup..rangeEndGroup) {
+            if (!isNumberRepeated(number)) {
+                sum += number
             }
         }
-
-//        val betweenGroupsSequence = ArithmeticSequence(firstElement = rangeStartGroup.toDouble(), difference = 1.0)
-//        val lastElementIndex = betweenGroupsSequence.getIndexOfElement(rangeEndGroup.toDouble())
-//        val sum = betweenGroupsSequence.getNFirstElementsSum(lastElementIndex)
 
         val multiplierSequence = GeometricSequence(firstElement = 1.0, ratio = 10.0.pow(groupSize))
         val multiplier = multiplierSequence.getNFirstElementsSum(digitCount / groupSize)
 
         return (multiplier * sum).toLong()
+    }
+
+    private fun isDigitGroupValid(
+        remainingDigitGroups: List<Long>,
+        firstDigitGroup: Long,
+        smallerToLargerDigitIndexComparator: (a: Long, b: Long) -> Boolean
+    ): Boolean {
+        val firstSmallerDigit = remainingDigitGroups.indexOfFirst { firstDigitGroup > it }
+        val firstSmallerDigitIndex = if (firstSmallerDigit == -1) Long.MAX_VALUE else firstSmallerDigit.toLong()
+
+        val firstLargerDigit = remainingDigitGroups.indexOfFirst { firstDigitGroup < it }
+        val firstLargerDigitIndex = if (firstLargerDigit == -1) Long.MAX_VALUE else firstLargerDigit.toLong()
+
+        return smallerToLargerDigitIndexComparator(firstSmallerDigitIndex, firstLargerDigitIndex)
     }
 
     private fun constructNumberFromDigitGroup(digitGroup: Long): Long {
@@ -93,13 +111,13 @@ class InvalidIdAdder(range: SameLengthRange) {
         return (digitGroup * multiplier).toLong()
     }
 
-    private fun isNumRepeated(num: Long): Boolean {
-        val w = PositiveIntegerWrapper(num)
-        val facss = PositiveIntegerWrapper(w.length.toLong()).factorize()
-        val facs = facss.dropLast(1)
+    private fun isNumberRepeated(number: Long): Boolean {
+        val numberWrapper = PositiveIntegerWrapper(number)
 
-        val isRepeated = facs.any { factor ->
-            val groups = w.divideDigitsIntoEqualGroups(factor.toInt())
+        val factors = getFactors(number)
+
+        val isRepeated = factors.any { factor ->
+            val groups = numberWrapper.divideDigitsIntoEqualGroups(factor.toInt())
             val firstGroup = groups.first()
 
             groups.all { it == firstGroup }

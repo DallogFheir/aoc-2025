@@ -1,39 +1,7 @@
 package day2
 
-import day2.range.Range
-import utils.filereader.FileReader
-import java.io.File
-private const val ID_RANGES_SEPARATOR = ","
-private const val INPUT_FILE_LINE_COUNT = 1
-
 object Part1 {
     fun solve(dayNumber: Int, fileName: String): Long {
-        val ranges = FileReader(dayNumber = dayNumber, fileName = fileName).readLinesWithParser { line ->
-            val rangeStrings = line.split(ID_RANGES_SEPARATOR)
-
-            rangeStrings.map { Range.fromString(it) }
-        }
-
-        if (ranges.size != INPUT_FILE_LINE_COUNT) {
-            throw IllegalArgumentException("File must be $INPUT_FILE_LINE_COUNT line.")
-        }
-
-        val flattenedRanges = ranges[0]
-
-        val result = flattenedRanges.sumOf { range ->
-            val subranges = range.divideIntoSameLengthSubranges()
-
-            val sum1 = subranges.sumOf { subrange ->
-                val counter = InvalidIdAdder(subrange)
-
-                val sum2 = counter.sumUp()
-
-                sum2
-            }
-
-            sum1
-        }
-
-        return result
+        return solveWithInvalidIdAdder(dayNumber = dayNumber, fileName = fileName)
     }
 }

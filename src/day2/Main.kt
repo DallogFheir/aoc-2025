@@ -24,14 +24,14 @@ private fun part1(dayNumber: Int): Long {
     ).solve()
 }
 
-private fun part2(dayNumber: Int): Int {
-//    val testCases = listOf(
-//        TestCase(fileName = "test", expectedResult = 6),
-//    )
-//
-//    return Solver(
-//        testCases = testCases,
-//        solver = Part2::solve
-//    ).solve()
-    return 1
+private fun part2(dayNumber: Int): Long {
+    val testCases = listOf(
+        TestCase(fileName = "test", expectedResult = 4174379265L),
+    )
+
+    return Solver(
+        dayNumber = dayNumber,
+        testCases = testCases,
+        solver = Part2::solve
+    ).solve()
 }
