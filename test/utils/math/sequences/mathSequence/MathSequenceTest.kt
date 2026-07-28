@@ -1,43 +1,9 @@
-package utils.math.sequences
+package utils.math.sequences.mathSequence
 
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-
-data object InvalidElementForDoGetPossibleFirstIndexOfElement {
-    const val ELEMENT_FOR_NON_POSITIVE_INDEX = 0.0
-    const val ELEMENT_FOR_NON_INTEGER_INDEX = 1.0
-}
-
-class DummyMathSequence : MathSequence(firstElement = 0.0) {
-    override fun doGetNthElement(n: Int): Double {
-        return 0.0
-    }
-
-    override fun doGetNFirstElementsSum(n: Int): Double {
-        return 0.0
-    }
-
-    override fun doGetPossibleFirstIndexOfElement(element: Double): Double {
-        return when (element) {
-            InvalidElementForDoGetPossibleFirstIndexOfElement.ELEMENT_FOR_NON_POSITIVE_INDEX -> -1.0
-            InvalidElementForDoGetPossibleFirstIndexOfElement.ELEMENT_FOR_NON_INTEGER_INDEX -> 1.5
-            else -> 1.0
-        }
-    }
-}
-
-data class InvalidGetNthElementTestCase(
-    val n: Int
-)
-
-data class InvalidGetNFirstNumbersSumTestCase(
-    val n: Int
-)
-
-data class InvalidDoGetPossibleFirstIndexOfElementTestCase(
-    val element: Double
-)
+import utils.math.sequences.MathSequence
 
 class MathSequenceTest {
     companion object {

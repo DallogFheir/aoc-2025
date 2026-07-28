@@ -1,65 +1,46 @@
-package utils.math.sequences
+package utils.math.sequences.arithmeticSequence
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-
-data class ArithmeticSequenceTestCase(
-    val firstElement: Double,
-    val difference: Double,
-    val n: Int,
-    val expected: Double? = null,
-)
-
-data class ArithmeticSequenceGetIndexOfElementTestCase(
-    val firstElement: Double,
-    val difference: Double,
-    val element: Double,
-    val expected: Int,
-)
-
-data class ArithmeticSequenceInvalidGetIndexOfElementTestCase(
-    val firstElement: Double,
-    val difference: Double,
-    val element: Double,
-)
+import utils.math.sequences.ArithmeticSequence
 
 class ArithmeticSequenceTest {
     companion object {
         @JvmStatic
         fun getNthElementCases() = listOf(
-            ArithmeticSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 n = 1,
                 expected = 2.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 n = 2,
                 expected = 5.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 n = 5,
                 expected = 14.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 5.0,
                 difference = 0.0,
                 n = 10,
                 expected = 5.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 3.0,
                 difference = -2.0,
                 n = 4,
                 expected = -3.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = -3.0,
                 difference = 2.0,
                 n = 4,
@@ -69,31 +50,31 @@ class ArithmeticSequenceTest {
 
         @JvmStatic
         fun getNFirstElementsSumCases() = listOf(
-            ArithmeticSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 n = 1,
                 expected = 2.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 n = 4,
                 expected = 26.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 5.0,
                 difference = 0.0,
                 n = 4,
                 expected = 20.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 3.0,
                 difference = -2.0,
                 n = 5,
                 expected = -5.0,
             ),
-            ArithmeticSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = -3.0,
                 difference = 2.0,
                 n = 4,
@@ -103,25 +84,25 @@ class ArithmeticSequenceTest {
 
         @JvmStatic
         fun getIndexOfElementCases() = listOf(
-            ArithmeticSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 element = 8.0,
                 expected = 3,
             ),
-            ArithmeticSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 element = 1538.0,
                 expected = 513,
             ),
-            ArithmeticSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = -3.0,
                 difference = 2.0,
                 element = 1.0,
                 expected = 3,
             ),
-            ArithmeticSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 2.0,
                 difference = 0.0,
                 element = 2.0,
@@ -131,17 +112,17 @@ class ArithmeticSequenceTest {
 
         @JvmStatic
         fun invalidGetIndexOfElementCases() = listOf(
-            ArithmeticSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 element = -10.0,
             ),
-            ArithmeticSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 difference = 3.0,
                 element = 1539.0,
             ),
-            ArithmeticSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 difference = 0.0,
                 element = 3.0,
@@ -151,7 +132,7 @@ class ArithmeticSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getNthElementCases")
-    fun `gets nth element correctly`(case: ArithmeticSequenceTestCase) {
+    fun `gets nth element correctly`(case: GetNthElementTestCase) {
         val cut = ArithmeticSequence(
             firstElement = case.firstElement,
             difference = case.difference,
@@ -168,7 +149,7 @@ class ArithmeticSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getNFirstElementsSumCases")
-    fun `gets sum of first n elements correctly`(case: ArithmeticSequenceTestCase) {
+    fun `gets sum of first n elements correctly`(case: GetNFirstElementsSumTestCase) {
         val cut = ArithmeticSequence(
             firstElement = case.firstElement,
             difference = case.difference,
@@ -185,7 +166,7 @@ class ArithmeticSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getIndexOfElementCases")
-    fun `gets index of a valid element correctly`(case: ArithmeticSequenceGetIndexOfElementTestCase) {
+    fun `gets index of a valid element correctly`(case: GetIndexOfElementTestCase) {
         val cut = ArithmeticSequence(
             firstElement = case.firstElement,
             difference = case.difference,
@@ -202,7 +183,7 @@ class ArithmeticSequenceTest {
 
     @ParameterizedTest
     @MethodSource("invalidGetIndexOfElementCases")
-    fun `throws when trying to get index of invalid element`(case: ArithmeticSequenceInvalidGetIndexOfElementTestCase) {
+    fun `throws when trying to get index of invalid element`(case: InvalidGetIndexOfElementTestCase) {
         val cut = ArithmeticSequence(
             firstElement = case.firstElement,
             difference = case.difference,

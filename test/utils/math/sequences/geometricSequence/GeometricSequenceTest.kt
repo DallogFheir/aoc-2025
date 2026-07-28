@@ -1,77 +1,58 @@
-package utils.math.sequences
+package utils.math.sequences.geometricSequence
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-
-data class GeometricSequenceTestCase(
-    val firstElement: Double,
-    val ratio: Double,
-    val n: Int,
-    val expected: Double? = null,
-)
-
-data class GeometricSequenceGetIndexOfElementTestCase(
-    val firstElement: Double,
-    val ratio: Double,
-    val element: Double,
-    val expected: Int,
-)
-
-data class GeometricSequenceInvalidGetIndexOfElementTestCase(
-    val firstElement: Double,
-    val ratio: Double,
-    val element: Double,
-)
+import utils.math.sequences.GeometricSequence
 
 class GeometricSequenceTest {
     companion object {
         @JvmStatic
         fun getNthElementCases() = listOf(
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 n = 1,
                 expected = 2.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 n = 2,
                 expected = 6.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 n = 5,
                 expected = 162.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 5.0,
                 ratio = 1.0,
                 n = 10,
                 expected = 5.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 3.0,
                 ratio = 0.0,
                 n = 1,
                 expected = 3.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 3.0,
                 ratio = 0.0,
                 n = 4,
                 expected = 0.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = 2.0,
                 ratio = -2.0,
                 n = 4,
                 expected = -16.0,
             ),
-            GeometricSequenceTestCase(
+            GetNthElementTestCase(
                 firstElement = -3.0,
                 ratio = 2.0,
                 n = 4,
@@ -81,37 +62,37 @@ class GeometricSequenceTest {
 
         @JvmStatic
         fun getNFirstElementsSumCases() = listOf(
-            GeometricSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 n = 1,
                 expected = 2.0,
             ),
-            GeometricSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 n = 4,
                 expected = 80.0,
             ),
-            GeometricSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 5.0,
                 ratio = 1.0,
                 n = 4,
                 expected = 20.0,
             ),
-            GeometricSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 3.0,
                 ratio = 0.0,
                 n = 5,
                 expected = 3.0,
             ),
-            GeometricSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = 2.0,
                 ratio = -2.0,
                 n = 4,
                 expected = -10.0,
             ),
-            GeometricSequenceTestCase(
+            GetNFirstElementsSumTestCase(
                 firstElement = -3.0,
                 ratio = 2.0,
                 n = 4,
@@ -121,37 +102,37 @@ class GeometricSequenceTest {
 
         @JvmStatic
         fun getIndexOfElementCases() = listOf(
-            GeometricSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 element = 18.0,
                 expected = 3,
             ),
-            GeometricSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 element = 1062882.0,
                 expected = 13,
             ),
-            GeometricSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = -3.0,
                 ratio = -2.0,
                 element = -12.0,
                 expected = 3,
             ),
-            GeometricSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 0.0,
                 ratio = 2.0,
                 element = 0.0,
                 expected = 1,
             ),
-            GeometricSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 1.0,
                 ratio = 0.0,
                 element = 0.0,
                 expected = 2,
             ),
-            GeometricSequenceGetIndexOfElementTestCase(
+            GetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 1.0,
                 element = 2.0,
@@ -161,52 +142,52 @@ class GeometricSequenceTest {
 
         @JvmStatic
         fun invalidGetIndexOfElementCases() = listOf(
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 element = -10.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 element = 1062883.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 3.0,
                 element = 0.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 0.0,
                 ratio = 3.0,
                 element = 1.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 0.0,
                 element = 1.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = 1.0,
                 element = 1.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = -2.0,
                 ratio = 3.0,
                 element = 6.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = -3.0,
                 element = 6.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = -3.0,
                 element = -18.0,
             ),
-            GeometricSequenceInvalidGetIndexOfElementTestCase(
+            InvalidGetIndexOfElementTestCase(
                 firstElement = 2.0,
                 ratio = -3.0,
                 element = -19.0,
@@ -216,7 +197,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getNthElementCases")
-    fun `gets nth element correctly`(case: GeometricSequenceTestCase) {
+    fun `gets nth element correctly`(case: GetNthElementTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
@@ -233,7 +214,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getNFirstElementsSumCases")
-    fun `gets sum of first n elements correctly`(case: GeometricSequenceTestCase) {
+    fun `gets sum of first n elements correctly`(case: GetNFirstElementsSumTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
@@ -250,7 +231,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("getIndexOfElementCases")
-    fun `gets index of a valid element correctly`(case: GeometricSequenceGetIndexOfElementTestCase) {
+    fun `gets index of a valid element correctly`(case: GetIndexOfElementTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
@@ -267,7 +248,7 @@ class GeometricSequenceTest {
 
     @ParameterizedTest
     @MethodSource("invalidGetIndexOfElementCases")
-    fun `throws when trying to get index of invalid element`(case: GeometricSequenceInvalidGetIndexOfElementTestCase) {
+    fun `throws when trying to get index of invalid element`(case: InvalidGetIndexOfElementTestCase) {
         val cut = GeometricSequence(
             firstElement = case.firstElement,
             ratio = case.ratio,
