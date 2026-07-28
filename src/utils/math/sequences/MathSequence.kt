@@ -1,5 +1,7 @@
 package utils.math.sequences
 
+import utils.math.wrappers.IntegerWrapper
+
 abstract class MathSequence(val firstElement: Double) {
     fun getNthElement(n: Int): Double {
         if (n <= 0) {
@@ -21,5 +23,19 @@ abstract class MathSequence(val firstElement: Double) {
 
     protected abstract fun doGetNFirstElementsSum(n: Int): Double
 
-    abstract fun getIndexOfElement(element: Double): Int
+    fun getFirstIndexOfElement(element: Double): Int {
+        val index = doGetPossibleFirstIndexOfElement(element)
+
+        if (index <= 0 || !IntegerWrapper.isInteger(index)) {
+            throwNotElementOfSequence(element)
+        }
+
+        return index.toInt()
+    }
+
+    protected abstract fun doGetPossibleFirstIndexOfElement(element: Double): Double
+
+    protected fun throwNotElementOfSequence(element: Double) {
+        throw IllegalArgumentException("$element is not an element in sequence")
+    }
 }
