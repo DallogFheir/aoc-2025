@@ -1,12 +1,17 @@
 package day2
 
 import day2.range.Range
+import day2.range.SameLengthRange
 import utils.filereader.FileReader
 
 private const val ID_RANGES_SEPARATOR = ","
 private const val INPUT_FILE_LINE_COUNT = 1
 
-fun solveWithInvalidIdAdder(dayNumber: Int, fileName: String): Long {
+fun solveWithInvalidIdAdder(
+    dayNumber: Int,
+    fileName: String,
+    adderFactory: (range: SameLengthRange) -> InvalidIdAdder
+): Long {
     val ranges = FileReader(dayNumber = dayNumber, fileName = fileName).readLinesWithParser { line ->
         val rangeStrings = line.split(ID_RANGES_SEPARATOR)
 
@@ -23,7 +28,7 @@ fun solveWithInvalidIdAdder(dayNumber: Int, fileName: String): Long {
         val subranges = range.divideIntoSameLengthSubranges()
 
         subranges.sumOf { subrange ->
-            val counter = InvalidIdAdder(subrange)
+            val counter = adderFactory(subrange)
 
             counter.sumUp()
         }

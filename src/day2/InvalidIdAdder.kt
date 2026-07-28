@@ -5,18 +5,24 @@ import utils.math.sequences.GeometricSequence
 import utils.math.wrappers.PositiveIntegerWrapper
 import kotlin.math.pow
 
-class InvalidIdAdder(range: SameLengthRange) {
+open class InvalidIdAdder(range: SameLengthRange) {
     private val rangeStart = PositiveIntegerWrapper(range.start)
     private val rangeEnd = PositiveIntegerWrapper(range.end)
-    private val digitCount = rangeStart.length
+    private val groupSizes = mutableSetOf<Long>()
+    protected val digitCount = rangeStart.length
+
 
     fun sumUp(): Long {
-        val factors = getFactors(rangeStart.number)
+        val groupSizes = getGroupSizes()
 
-        return factors.sumOf { sumUpForGroupSize(it.toInt()) }
+        return groupSizes.sumOf { sumUpForGroupSize(it.toInt()) }
     }
 
-    private fun getFactors(number: Long): List<Long> {
+    protected open fun getGroupSizes(): List<Long> {
+        return getFactorsOfNumberLength(rangeStart.number)
+    }
+
+    private fun getFactorsOfNumberLength(number: Long): List<Long> {
         val numberWrapper = PositiveIntegerWrapper(number)
 
         val rangeLengthFactors = PositiveIntegerWrapper(numberWrapper.length.toLong()).factorize()
@@ -38,15 +44,15 @@ class InvalidIdAdder(range: SameLengthRange) {
             rangeEndGroup = rangeEndFirstGroup - 1
         )
 
-        val rangeStartRemainingDigitGroups = rangeStartDigitGroups.drop(1)
-        val rangeEndRemainingDigitGroups = rangeEndDigitGroups.drop(1)
-
         var result = betweenCombinationsSum
 
+        val rangeStartRemainingDigitGroups = rangeStartDigitGroups.drop(1)
         val isRangeStartFirstGroupValid = isDigitGroupValid(
             remainingDigitGroups = rangeStartRemainingDigitGroups,
             firstDigitGroup = rangeStartFirstGroup,
             smallerToLargerDigitIndexComparator = { a, b -> a <= b })
+
+        val rangeEndRemainingDigitGroups = rangeEndDigitGroups.drop(1)
         val isRangeEndFirstGroupValid = isDigitGroupValid(
             remainingDigitGroups = rangeEndRemainingDigitGroups,
             firstDigitGroup = rangeEndFirstGroup,
@@ -66,6 +72,8 @@ class InvalidIdAdder(range: SameLengthRange) {
                 rangeEndFirstGroup
             ) else 0
         }
+
+        groupSizes.add(groupSize.toLong())
 
         return result
     }
@@ -114,9 +122,13 @@ class InvalidIdAdder(range: SameLengthRange) {
     private fun isNumberRepeated(number: Long): Boolean {
         val numberWrapper = PositiveIntegerWrapper(number)
 
-        val factors = getFactors(number)
+        val factors = getFactorsOfNumberLength(number)
 
         val isRepeated = factors.any { factor ->
+            if (!groupSizes.contains(factor)) {
+                return false
+            }
+
             val groups = numberWrapper.divideDigitsIntoEqualGroups(factor.toInt())
             val firstGroup = groups.first()
 
