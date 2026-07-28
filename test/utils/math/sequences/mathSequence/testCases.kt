@@ -11,3 +11,12 @@ data class InvalidGetNFirstNumbersSumTestCase(
 data class InvalidDoGetPossibleFirstIndexOfElementTestCase(
     val element: Double
 )
+
+data class GetSumBetweenFirstAndElementTestCase(
+    val element: Double,
+    val expected: Double
+)
+
+data class InvalidGetSumBetweenFirstAndElementTestCase(
+    val element: Double
+)

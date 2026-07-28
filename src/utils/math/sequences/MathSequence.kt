@@ -38,4 +38,10 @@ abstract class MathSequence(val firstElement: Double) {
     protected fun throwNotElementOfSequence(element: Double) {
         throw IllegalArgumentException("$element is not an element in sequence")
     }
+
+    fun getSumBetweenFirstAndElement(element: Double): Double {
+        val elementIndex = getFirstIndexOfElement(element)
+
+        return getNFirstElementsSum(elementIndex)
+    }
 }

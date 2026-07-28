@@ -1,5 +1,6 @@
 package utils.math.sequences.mathSequence
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
@@ -20,8 +21,21 @@ class MathSequenceTest {
 
         @JvmStatic
         fun invalidGetFirstIndexOfElementCases() = listOf(
-            InvalidDoGetPossibleFirstIndexOfElementTestCase(element = InvalidElementForDoGetPossibleFirstIndexOfElement.ELEMENT_FOR_NON_POSITIVE_INDEX),
-            InvalidDoGetPossibleFirstIndexOfElementTestCase(element = InvalidElementForDoGetPossibleFirstIndexOfElement.ELEMENT_FOR_NON_INTEGER_INDEX),
+            InvalidDoGetPossibleFirstIndexOfElementTestCase(element = -1.0),
+            InvalidDoGetPossibleFirstIndexOfElementTestCase(element = 1.5),
+        )
+
+        @JvmStatic
+        fun getSumBetweenFirstAndElementCases() = listOf(
+            GetSumBetweenFirstAndElementTestCase(element = 1.0, expected = 1.0),
+            GetSumBetweenFirstAndElementTestCase(element = 2.0, expected = 3.0),
+            GetSumBetweenFirstAndElementTestCase(element = 3.0, expected = 6.0),
+        )
+
+        @JvmStatic
+        fun invalidGetSumBetweenFirstAndElementCases() = listOf(
+            InvalidGetSumBetweenFirstAndElementTestCase(element = 0.0),
+            InvalidGetSumBetweenFirstAndElementTestCase(element = -1.0),
         )
     }
 
@@ -52,6 +66,30 @@ class MathSequenceTest {
 
         assertThrows(IllegalArgumentException::class.java) {
             cut.getFirstIndexOfElement(case.element)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("getSumBetweenFirstAndElementCases")
+    fun `calculates sum between first and given element correctly`(case: GetSumBetweenFirstAndElementTestCase) {
+        val cut = DummyMathSequence()
+
+        val result = cut.getSumBetweenFirstAndElement(case.element)
+
+        assertEquals(
+            case.expected,
+            result,
+            "getSumBetweenFirstAndElement for element ${case.element} should return ${case.expected}, got $result"
+        )
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidGetSumBetweenFirstAndElementCases")
+    fun `throws if trying to get sum between first and an invalid element`(case: InvalidGetSumBetweenFirstAndElementTestCase) {
+        val cut = DummyMathSequence()
+
+        assertThrows(IllegalArgumentException::class.java) {
+            cut.getSumBetweenFirstAndElement(case.element)
         }
     }
 }
