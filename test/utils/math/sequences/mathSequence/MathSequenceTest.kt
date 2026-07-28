@@ -3,7 +3,6 @@ package utils.math.sequences.mathSequence
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import utils.math.sequences.MathSequence
 
 class MathSequenceTest {
     companion object {
