@@ -14,4 +14,8 @@ class GeometricSequence(firstElement: Double, val ratio: Double) : MathSequence(
 
         return firstElement * (1 - ratio.pow(n)) / (1 - ratio)
     }
+
+    override fun getIndexOfElement(element: Double): Int {
+        TODO("Not yet implemented")
+    }
 }

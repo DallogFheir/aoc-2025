@@ -10,4 +10,14 @@ class ArithmeticSequence(firstElement: Double, val difference: Double) : MathSeq
 
         return (firstElement + lastElement) * n / 2
     }
+
+    override fun getIndexOfElement(element: Double): Int {
+        val index = (element - firstElement) / difference + 1
+
+        if (index % 1.0 != 0.0) {
+            throw IllegalArgumentException("$element is not an element in sequence")
+        }
+
+        return index.toInt()
+    }
 }

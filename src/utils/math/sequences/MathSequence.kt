@@ -20,4 +20,6 @@ abstract class MathSequence(val firstElement: Double) {
     }
 
     protected abstract fun doGetNFirstElementsSum(n: Int): Double
+
+    abstract fun getIndexOfElement(element: Double): Int
 }
