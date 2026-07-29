@@ -39,6 +39,12 @@ class Grid<T>(private val grid: Array<Array<T>>) {
         return grid[y][x]
     }
 
+    fun setAt(x: Int, y: Int, value: T) {
+        ensureCoordinateInGrid(x = x, y = y)
+
+        grid[y][x] = value
+    }
+
     private fun ensureCoordinateInGrid(x: Int, y: Int) {
         if (!isInGrid(x, y)) {
             throw IllegalArgumentException("Grid coordinate (x=${x}, y=${y}) out of range for grid with size $width×$height")

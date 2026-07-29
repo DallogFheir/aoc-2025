@@ -3,9 +3,6 @@ package day4
 import utils.filereader.FileReader
 import utils.grid.Grid
 
-private const val ROLL_OF_PAPER_SYMBOL = '@'
-private const val MAXIMUM_ROLL_OF_PAPER_NEIGHBOR_COUNT = 3
-
 object Part1 {
     fun solve(dayNumber: Int, fileName: String): Long {
         val gridString = FileReader(dayNumber = dayNumber, fileName = fileName).read()

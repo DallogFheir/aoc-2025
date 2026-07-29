@@ -40,6 +40,13 @@ data class GetAtTestCase<T>(
     val expected: T,
 )
 
+data class SetAtTestCase<T>(
+    val grid: Array<Array<T>>,
+    val x: Int,
+    val y: Int,
+    val value: T,
+)
+
 data class CountNeighborsWithValueTestCase<T>(
     val grid: Array<Array<T>>,
     val x: Int,

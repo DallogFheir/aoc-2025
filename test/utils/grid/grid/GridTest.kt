@@ -22,7 +22,8 @@ class GridTest {
         @JvmStatic
         fun fromStringCases() = listOf(
             FromStringTestCase(
-                string = "12\n34", expectedValuesAtCoordinates = listOf(
+                string = listOf("12", "34").joinToString(separator = System.lineSeparator()),
+                expectedValuesAtCoordinates = listOf(
                     ValueAtCoordinate(x = 0, y = 0, value = '1'),
                     ValueAtCoordinate(x = 1, y = 0, value = '2'),
                     ValueAtCoordinate(x = 0, y = 1, value = '3'),
@@ -112,6 +113,22 @@ class GridTest {
                 x = 1,
                 y = 1,
                 expected = 4
+            ),
+        )
+
+        @JvmStatic
+        fun setAtCases() = listOf(
+            SetAtTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                x = 0,
+                y = 0,
+                value = 5,
+            ),
+            SetAtTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                x = 1,
+                y = 1,
+                value = 5,
             ),
         )
 
@@ -288,6 +305,32 @@ class GridTest {
 
         assertThrows(IllegalArgumentException::class.java) {
             cut.getAt(x = case.x, y = case.y)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("setAtCases")
+    fun `sets value at coordinate correctly`(case: SetAtTestCase<Int>) {
+        val cut = Grid(grid = case.grid)
+
+        cut.setAt(x = case.x, y = case.y, value = case.value)
+
+        val result = cut.getAt(x = case.x, y = case.y)
+
+        Assertions.assertEquals(
+            case.value,
+            result,
+            "setAt for grid $cut, coordinate (x=${case.x}, y=${case.y}) should set grid cell to ${case.value}, got $result"
+        )
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidCoordinateCases")
+    fun `throws if trying to set at invalid coordinate`(case: InvalidCoordinateTestCase<Int>) {
+        val cut = Grid(grid = case.grid)
+
+        assertThrows(IllegalArgumentException::class.java) {
+            cut.setAt(x = case.x, y = case.y, value = 1)
         }
     }
 
