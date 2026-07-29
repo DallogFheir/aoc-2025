@@ -56,6 +56,13 @@ class BatteryBank(private val activatableBatteryCount: Int, private val joltages
             largestJoltageWithIndex
         }
 
+        if (largestJoltageWithIndex.index == -1) {
+            return JoltageWithIndex(
+                joltage = 0,
+                index = 0,
+            )
+        }
+
         return largestJoltageWithIndex
     }
 
