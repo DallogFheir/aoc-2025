@@ -8,7 +8,7 @@ import kotlin.math.pow
 open class InvalidIdAdder(range: SameLengthRange) {
     private val rangeStart = PositiveIntegerWrapper(range.start)
     private val rangeEnd = PositiveIntegerWrapper(range.end)
-    private val groupSizes = mutableSetOf<Long>()
+    private val alreadyProcessedGroupSizes = mutableSetOf<Long>()
     protected val digitCount = rangeStart.length
 
 
@@ -73,7 +73,7 @@ open class InvalidIdAdder(range: SameLengthRange) {
             ) else 0
         }
 
-        groupSizes.add(groupSize.toLong())
+        alreadyProcessedGroupSizes.add(groupSize.toLong())
 
         return result
     }
@@ -125,8 +125,8 @@ open class InvalidIdAdder(range: SameLengthRange) {
         val factors = getFactorsOfNumberLength(number)
 
         val isRepeated = factors.any { factor ->
-            if (!groupSizes.contains(factor)) {
-                return false
+            if (!alreadyProcessedGroupSizes.contains(factor)) {
+                return@any false
             }
 
             val groups = numberWrapper.divideDigitsIntoEqualGroups(factor.toInt())

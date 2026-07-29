@@ -9,8 +9,8 @@ class SameLengthRangeTest {
     companion object {
         @JvmStatic
         fun invalidConstructorCases() = listOf(
-            InvalidConstructorTestCase(rangeStart = 1, rangeEnd = 10),
-            InvalidConstructorTestCase(rangeStart = 10, rangeEnd = 10_000),
+            InvalidConstructorTestCase(rangeStart = 1L, rangeEnd = 10L),
+            InvalidConstructorTestCase(rangeStart = 10L, rangeEnd = 10_000L),
         )
     }
 

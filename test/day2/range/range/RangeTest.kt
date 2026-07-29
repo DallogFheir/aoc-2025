@@ -9,11 +9,11 @@ class RangeTest {
     companion object {
         @JvmStatic
         fun invalidConstructorCases() = listOf(
-            InvalidConstructorTestCase(rangeStart = -1, rangeEnd = 1),
-            InvalidConstructorTestCase(rangeStart = 0, rangeEnd = 1),
-            InvalidConstructorTestCase(rangeStart = 1, rangeEnd = -1),
-            InvalidConstructorTestCase(rangeStart = 1, rangeEnd = 0),
-            InvalidConstructorTestCase(rangeStart = 3, rangeEnd = 1),
+            InvalidConstructorTestCase(rangeStart = -1L, rangeEnd = 1L),
+            InvalidConstructorTestCase(rangeStart = 0L, rangeEnd = 1L),
+            InvalidConstructorTestCase(rangeStart = 1L, rangeEnd = -1L),
+            InvalidConstructorTestCase(rangeStart = 1L, rangeEnd = 0L),
+            InvalidConstructorTestCase(rangeStart = 3L, rangeEnd = 1L),
         )
 
         @JvmStatic

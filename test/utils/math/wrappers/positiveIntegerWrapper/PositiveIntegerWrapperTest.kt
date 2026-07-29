@@ -130,6 +130,12 @@ class PositiveIntegerWrapperTest {
                 groupSize = 4,
             ),
         )
+
+        @JvmStatic
+        fun invalidToShiftedRightCases() = listOf(
+            InvalidToShiftedRightTestCase(number = 1L),
+            InvalidToShiftedRightTestCase(number = 10L),
+        )
     }
 
     @ParameterizedTest
@@ -203,6 +209,16 @@ class PositiveIntegerWrapperTest {
 
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.divideDigitsIntoEqualGroups(case.groupSize)
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidToShiftedRightCases")
+    fun `throws if trying to do a right shift that results in a non-positive number`(case: InvalidToShiftedRightTestCase) {
+        val cut = PositiveIntegerWrapper(case.number)
+
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            cut.toShiftedRight()
         }
     }
 }

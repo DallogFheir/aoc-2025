@@ -32,7 +32,7 @@ open class IntegerWrapper(val number: Long) {
     }
 
     open fun toShiftedRight(): IntegerWrapper {
-        val modulo = 10.0.pow(length - 1).toInt()
+        val modulo = 10.0.pow(length - 1).toLong()
 
         return IntegerWrapper(number % modulo)
     }

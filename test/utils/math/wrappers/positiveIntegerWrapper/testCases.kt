@@ -23,3 +23,7 @@ data class InvalidGroupSizeNotFactorDivideDigitsIntoEqualGroupsTestCase(
     val number: Long,
     val groupSize: Int,
 )
+
+data class InvalidToShiftedRightTestCase(
+    val number: Long,
+)
