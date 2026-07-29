@@ -4,12 +4,6 @@ import kotlin.math.abs
 import kotlin.math.pow
 
 open class IntegerWrapper(val number: Long) {
-    companion object {
-        fun isInteger(number: Double): Boolean {
-            return number % 1.0 == 0.0
-        }
-    }
-
     val length: Int = abs(number).toString().length
     val firstDigit: Int = (abs(number) / (10.0.pow(length - 1).toLong())).toInt()
 
@@ -35,5 +29,11 @@ open class IntegerWrapper(val number: Long) {
         val modulo = 10.0.pow(length - 1).toLong()
 
         return IntegerWrapper(number % modulo)
+    }
+
+    companion object {
+        fun isInteger(number: Double): Boolean {
+            return number % 1.0 == 0.0
+        }
     }
 }
