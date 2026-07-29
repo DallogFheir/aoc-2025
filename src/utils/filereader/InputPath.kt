@@ -1,11 +1,19 @@
 package utils.filereader
 
-object InputPath {
-    const val INPUT_DIRECTORY_PATH = """src\day1\input"""
-    const val PATH_SEPARATOR = """\"""
-    const val FILE_EXTENSION = ".txt"
+import java.nio.file.Path
 
-    fun getFullPathForFileName(fileName: String): String {
-        return INPUT_DIRECTORY_PATH + PATH_SEPARATOR + fileName + FILE_EXTENSION
+private const val SOURCE_DIRECTORY_PATH = "src"
+private const val DAY_DIRECTORY_PATH_TEMPLATE = "day%d"
+private const val INPUT_DIRECTORY_PATH = "input"
+private const val FILE_EXTENSION = ".txt"
+
+object InputPath {
+    fun getFullPathForFileName(dayNumber: Int, fileName: String): String {
+        return Path.of(
+            SOURCE_DIRECTORY_PATH,
+            DAY_DIRECTORY_PATH_TEMPLATE.format(dayNumber),
+            INPUT_DIRECTORY_PATH,
+            fileName + FILE_EXTENSION
+        ).toString()
     }
 }

@@ -1,4 +1,4 @@
-package day1
+package day2
 
 import utils.DayRunner
 import utils.Solver
@@ -6,15 +6,15 @@ import utils.TestCase
 
 fun main() {
     DayRunner(
-        dayNumber = 1,
+        dayNumber = 2,
         part1Solver = ::part1,
         part2Solver = ::part2,
     ).run()
 }
 
-private fun part1(dayNumber: Int): Int {
+private fun part1(dayNumber: Int): Long {
     val testCases = listOf(
-        TestCase(fileName = "test", expectedResult = 3),
+        TestCase(fileName = "test", expectedResult = 1227775554L),
     )
 
     return Solver(
@@ -24,9 +24,9 @@ private fun part1(dayNumber: Int): Int {
     ).solve()
 }
 
-private fun part2(dayNumber: Int): Int {
+private fun part2(dayNumber: Int): Long {
     val testCases = listOf(
-        TestCase(fileName = "test", expectedResult = 6),
+        TestCase(fileName = "test", expectedResult = 4174379265L),
     )
 
     return Solver(

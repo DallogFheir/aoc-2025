@@ -5,8 +5,8 @@ import day1.safedial.SafeDial
 import utils.filereader.FileReader
 
 object Part1 {
-    fun solve(fileName: String): Int {
-        val rotations = FileReader(fileName = fileName).readLinesWithParser {
+    fun solve(dayNumber: Int, fileName: String): Int {
+        val rotations = FileReader(dayNumber = dayNumber, fileName = fileName).readLinesWithParser {
             Rotation.fromString(it)
         }
 
