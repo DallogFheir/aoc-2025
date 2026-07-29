@@ -11,6 +11,12 @@ private data class AllowedIndices(
 )
 
 class BatteryBank(private val activatableBatteryCount: Int, private val joltages: List<Int>) {
+    init {
+        require(activatableBatteryCount in 1..joltages.size) {
+            "activatable battery count must be between 1 and battery count ${joltages.size}, got $activatableBatteryCount"
+        }
+    }
+
     fun findLargestPossibleJoltage(): Long {
         var minimumAllowedIndex = 0
 
@@ -33,27 +39,22 @@ class BatteryBank(private val activatableBatteryCount: Int, private val joltages
     }
 
     private fun findLargestJoltageWithAllowedIndices(allowedIndices: AllowedIndices): JoltageWithIndex {
-        var largestJoltageWithIndex: JoltageWithIndex?
-        var joltagesToSearch = joltages.slice(allowedIndices.minimum..joltages.lastIndex)
+        val joltagesToSearch = joltages.slice(allowedIndices.minimum..allowedIndices.maximum)
 
-        do {
-            largestJoltageWithIndex = joltagesToSearch.foldIndexed(
-                initial = JoltageWithIndex(
-                    joltage = 0,
-                    index = -1,
-                )
-            ) { slicedIndex, largestJoltageWithIndex, joltage ->
-                val index = slicedIndex + allowedIndices.minimum
+        val largestJoltageWithIndex = joltagesToSearch.foldIndexed(
+            initial = JoltageWithIndex(
+                joltage = 0,
+                index = -1,
+            )
+        ) { slicedIndex, largestJoltageWithIndex, joltage ->
+            val index = slicedIndex + allowedIndices.minimum
 
-                if (joltage > largestJoltageWithIndex.joltage) {
-                    return@foldIndexed JoltageWithIndex(joltage = joltage, index = index)
-                }
-
-                largestJoltageWithIndex
+            if (joltage > largestJoltageWithIndex.joltage) {
+                return@foldIndexed JoltageWithIndex(joltage = joltage, index = index)
             }
 
-            joltagesToSearch = joltages.slice(allowedIndices.minimum..<largestJoltageWithIndex.index)
-        } while (largestJoltageWithIndex.index > allowedIndices.maximum)
+            largestJoltageWithIndex
+        }
 
         return largestJoltageWithIndex
     }
