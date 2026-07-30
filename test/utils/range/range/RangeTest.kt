@@ -31,6 +31,15 @@ class RangeTest {
         )
 
         @JvmStatic
+        fun toStringCases() = listOf(
+            ToStringTestCase(
+                rangeStart = 1L,
+                rangeEnd = 10L,
+                expected = "[1; 10]",
+            )
+        )
+
+        @JvmStatic
         fun divideIntoSameLengthSubrangesCases() = listOf(
             DivideIntoSameLengthSubrangesTestCase(
                 rangeStart = 1L,
@@ -240,12 +249,12 @@ class RangeTest {
         Assertions.assertEquals(
             case.expectedRangeStart,
             cut.start,
-            "fromString for ${case.string} should initialize range with ${case.expectedRangeStart}-${case.expectedRangeEnd}, got ${cut.start}-${cut.end}"
+            "fromString for ${case.string} should initialize range as [${case.expectedRangeStart}; ${case.expectedRangeEnd}], got $cut"
         )
         Assertions.assertEquals(
             case.expectedRangeEnd,
             cut.end,
-            "fromString for ${case.string} should initialize range with ${case.expectedRangeEnd}-${case.expectedRangeEnd}, got ${cut.start}-${cut.end}"
+            "fromString for ${case.string} should initialize range with [${case.expectedRangeEnd}; ${case.expectedRangeEnd}], got $cut"
         )
     }
 
@@ -258,6 +267,20 @@ class RangeTest {
     }
 
     @ParameterizedTest
+    @MethodSource("toStringCases")
+    fun `converts to string correctly`(case: ToStringTestCase) {
+        val cut = Range(start = case.rangeStart, end = case.rangeEnd)
+
+        val result = cut.toString()
+
+        Assertions.assertEquals(
+            case.expected,
+            result,
+            "toString should return ${case.expected}, got $result"
+        )
+    }
+
+    @ParameterizedTest
     @MethodSource("divideIntoSameLengthSubrangesCases")
     fun `divides into same length subranges correctly`(case: DivideIntoSameLengthSubrangesTestCase) {
         val cut = Range(start = case.rangeStart, end = case.rangeEnd)
@@ -267,14 +290,14 @@ class RangeTest {
         Assertions.assertEquals(
             case.expectedSubrangeBoundaries.size,
             subranges.size,
-            "expected ${case.expectedSubrangeBoundaries.size} for subrange of range ${case.rangeStart}-${case.rangeEnd} but got ${subranges.size}"
+            "expected ${case.expectedSubrangeBoundaries.size} for subrange of range [${case.rangeStart}; ${case.rangeEnd}] but got ${subranges.size}"
         )
 
         case.expectedSubrangeBoundaries.zip(subranges).forEachIndexed { index, value ->
             val (expectedSubrangeBound, subrange) = value
 
             val message =
-                "subrange no. $index for range ${subrange.start}-${subrange.end} should be ${expectedSubrangeBound.rangeStart}-${expectedSubrangeBound.rangeEnd}, got ${subrange.start}-${subrange.end}"
+                "subrange no. $index of range [${case.rangeStart}; ${case.rangeEnd}] should be [${expectedSubrangeBound.rangeStart}; ${expectedSubrangeBound.rangeEnd}], got $subrange"
 
             Assertions.assertEquals(
                 expectedSubrangeBound.rangeStart,
@@ -299,7 +322,7 @@ class RangeTest {
         Assertions.assertEquals(
             case.expected,
             result,
-            "contains for range ${cut.start}-${cut.end} and value to check ${case.valueToCheck} should return ${case.expected}, got $result"
+            "contains for range $cut and value to check ${case.valueToCheck} should return ${case.expected}, got $result"
         )
     }
 
@@ -314,7 +337,7 @@ class RangeTest {
         Assertions.assertEquals(
             case.expected,
             result,
-            "countInRange for range ${cut.start}-${cut.end} should return ${case.expected}, got $result"
+            "countInRange for range $cut should return ${case.expected}, got $result"
         )
     }
 
@@ -331,7 +354,7 @@ class RangeTest {
         Assertions.assertEquals(
             case.expected,
             result,
-            "countOverlappingWithRange for ranges ${cut.start}-${cut.end} and ${other.start}-${other.end} should return ${case.expected}, got $result"
+            "countOverlappingWithRange for ranges $cut and $other should return ${case.expected}, got $result"
         )
     }
 
@@ -347,7 +370,7 @@ class RangeTest {
         Assertions.assertEquals(
             case.expected,
             result,
-            "doesOverlapWithRange for ranges ${cut.start}-${cut.end} and ${other.start}-${other.end} should return ${case.expected}, got $result"
+            "doesOverlapWithRange for ranges $cut and $other should return ${case.expected}, got $result"
         )
     }
 
@@ -363,9 +386,7 @@ class RangeTest {
         Assertions.assertEquals(
             case.expectedRangeStart,
             result.start,
-            "mergeWithRange for ranges ${cut.start}-${cut.end} and ${other.start}-${other.end} should return range  ${case.expectedRangeStart}-${case.expectedRangeEnd}, got ${
-                result.start
-            }-${result.end}"
+            "mergeWithRange for ranges $cut and $other should return range [${case.expectedRangeStart}; ${case.expectedRangeEnd}], got $result"
         )
     }
 

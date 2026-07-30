@@ -15,6 +15,12 @@ data class InvalidFromStringTestCase(
     val string: String,
 )
 
+data class ToStringTestCase(
+    val rangeStart: Long,
+    val rangeEnd: Long,
+    val expected: String,
+)
+
 data class SubrangeBoundary(
     val rangeStart: Long,
     val rangeEnd: Long,

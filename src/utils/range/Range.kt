@@ -19,6 +19,10 @@ open class Range(val start: Long, val end: Long) {
         endDigitCount = end.toString().length
     }
 
+    override fun toString(): String {
+        return "[$start; $end]"
+    }
+
     fun divideIntoSameLengthSubranges(): List<SameLengthRange> {
         if (startDigitCount == endDigitCount) {
             return listOf(SameLengthRange(start = start, end = end))
