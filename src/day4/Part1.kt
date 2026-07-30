@@ -1,21 +1,17 @@
 package day4
 
-import utils.filereader.FileReader
-import utils.grid.Grid
-
 object Part1 {
     fun solve(dayNumber: Int, fileName: String): Long {
-        val gridString = FileReader(dayNumber = dayNumber, fileName = fileName).read()
-        val grid = Grid.fromString(gridString)
+        return solveForGrid(dayNumber = dayNumber, fileName = fileName) { grid ->
+            grid.flatMapWithCoordinate { coordinate, cell ->
+                if (cell != ROLL_OF_PAPER_SYMBOL) {
+                    return@flatMapWithCoordinate false
+                }
 
-        return grid.flatMapWithCoordinate { coordinate, cell ->
-            if (cell != ROLL_OF_PAPER_SYMBOL) {
-                return@flatMapWithCoordinate false
-            }
+                val neighborCount = grid.countNeighborsWithValue(coordinate = coordinate, value = ROLL_OF_PAPER_SYMBOL)
 
-            val neighborCount = grid.countNeighborsWithValue(coordinate = coordinate, value = ROLL_OF_PAPER_SYMBOL)
-
-            neighborCount <= MAXIMUM_ROLL_OF_PAPER_NEIGHBOR_COUNT
-        }.filter { it }.size.toLong()
+                neighborCount <= MAXIMUM_ROLL_OF_PAPER_NEIGHBOR_COUNT
+            }.filter { it }.size.toLong()
+        }
     }
 }
