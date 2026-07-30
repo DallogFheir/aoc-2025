@@ -55,6 +55,40 @@ class RangeTest {
                 )
             ),
         )
+
+        @JvmStatic
+        fun containsCases() = listOf(
+            ContainsTestCase(
+                rangeStart = 1,
+                rangeEnd = 3,
+                valueToCheck = 0,
+                expected = false,
+            ),
+            ContainsTestCase(
+                rangeStart = 1,
+                rangeEnd = 3,
+                valueToCheck = 1,
+                expected = true,
+            ),
+            ContainsTestCase(
+                rangeStart = 1,
+                rangeEnd = 3,
+                valueToCheck = 2,
+                expected = true,
+            ),
+            ContainsTestCase(
+                rangeStart = 1,
+                rangeEnd = 3,
+                valueToCheck = 3,
+                expected = true,
+            ),
+            ContainsTestCase(
+                rangeStart = 1,
+                rangeEnd = 3,
+                valueToCheck = 4,
+                expected = false,
+            )
+        )
     }
 
     @ParameterizedTest
@@ -120,5 +154,19 @@ class RangeTest {
                 message,
             )
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("containsCases")
+    fun `contains returns whether range contains given value`(case: ContainsTestCase) {
+        val cut = Range(start = case.rangeStart, end = case.rangeEnd)
+
+        val result = cut.contains(case.valueToCheck)
+
+        Assertions.assertEquals(
+            case.expected,
+            result,
+            "contains for range ${cut.start}-${cut.end} and value to check ${case.valueToCheck} should return ${case.expected}, got $result"
+        )
     }
 }

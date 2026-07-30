@@ -25,3 +25,10 @@ data class DivideIntoSameLengthSubrangesTestCase(
     val rangeEnd: Long,
     val expectedSubrangeBoundaries: List<SubrangeBoundary>,
 )
+
+data class ContainsTestCase(
+    val rangeStart: Long,
+    val rangeEnd: Long,
+    val valueToCheck: Long,
+    val expected: Boolean,
+)

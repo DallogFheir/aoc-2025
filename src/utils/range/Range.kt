@@ -41,6 +41,10 @@ open class Range(val start: Long, val end: Long) {
         }
     }
 
+    fun contains(value: Long): Boolean {
+        return value in start..end
+    }
+
     companion object {
         fun fromString(string: String): Range {
             val parts = string.split(SEPARATOR)
