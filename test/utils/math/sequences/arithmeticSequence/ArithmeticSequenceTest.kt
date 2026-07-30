@@ -1,7 +1,6 @@
 package utils.math.sequences.arithmeticSequence
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import utils.math.sequences.ArithmeticSequence
@@ -140,7 +139,7 @@ class ArithmeticSequenceTest {
 
         val result = cut.getNthElement(case.n)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getNthElement for first element ${case.firstElement}, difference ${case.difference} and n ${case.n} should return ${case.expected}, got $result",
@@ -157,7 +156,7 @@ class ArithmeticSequenceTest {
 
         val result = cut.getNFirstElementsSum(case.n)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getNFirstElementsSum for first element ${case.firstElement}, difference ${case.difference} and n ${case.n} should return ${case.expected}, got $result",
@@ -174,7 +173,7 @@ class ArithmeticSequenceTest {
 
         val result = cut.getFirstIndexOfElement(case.element)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getIndexOfElement for first element ${case.firstElement}, difference ${case.difference} and element ${case.element} should return ${case.expected}, got $result",
@@ -189,7 +188,7 @@ class ArithmeticSequenceTest {
             difference = case.difference,
         )
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getFirstIndexOfElement(case.element)
         }
     }

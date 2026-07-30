@@ -1,7 +1,6 @@
 package utils.math.sequences.geometricSequence
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import utils.math.sequences.GeometricSequence
@@ -205,7 +204,7 @@ class GeometricSequenceTest {
 
         val result = cut.getNthElement(case.n)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getNthElement for first element ${case.firstElement}, ratio ${case.ratio} and n ${case.n} should return ${case.expected}, got $result",
@@ -222,7 +221,7 @@ class GeometricSequenceTest {
 
         val result = cut.getNFirstElementsSum(case.n)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getNFirstElementsSum for first element ${case.firstElement}, ratio ${case.ratio} and n ${case.n} should return ${case.expected}, got $result",
@@ -239,7 +238,7 @@ class GeometricSequenceTest {
 
         val result = cut.getFirstIndexOfElement(case.element)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getIndexOfElement for first element ${case.firstElement}, ratio ${case.ratio} and element ${case.element} should return ${case.expected}, got $result",
@@ -254,7 +253,7 @@ class GeometricSequenceTest {
             ratio = case.ratio,
         )
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getFirstIndexOfElement(case.element)
         }
     }

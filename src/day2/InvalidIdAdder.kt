@@ -1,8 +1,8 @@
 package day2
 
-import day2.range.SameLengthRange
 import utils.math.sequences.GeometricSequence
 import utils.math.wrappers.PositiveIntegerWrapper
+import utils.range.SameLengthRange
 import kotlin.math.pow
 
 open class InvalidIdAdder(range: SameLengthRange) {

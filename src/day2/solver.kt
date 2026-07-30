@@ -1,8 +1,8 @@
 package day2
 
-import day2.range.Range
-import day2.range.SameLengthRange
 import utils.filereader.FileReader
+import utils.range.Range
+import utils.range.SameLengthRange
 
 private const val ID_RANGES_SEPARATOR = ","
 private const val INPUT_FILE_LINE_COUNT = 1

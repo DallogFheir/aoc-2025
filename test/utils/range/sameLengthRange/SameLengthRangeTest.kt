@@ -1,9 +1,9 @@
-package day2.range.sameLengthRange
+package utils.range.sameLengthRange
 
-import day2.range.SameLengthRange
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import utils.range.SameLengthRange
 
 class SameLengthRangeTest {
     companion object {

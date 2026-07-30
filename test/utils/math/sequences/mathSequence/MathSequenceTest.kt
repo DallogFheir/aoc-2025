@@ -1,7 +1,6 @@
 package utils.math.sequences.mathSequence
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 
@@ -44,7 +43,7 @@ class MathSequenceTest {
     fun `throws if nth number index is not positive`(case: InvalidGetNthElementTestCase) {
         val cut = DummyMathSequence()
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getNthElement(case.n)
         }
     }
@@ -54,7 +53,7 @@ class MathSequenceTest {
     fun `throws if number of elements to sum is not positive`(case: InvalidGetNFirstNumbersSumTestCase) {
         val cut = DummyMathSequence()
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getNFirstElementsSum(case.n)
         }
     }
@@ -64,7 +63,7 @@ class MathSequenceTest {
     fun `throws if subclass returns an invalid index`(case: InvalidDoGetPossibleFirstIndexOfElementTestCase) {
         val cut = DummyMathSequence()
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getFirstIndexOfElement(case.element)
         }
     }
@@ -76,7 +75,7 @@ class MathSequenceTest {
 
         val result = cut.getSumBetweenFirstAndElement(case.element)
 
-        assertEquals(
+        Assertions.assertEquals(
             case.expected,
             result,
             "getSumBetweenFirstAndElement for element ${case.element} should return ${case.expected}, got $result"
@@ -88,7 +87,7 @@ class MathSequenceTest {
     fun `throws if trying to get sum between first and an invalid element`(case: InvalidGetSumBetweenFirstAndElementTestCase) {
         val cut = DummyMathSequence()
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getSumBetweenFirstAndElement(case.element)
         }
     }

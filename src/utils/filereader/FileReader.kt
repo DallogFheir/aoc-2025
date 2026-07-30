@@ -8,4 +8,8 @@ class FileReader(dayNumber: Int, fileName: String) {
     fun <T> readLinesWithParser(parser: (line: String) -> T): List<T> {
         return File(filePath).readLines().map { parser(it) }
     }
+
+    fun read(): String {
+        return File(filePath).readText()
+    }
 }
