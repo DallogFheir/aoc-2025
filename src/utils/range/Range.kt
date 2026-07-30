@@ -1,6 +1,8 @@
 package utils.range
 
 import utils.math.MathUtils
+import kotlin.math.max
+import kotlin.math.min
 
 private const val SEPARATOR = "-"
 private const val ID_RANGE_PARTS_COUNT = 2
@@ -43,6 +45,36 @@ open class Range(val start: Long, val end: Long) {
 
     fun contains(value: Long): Boolean {
         return value in start..end
+    }
+
+    fun countInRange(): Long {
+        return end - start + 1
+    }
+
+    fun countOverlappingWithRange(other: Range): Long {
+        if (!doesOverlapWithRange(other)) {
+            return 0L
+        }
+
+        val overlappingRangeStart = max(start, other.start)
+        val overlappingRangeEnd = min(end, other.end)
+
+        return Range(start = overlappingRangeStart, end = overlappingRangeEnd).countInRange()
+    }
+
+    fun doesOverlapWithRange(other: Range): Boolean {
+        return start <= other.end && end >= other.start
+    }
+
+    fun mergeWithRange(other: Range): Range {
+        if (!doesOverlapWithRange(other)) {
+            throw IllegalArgumentException("Cannot merge ranges that do not overlap, got $this and $other")
+        }
+
+        val mergedRangeStart = min(start, other.start)
+        val mergedRangeEnd = max(end, other.end)
+
+        return Range(start = mergedRangeStart, end = mergedRangeEnd)
     }
 
     companion object {

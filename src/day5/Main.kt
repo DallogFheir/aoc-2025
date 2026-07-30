@@ -25,14 +25,13 @@ private fun part1(dayNumber: Int): Long {
 }
 
 private fun part2(dayNumber: Int): Long {
-    return 0L
-//    val testCases = listOf(
-//        TestCase(fileName = "test", expectedResult = 43L),
-//    )
-//
-//    return Solver(
-//        dayNumber = dayNumber,
-//        testCases = testCases,
-//        solver = Part2::solve
-//    ).solve()
+    val testCases = listOf(
+        TestCase(fileName = "test", expectedResult = 14L),
+    )
+
+    return Solver(
+        dayNumber = dayNumber,
+        testCases = testCases,
+        solver = Part2::solve
+    ).solve()
 }

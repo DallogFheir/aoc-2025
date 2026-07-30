@@ -32,3 +32,41 @@ data class ContainsTestCase(
     val valueToCheck: Long,
     val expected: Boolean,
 )
+
+data class CountInRangeTestCase(
+    val rangeStart: Long,
+    val rangeEnd: Long,
+    val expected: Long,
+)
+
+data class CountOverlappingWithRangeTestCase(
+    val range1Start: Long,
+    val range1End: Long,
+    val range2Start: Long,
+    val range2End: Long,
+    val expected: Long,
+)
+
+data class DoesOverlapWithRangeTestCase(
+    val range1Start: Long,
+    val range1End: Long,
+    val range2Start: Long,
+    val range2End: Long,
+    val expected: Boolean,
+)
+
+data class MergeWithRangeTestCase(
+    val range1Start: Long,
+    val range1End: Long,
+    val range2Start: Long,
+    val range2End: Long,
+    val expectedRangeStart: Long,
+    val expectedRangeEnd: Long,
+)
+
+data class InvalidMergeWithRangeTestCase(
+    val range1Start: Long,
+    val range1End: Long,
+    val range2Start: Long,
+    val range2End: Long,
+)
