@@ -1,6 +1,7 @@
 package utils.math.operators.additionOperator
 
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import utils.math.operators.AdditionOperator
@@ -26,6 +27,17 @@ class AdditionOperatorTest {
                 expected = 6,
             ),
         )
+    }
+
+    @Test
+    fun `stores neutral element`() {
+        val expected = 0L
+
+        val cut = AdditionOperator()
+
+        val result = cut.neutralElement
+
+        Assertions.assertEquals(expected, result)
     }
 
     @ParameterizedTest

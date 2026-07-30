@@ -1,6 +1,7 @@
 package utils.math.operators.multiplicationOperator
 
 import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import utils.math.operators.MultiplicationOperator
@@ -26,6 +27,17 @@ class MultiplicationOperatorTest {
                 expected = 6,
             ),
         )
+    }
+
+    @Test
+    fun `stores neutral element`() {
+        val expected = 1L
+
+        val cut = MultiplicationOperator()
+
+        val result = cut.neutralElement
+
+        Assertions.assertEquals(expected, result)
     }
 
     @ParameterizedTest

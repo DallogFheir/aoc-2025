@@ -2,14 +2,8 @@ package day6.calculator
 
 import utils.math.operators.Operator
 
-val ALLOWED_OPERATORS = listOf("+", "*")
-
-class CephalopodCalculator(private val numbers: List<List<Long>>, operatorSymbols: List<String>) {
+open class CephalopodCalculator(protected val numbers: List<List<Long>>, operatorSymbols: List<String>) {
     init {
-        require(operatorSymbols.all { ALLOWED_OPERATORS.contains(it) }) {
-            "All operators must be valid"
-        }
-
         val numbersSizeSet = numbers.map { it.size }.toSet()
         require(numbersSizeSet.size == 1) {
             "All number lists must be same size"
@@ -20,9 +14,9 @@ class CephalopodCalculator(private val numbers: List<List<Long>>, operatorSymbol
         }
     }
 
-    private val operators = operatorSymbols.map { Operator.fromSymbol(it) }
+    protected val operators = operatorSymbols.map { Operator.fromSymbol(it) }
 
-    fun calculate(): Long {
+    open fun calculate(): Long {
         val initialResults = List(operators.size) { index ->
             operators[index].neutralElement
         }
