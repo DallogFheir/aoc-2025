@@ -1,7 +1,7 @@
 package day2
 
-import day2.range.SameLengthRange
 import utils.math.wrappers.PositiveIntegerWrapper
+import utils.range.SameLengthRange
 
 private const val GROUP_REPEAT_COUNT = 2
 

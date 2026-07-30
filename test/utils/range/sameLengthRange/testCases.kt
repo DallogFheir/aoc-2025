@@ -1,4 +1,4 @@
-package day2.range.sameLengthRange
+package utils.range.sameLengthRange
 
 data class InvalidConstructorTestCase(
     val rangeStart: Long,

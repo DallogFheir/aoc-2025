@@ -1,4 +1,4 @@
-package day2.range
+package utils.range
 
 import utils.math.MathUtils
 

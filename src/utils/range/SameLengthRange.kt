@@ -1,4 +1,4 @@
-package day2.range
+package utils.range
 
 class SameLengthRange(start: Long, end: Long) : Range(start = start, end = end) {
     init {
