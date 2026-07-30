@@ -1,6 +1,6 @@
 package utils.listUtils
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import utils.product
@@ -32,6 +32,6 @@ class ListUtilsTest {
     fun `returns product of lists correctly`(case: ProductTestCase<Int>) {
         val result = product(case.list1, case.list2)
 
-        assertEquals(case.expected, result, "product should return ${case.expected}, got $result")
+        Assertions.assertEquals(case.expected, result, "product should return ${case.expected}, got $result")
     }
 }

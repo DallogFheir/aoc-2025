@@ -1,7 +1,6 @@
 package utils.grid.grid
 
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import utils.grid.Grid
@@ -227,7 +226,7 @@ class GridTest {
     @ParameterizedTest
     @MethodSource("invalidEmptyConstructorCases")
     fun `throws if trying to initialize with empty array`(case: InvalidConstructorTestCase<Int>) {
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             Grid(grid = case.grid)
         }
     }
@@ -235,7 +234,7 @@ class GridTest {
     @ParameterizedTest
     @MethodSource("invalidUnequalConstructorCases")
     fun `throws if trying to initialize with arrays of unequal sizes`(case: InvalidConstructorTestCase<Int>) {
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             Grid(grid = case.grid)
         }
     }
@@ -303,7 +302,7 @@ class GridTest {
     fun `throws if trying to get at invalid coordinate`(case: InvalidCoordinateTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.getAt(x = case.x, y = case.y)
         }
     }
@@ -329,7 +328,7 @@ class GridTest {
     fun `throws if trying to set at invalid coordinate`(case: InvalidCoordinateTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.setAt(x = case.x, y = case.y, value = 1)
         }
     }
@@ -353,7 +352,7 @@ class GridTest {
     fun `throws if trying to count neighbors of invalid coordinate`(case: InvalidCoordinateTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.countNeighborsWithValue(x = case.x, y = case.y, value = 1)
         }
     }
