@@ -1,15 +1,15 @@
 package utils.grid.grid
 
+import utils.grid.Coordinate
+
 data class ValueAtCoordinate<T>(
-    val x: Int,
-    val y: Int,
+    val coordinate: Coordinate,
     val value: T,
 )
 
 data class InvalidCoordinateTestCase<T>(
     val grid: Array<Array<T>>,
-    val x: Int,
-    val y: Int,
+    val coordinate: Coordinate,
 )
 
 data class InvalidConstructorTestCase<T>(
@@ -28,35 +28,31 @@ data class ToStringTestCase<T>(
 
 data class IsInGridTestCase<T>(
     val grid: Array<Array<T>>,
-    val x: Int,
-    val y: Int,
+    val coordinate: Coordinate,
     val expected: Boolean,
 )
 
 data class GetAtTestCase<T>(
     val grid: Array<Array<T>>,
-    val x: Int,
-    val y: Int,
+    val coordinate: Coordinate,
     val expected: T,
 )
 
 data class SetAtTestCase<T>(
     val grid: Array<Array<T>>,
-    val x: Int,
-    val y: Int,
+    val coordinate: Coordinate,
     val value: T,
 )
 
 data class CountNeighborsWithValueTestCase<T>(
     val grid: Array<Array<T>>,
-    val x: Int,
-    val y: Int,
+    val coordinate: Coordinate,
     val value: T,
     val expected: Int,
 )
 
 data class FlatMapWithCoordinateTestCase<T, U>(
     val grid: Array<Array<T>>,
-    val callback: (Int, Int, T) -> U,
+    val callback: (Coordinate, T) -> U,
     val expected: List<T>,
 )

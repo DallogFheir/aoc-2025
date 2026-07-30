@@ -8,12 +8,12 @@ object Part1 {
         val gridString = FileReader(dayNumber = dayNumber, fileName = fileName).read()
         val grid = Grid.fromString(gridString)
 
-        return grid.flatMapWithCoordinate { x, y, cell ->
+        return grid.flatMapWithCoordinate { coordinate, cell ->
             if (cell != ROLL_OF_PAPER_SYMBOL) {
                 return@flatMapWithCoordinate false
             }
 
-            val neighborCount = grid.countNeighborsWithValue(x = x, y = y, value = ROLL_OF_PAPER_SYMBOL)
+            val neighborCount = grid.countNeighborsWithValue(coordinate = coordinate, value = ROLL_OF_PAPER_SYMBOL)
 
             neighborCount <= MAXIMUM_ROLL_OF_PAPER_NEIGHBOR_COUNT
         }.filter { it }.size.toLong()

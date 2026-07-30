@@ -29,37 +29,37 @@ class Grid<T>(private val grid: Array<Array<T>>) {
         return "[$gridString]"
     }
 
-    fun isInGrid(x: Int, y: Int): Boolean {
-        return x in 0 until width && y in 0 until height
+    fun isInGrid(coordinate: Coordinate): Boolean {
+        return coordinate.x < width && coordinate.y < height
     }
 
-    fun getAt(x: Int, y: Int): T {
-        ensureCoordinateInGrid(x = x, y = y)
+    fun getAt(coordinate: Coordinate): T {
+        ensureCoordinateInGrid(coordinate)
 
-        return grid[y][x]
+        return grid[coordinate.y][coordinate.x]
     }
 
-    fun setAt(x: Int, y: Int, value: T) {
-        ensureCoordinateInGrid(x = x, y = y)
+    fun setAt(coordinate: Coordinate, value: T) {
+        ensureCoordinateInGrid(coordinate)
 
-        grid[y][x] = value
+        grid[coordinate.y][coordinate.x] = value
     }
 
-    private fun ensureCoordinateInGrid(x: Int, y: Int) {
-        if (!isInGrid(x, y)) {
-            throw IllegalArgumentException("Grid coordinate (x=${x}, y=${y}) out of range for grid with size $width×$height")
+    private fun ensureCoordinateInGrid(coordinate: Coordinate) {
+        if (!isInGrid(coordinate)) {
+            throw IllegalArgumentException("Grid coordinate $coordinate out of range for grid with size $width×$height")
         }
     }
 
-    fun countNeighborsWithValue(x: Int, y: Int, value: T): Int {
-        ensureCoordinateInGrid(x = x, y = y)
+    fun countNeighborsWithValue(coordinate: Coordinate, value: T): Int {
+        ensureCoordinateInGrid(coordinate)
 
-        val neighbors = getNeighbors(x = x, y = y)
+        val neighbors = getNeighbors(coordinate)
 
         return neighbors.count { it == value }
     }
 
-    private fun getNeighbors(x: Int, y: Int): List<T> {
+    private fun getNeighbors(coordinate: Coordinate): List<T> {
         val coordinateAddends = listOf(-1, 0, 1)
 
         val addendsForXAndY = product(coordinateAddends, coordinateAddends)
@@ -71,19 +71,25 @@ class Grid<T>(private val grid: Array<Array<T>>) {
                 return@mapNotNull null
             }
 
-            val neighborX = x + xAddend
-            val neighborY = y + yAddend
+            val neighborX = coordinate.x + xAddend
+            val neighborY = coordinate.y + yAddend
 
-            if (isInGrid(x = neighborX, y = neighborY)) {
-                return@mapNotNull getAt(x = neighborX, y = neighborY)
+            if (!Coordinate.isValid(x = neighborX, y = neighborY)) {
+                return@mapNotNull null
             }
 
-            null
+            val neighborCoordinate = Coordinate(x = neighborX, y = neighborY)
+
+            if (!isInGrid(neighborCoordinate)) {
+                return@mapNotNull null
+            }
+
+            getAt(neighborCoordinate)
         }
     }
 
-    fun <U> flatMapWithCoordinate(callback: (Int, Int, T) -> U): List<U> {
-        return grid.flatMapIndexed { y, row -> row.mapIndexed { x, item -> callback(x, y, item) } }
+    fun <U> flatMapWithCoordinate(callback: (Coordinate, T) -> U): List<U> {
+        return grid.flatMapIndexed { y, row -> row.mapIndexed { x, item -> callback(Coordinate(x = x, y = y), item) } }
     }
 
     companion object {

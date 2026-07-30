@@ -3,6 +3,7 @@ package utils.grid.grid
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import utils.grid.Coordinate
 import utils.grid.Grid
 
 class GridTest {
@@ -23,10 +24,10 @@ class GridTest {
             FromStringTestCase(
                 string = listOf("12", "34").joinToString(separator = System.lineSeparator()),
                 expectedValuesAtCoordinates = listOf(
-                    ValueAtCoordinate(x = 0, y = 0, value = '1'),
-                    ValueAtCoordinate(x = 1, y = 0, value = '2'),
-                    ValueAtCoordinate(x = 0, y = 1, value = '3'),
-                    ValueAtCoordinate(x = 1, y = 1, value = '4'),
+                    ValueAtCoordinate(coordinate = Coordinate(x = 0, y = 0), value = '1'),
+                    ValueAtCoordinate(coordinate = Coordinate(x = 1, y = 0), value = '2'),
+                    ValueAtCoordinate(coordinate = Coordinate(x = 0, y = 1), value = '3'),
+                    ValueAtCoordinate(coordinate = Coordinate(x = 1, y = 1), value = '4'),
                 )
             ),
         )
@@ -51,38 +52,32 @@ class GridTest {
         fun isInGridCases() = listOf(
             IsInGridTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 expected = true
             ),
             IsInGridTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 1,
-                y = 0,
+                coordinate = Coordinate(x = 1, y = 0),
                 expected = true
             ),
             IsInGridTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 1,
+                coordinate = Coordinate(x = 0, y = 1),
                 expected = true
             ),
             IsInGridTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 1,
-                y = 1,
+                coordinate = Coordinate(x = 1, y = 1),
                 expected = true
             ),
             IsInGridTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 2,
-                y = 0,
+                coordinate = Coordinate(x = 2, y = 0),
                 expected = false
             ),
             IsInGridTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 2,
+                coordinate = Coordinate(x = 0, y = 2),
                 expected = false
             ),
         )
@@ -91,26 +86,22 @@ class GridTest {
         fun getAtCases() = listOf(
             GetAtTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 expected = 1
             ),
             GetAtTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 1,
-                y = 0,
+                coordinate = Coordinate(x = 1, y = 0),
                 expected = 2
             ),
             GetAtTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 1,
+                coordinate = Coordinate(x = 0, y = 1),
                 expected = 3
             ),
             GetAtTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 1,
-                y = 1,
+                coordinate = Coordinate(x = 1, y = 1),
                 expected = 4
             ),
         )
@@ -119,14 +110,12 @@ class GridTest {
         fun setAtCases() = listOf(
             SetAtTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 value = 5,
             ),
             SetAtTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 1,
-                y = 1,
+                coordinate = Coordinate(x = 1, y = 1),
                 value = 5,
             ),
         )
@@ -135,50 +124,43 @@ class GridTest {
         fun countNeighborsWithValueCases() = listOf(
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 value = 2,
                 expected = 1
             ),
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 value = 3,
                 expected = 1
             ),
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 value = 4,
                 expected = 1
             ),
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 2, 3), arrayOf(4, 5, 6), arrayOf(7, 8, 9)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 value = 6,
                 expected = 0
             ),
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 1, 1), arrayOf(1, 1, 1), arrayOf(1, 1, 1)),
-                x = 0,
-                y = 0,
+                coordinate = Coordinate(x = 0, y = 0),
                 value = 1,
                 expected = 3
             ),
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 1, 1), arrayOf(1, 1, 1), arrayOf(1, 1, 1)),
-                x = 1,
-                y = 1,
+                coordinate = Coordinate(x = 1, y = 1),
                 value = 1,
                 expected = 8
             ),
             CountNeighborsWithValueTestCase(
                 grid = arrayOf(arrayOf(1, 1, 1), arrayOf(1, 1, 1), arrayOf(1, 1, 1)),
-                x = 2,
-                y = 2,
+                coordinate = Coordinate(x = 2, y = 2),
                 value = 1,
                 expected = 3
             ),
@@ -188,23 +170,11 @@ class GridTest {
         fun invalidCoordinateCases() = listOf(
             InvalidCoordinateTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = -1,
-                y = 0,
+                coordinate = Coordinate(x = 3, y = 0),
             ),
             InvalidCoordinateTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = -1,
-            ),
-            InvalidCoordinateTestCase(
-                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 3,
-                y = 0,
-            ),
-            InvalidCoordinateTestCase(
-                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                x = 0,
-                y = 3,
+                coordinate = Coordinate(x = 0, y = 3),
             ),
         )
 
@@ -212,12 +182,12 @@ class GridTest {
         fun flatMapWithCoordinateTestCases() = listOf(
             FlatMapWithCoordinateTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                callback = { _, _, item -> item },
+                callback = { _, item -> item },
                 expected = listOf(1, 2, 3, 4)
             ),
             FlatMapWithCoordinateTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
-                callback = { x, y, item -> x + y + item },
+                callback = { coordinate, item -> coordinate.x + coordinate.y + item },
                 expected = listOf(1, 3, 4, 6)
             ),
         )
@@ -245,12 +215,12 @@ class GridTest {
         val cut = Grid.fromString(case.string)
 
         case.expectedValuesAtCoordinates.forEach {
-            val value = cut.getAt(x = it.x, y = it.y)
+            val value = cut.getAt(coordinate = it.coordinate)
 
             Assertions.assertEquals(
                 it.value,
                 value,
-                "fromString for string ${case.string} should create a grid with value ${it.value} at coordinate (x=${it.x}, y=${it.y}), got $value"
+                "fromString for string ${case.string} should create a grid with value ${it.value} at coordinate ${it.coordinate}, got $value"
             )
         }
     }
@@ -274,12 +244,12 @@ class GridTest {
     fun `checks if coordinate is in grid correctly`(case: IsInGridTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        val result = cut.isInGrid(x = case.x, y = case.y)
+        val result = cut.isInGrid(coordinate = case.coordinate)
 
         Assertions.assertEquals(
             case.expected,
             result,
-            "isInGrid for grid $cut at coordinate (x=${case.x}, y=${case.y}) should return ${case.expected}, got $result"
+            "isInGrid for grid $cut at coordinate ${case.coordinate} should return ${case.expected}, got $result"
         )
     }
 
@@ -288,12 +258,12 @@ class GridTest {
     fun `gets value at coordinate correctly`(case: GetAtTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        val result = cut.getAt(x = case.x, y = case.y)
+        val result = cut.getAt(coordinate = case.coordinate)
 
         Assertions.assertEquals(
             case.expected,
             result,
-            "getAt for grid $cut at coordinate (x=${case.x}, y=${case.y}) should return ${case.expected}, got $result"
+            "getAt for grid $cut at coordinate ${case.coordinate} should return ${case.expected}, got $result"
         )
     }
 
@@ -303,7 +273,7 @@ class GridTest {
         val cut = Grid(grid = case.grid)
 
         Assertions.assertThrows(IllegalArgumentException::class.java) {
-            cut.getAt(x = case.x, y = case.y)
+            cut.getAt(coordinate = case.coordinate)
         }
     }
 
@@ -312,14 +282,14 @@ class GridTest {
     fun `sets value at coordinate correctly`(case: SetAtTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        cut.setAt(x = case.x, y = case.y, value = case.value)
+        cut.setAt(coordinate = case.coordinate, value = case.value)
 
-        val result = cut.getAt(x = case.x, y = case.y)
+        val result = cut.getAt(coordinate = case.coordinate)
 
         Assertions.assertEquals(
             case.value,
             result,
-            "setAt for grid $cut, coordinate (x=${case.x}, y=${case.y}) should set grid cell to ${case.value}, got $result"
+            "setAt for grid $cut, coordinate ${case.coordinate} should set grid cell to ${case.value}, got $result"
         )
     }
 
@@ -329,7 +299,7 @@ class GridTest {
         val cut = Grid(grid = case.grid)
 
         Assertions.assertThrows(IllegalArgumentException::class.java) {
-            cut.setAt(x = case.x, y = case.y, value = 1)
+            cut.setAt(coordinate = case.coordinate, value = 1)
         }
     }
 
@@ -338,12 +308,12 @@ class GridTest {
     fun `counts neighbors of given coordinate with given value correctly`(case: CountNeighborsWithValueTestCase<Int>) {
         val cut = Grid(grid = case.grid)
 
-        val result = cut.countNeighborsWithValue(x = case.x, y = case.y, value = case.value)
+        val result = cut.countNeighborsWithValue(coordinate = case.coordinate, value = case.value)
 
         Assertions.assertEquals(
             case.expected,
             result,
-            "countNeighborsWithValue for grid $cut, coordinate (x=${case.x}, y=${case.y}) and value ${case.value} should return ${case.expected}, got $result"
+            "countNeighborsWithValue for grid $cut, coordinate ${case.coordinate} and value ${case.value} should return ${case.expected}, got $result"
         )
     }
 
@@ -353,7 +323,7 @@ class GridTest {
         val cut = Grid(grid = case.grid)
 
         Assertions.assertThrows(IllegalArgumentException::class.java) {
-            cut.countNeighborsWithValue(x = case.x, y = case.y, value = 1)
+            cut.countNeighborsWithValue(coordinate = case.coordinate, value = 1)
         }
     }
 

@@ -1,31 +1,34 @@
 package day4
 
+import utils.grid.Coordinate
+
 object Part2 {
     fun solve(dayNumber: Int, fileName: String): Long {
         return solveForGrid(dayNumber = dayNumber, fileName = fileName) { grid ->
             var total = 0L
 
-            var removedPaperRolls: List<Pair<Int, Int>?>
+            var removedPaperRolls: List<Coordinate?>
 
             do {
-                removedPaperRolls = grid.flatMapWithCoordinate { x, y, cell ->
+                removedPaperRolls = grid.flatMapWithCoordinate { coordinate, cell ->
                     if (cell != ROLL_OF_PAPER_SYMBOL) {
                         return@flatMapWithCoordinate null
                     }
 
-                    val neighborCount = grid.countNeighborsWithValue(x = x, y = y, value = ROLL_OF_PAPER_SYMBOL)
+                    val neighborCount =
+                        grid.countNeighborsWithValue(coordinate = coordinate, value = ROLL_OF_PAPER_SYMBOL)
 
                     if (neighborCount > MAXIMUM_ROLL_OF_PAPER_NEIGHBOR_COUNT) {
                         return@flatMapWithCoordinate null
                     }
 
-                    x to y
+                    coordinate
                 }.filterNotNull()
 
                 total += removedPaperRolls.size.toLong()
 
-                removedPaperRolls.forEach { (x, y) ->
-                    grid.setAt(x = x, y = y, value = EMPTY_TILE_SYMBOL)
+                removedPaperRolls.forEach { coordinate ->
+                    grid.setAt(coordinate = coordinate, value = EMPTY_TILE_SYMBOL)
                 }
             } while (removedPaperRolls.isNotEmpty())
 
