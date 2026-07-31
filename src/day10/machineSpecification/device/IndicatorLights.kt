@@ -1,4 +1,4 @@
-package day10.machineSpecification
+package day10.machineSpecification.device
 
 data class IndicatorLights(val lights: Array<Boolean>) : Device {
     override val size = lights.size

@@ -2,7 +2,7 @@ package day10
 
 import day10.bfsSearcher.BfsSearcher
 import day10.machineSpecification.Button
-import day10.machineSpecification.IndicatorLights
+import day10.machineSpecification.device.IndicatorLights
 import day10.machineSpecification.MachineSpecification
 import utils.filereader.FileReader
 

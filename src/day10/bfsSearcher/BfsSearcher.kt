@@ -1,7 +1,7 @@
 package day10.bfsSearcher
 
 import day10.machineSpecification.Button
-import day10.machineSpecification.Device
+import day10.machineSpecification.device.Device
 import day10.machineSpecification.MachineSpecification
 
 private data class BfsQueueItem(

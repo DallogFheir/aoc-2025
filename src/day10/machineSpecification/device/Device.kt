@@ -1,4 +1,4 @@
-package day10.machineSpecification
+package day10.machineSpecification.device
 
 interface Device {
     val size: Int
