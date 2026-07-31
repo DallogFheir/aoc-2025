@@ -56,3 +56,14 @@ data class FlatMapWithCoordinateTestCase<T, U>(
     val callback: (Coordinate, T) -> U,
     val expected: List<T>,
 )
+
+data class FindCoordinateForTestCase<T>(
+    val grid: Array<Array<T>>,
+    val valueToSearchFor: T,
+    val expected: Coordinate,
+)
+
+data class InvalidFindCoordinateForTestCase<T>(
+    val grid: Array<Array<T>>,
+    val valueToSearchFor: T,
+)

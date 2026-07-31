@@ -179,7 +179,7 @@ class GridTest {
         )
 
         @JvmStatic
-        fun flatMapWithCoordinateTestCases() = listOf(
+        fun flatMapWithCoordinateCases() = listOf(
             FlatMapWithCoordinateTestCase(
                 grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
                 callback = { _, item -> item },
@@ -190,6 +190,38 @@ class GridTest {
                 callback = { coordinate, item -> coordinate.x + coordinate.y + item },
                 expected = listOf(1, 3, 4, 6)
             ),
+        )
+
+        @JvmStatic
+        fun findCoordinateForCases() = listOf(
+            FindCoordinateForTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                valueToSearchFor = 1,
+                expected = Coordinate(x = 0, y = 0),
+            ),
+            FindCoordinateForTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                valueToSearchFor = 2,
+                expected = Coordinate(x = 1, y = 0),
+            ),
+            FindCoordinateForTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                valueToSearchFor = 3,
+                expected = Coordinate(x = 0, y = 1),
+            ),
+            FindCoordinateForTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                valueToSearchFor = 4,
+                expected = Coordinate(x = 1, y = 1),
+            ),
+        )
+
+        @JvmStatic
+        fun invalidFindCoordinateForCases() = listOf(
+            InvalidFindCoordinateForTestCase(
+                grid = arrayOf(arrayOf(1, 2), arrayOf(3, 4)),
+                valueToSearchFor = 5,
+            )
         )
     }
 
@@ -328,7 +360,7 @@ class GridTest {
     }
 
     @ParameterizedTest
-    @MethodSource("flatMapWithCoordinateTestCases")
+    @MethodSource("flatMapWithCoordinateCases")
     fun `flat-maps grid with coordinate correctly`(case: FlatMapWithCoordinateTestCase<Int, Int>) {
         val cut = Grid(grid = case.grid)
 
@@ -339,5 +371,28 @@ class GridTest {
             result,
             "flatMap for grid $cut should return ${case.expected}, got $result"
         )
+    }
+
+    @ParameterizedTest
+    @MethodSource("findCoordinateForCases")
+    fun `finds coordinate for given value correctly`(case: FindCoordinateForTestCase<Int>) {
+        val cut = Grid(grid = case.grid)
+
+        val result = cut.findCoordinateFor(case.valueToSearchFor)
+
+        Assertions.assertEquals(
+            case.expected,
+            result
+        )
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidFindCoordinateForCases")
+    fun `throws if given value is not found in grid`(case: InvalidFindCoordinateForTestCase<Int>) {
+        val cut = Grid(grid = case.grid)
+
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            cut.findCoordinateFor(case.valueToSearchFor)
+        }
     }
 }
