@@ -10,6 +10,30 @@ import kotlin.math.sqrt
 class PointTest {
     companion object {
         @JvmStatic
+        fun toStringCases() = listOf(
+            ToStringTestCase(
+                coordinates = listOf(0.0),
+                expected = "(0.0)",
+            ),
+            ToStringTestCase(
+                coordinates = listOf(-1.0),
+                expected = "(-1.0)",
+            ),
+            ToStringTestCase(
+                coordinates = listOf(1.0),
+                expected = "(1.0)",
+            ),
+            ToStringTestCase(
+                coordinates = listOf(1.0, 2.0),
+                expected = "(1.0, 2.0)",
+            ),
+            ToStringTestCase(
+                coordinates = listOf(1.0, 2.0, 3.0),
+                expected = "(1.0, 2.0, 3.0)",
+            )
+        )
+
+        @JvmStatic
         fun distanceToCases() = listOf(
             DistanceToTestCase(
                 coordinates = listOf(0.0),
@@ -54,6 +78,16 @@ class PointTest {
                 otherCoordinates = listOf(0.0),
             )
         )
+    }
+
+    @ParameterizedTest
+    @MethodSource("toStringCases")
+    fun `converts to string correctly`(case: ToStringTestCase) {
+        val cut = Point(*case.coordinates.toDoubleArray())
+
+        val result = cut.toString()
+
+        Assertions.assertEquals(case.expected, result)
     }
 
     @Test
