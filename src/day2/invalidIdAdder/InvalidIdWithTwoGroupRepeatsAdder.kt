@@ -1,4 +1,4 @@
-package day2
+package day2.invalidIdAdder
 
 import utils.math.wrappers.PositiveIntegerWrapper
 import utils.range.SameLengthRange
