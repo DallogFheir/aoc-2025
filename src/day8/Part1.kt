@@ -1,8 +1,8 @@
 package day8
 
+import utils.disjointSetForest.DisjointSetForest
 import utils.filereader.FileReader
 import utils.math.euclidean.Point
-import java.io.File
 
 private const val COORDINATE_SEPARATOR = ","
 private const val POINT_DIMENSIONALITY = 3
@@ -40,6 +40,10 @@ object Part1 {
 
             Point(*coordinates.toDoubleArray())
         }
+        val circuits = DisjointSetForest<Point>()
+        points.forEach {
+            circuits.makeSetFor(it)
+        }
 
         val distances = points.flatMapIndexed { index, point ->
             val otherPoints = points.slice(index + 1..points.lastIndex)
@@ -51,29 +55,21 @@ object Part1 {
 
         val sortedDistances = distances.sortedBy { it.first }
 
-        val circuits = mutableSetOf<MutableSet<Point>>()
         (0..<pairCount).forEach { index ->
             val (_, points) = sortedDistances[index]
             val (point1, point2) = points
 
-            val existingCircuit = circuits.find { it.contains(point1) } ?: circuits.find { it.contains(point2) }
-
-            if (existingCircuit != null) {
-                existingCircuit.add(point1)
-                existingCircuit.add(point2)
-            } else {
-                circuits.add(mutableSetOf(point1, point2))
-            }
+            circuits.union(point1, point2)
         }
 
-        var finalSets = mergeOverlappingSets(circuits)
+        val finalCircuits = circuits.getDisjointSets()
 
-        val sortedCircuitSizes = finalSets.sortedBy { -it.size }.map { it.size }.slice(0..<3).toMutableList()
+        val sortedCircuitSizes = finalCircuits.sortedBy { -it.size }.map { it.size }.slice(0..<3).toMutableList()
 
         while (sortedCircuitSizes.size < 3) {
             sortedCircuitSizes.add(1)
         }
 
-        return sortedCircuitSizes.fold (1L) { total, size -> total * size.toLong() }
+        return sortedCircuitSizes.fold(1L) { total, size -> total * size.toLong() }
     }
 }
