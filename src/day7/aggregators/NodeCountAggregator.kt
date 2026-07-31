@@ -1,4 +1,4 @@
-package day7
+package day7.aggregators
 
 import utils.graphs.DAGNode
 

@@ -1,0 +1,38 @@
+package day8
+
+import utils.DayRunner
+import utils.Solver
+import utils.TestCase
+
+fun main() {
+    DayRunner(
+        dayNumber = 8,
+        part1Solver = ::part1,
+        part2Solver = ::part2,
+    ).run()
+}
+
+private fun part1(dayNumber: Int): Long {
+    val testCases = listOf(
+        TestCase(fileName = "test", expectedResult = 40L),
+    )
+
+    return Solver(
+        dayNumber = dayNumber,
+        testCases = testCases,
+        solver = { dayNumber, fileName -> Part1.solve(dayNumber = dayNumber, fileName = fileName, pairCount = 1000) },
+        testSolver = { dayNumber, fileName -> Part1.solve(dayNumber = dayNumber, fileName = fileName, pairCount = 10) }
+    ).solve()
+}
+
+private fun part2(dayNumber: Int): Long {
+    val testCases = listOf(
+        TestCase(fileName = "test", expectedResult = 25272L),
+    )
+
+    return Solver(
+        dayNumber = dayNumber,
+        testCases = testCases,
+        solver = Part2::solve
+    ).solve()
+}
