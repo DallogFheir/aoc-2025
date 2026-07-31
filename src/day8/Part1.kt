@@ -1,75 +1,24 @@
 package day8
 
-import utils.disjointSetForest.DisjointSetForest
-import utils.filereader.FileReader
-import utils.math.euclidean.Point
-
-private const val COORDINATE_SEPARATOR = ","
-private const val POINT_DIMENSIONALITY = 3
-
-fun mergeOverlappingSets(input: MutableSet<MutableSet<Point>>): Set<Set<Point>> {
-    val sets = input.map { it.toMutableSet() }.toMutableList()
-
-    var changed: Boolean
-    do {
-        changed = false
-
-        outer@ for (i in sets.indices) {
-            for (j in i + 1 until sets.size) {
-                if (sets[i].any { it in sets[j] }) {
-                    sets[i].addAll(sets[j])
-                    sets.removeAt(j)
-                    changed = true
-                    break@outer
-                }
-            }
-        }
-    } while (changed)
-
-    return sets.toSet()
-}
 
 object Part1 {
     fun solve(dayNumber: Int, fileName: String, pairCount: Int): Long {
-        val points = FileReader(dayNumber = dayNumber, fileName = fileName).readLinesWithParser { line ->
-            val coordinateStrings = line.split(COORDINATE_SEPARATOR)
+        return solveForDistancesAndCircuits(dayNumber = dayNumber, fileName = fileName) { distances, circuits ->
+            (0..<pairCount).forEach { index ->
+                val pairPointWithDistance = distances[index]
 
-            require(coordinateStrings.size == POINT_DIMENSIONALITY)
-
-            val coordinates = coordinateStrings.map { it.toDouble() }
-
-            Point(*coordinates.toDoubleArray())
-        }
-        val circuits = DisjointSetForest<Point>()
-        points.forEach {
-            circuits.makeSetFor(it)
-        }
-
-        val distances = points.flatMapIndexed { index, point ->
-            val otherPoints = points.slice(index + 1..points.lastIndex)
-
-            otherPoints.map {
-                point.distanceTo(it) to (point to it)
+                circuits.union(pairPointWithDistance.point1, pairPointWithDistance.point2)
             }
+
+            val finalCircuits = circuits.getDisjointSets()
+
+            val sortedCircuitSizes = finalCircuits.sortedBy { -it.size }.map { it.size }.slice(0..<3).toMutableList()
+
+            while (sortedCircuitSizes.size < 3) {
+                sortedCircuitSizes.add(1)
+            }
+
+            sortedCircuitSizes.fold(1L) { total, size -> total * size.toLong() }
         }
-
-        val sortedDistances = distances.sortedBy { it.first }
-
-        (0..<pairCount).forEach { index ->
-            val (_, points) = sortedDistances[index]
-            val (point1, point2) = points
-
-            circuits.union(point1, point2)
-        }
-
-        val finalCircuits = circuits.getDisjointSets()
-
-        val sortedCircuitSizes = finalCircuits.sortedBy { -it.size }.map { it.size }.slice(0..<3).toMutableList()
-
-        while (sortedCircuitSizes.size < 3) {
-            sortedCircuitSizes.add(1)
-        }
-
-        return sortedCircuitSizes.fold(1L) { total, size -> total * size.toLong() }
     }
 }
