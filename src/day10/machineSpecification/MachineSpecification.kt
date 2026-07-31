@@ -1,6 +1,6 @@
 package day10.machineSpecification
 
 data class MachineSpecification(
-    val indicatorLights: IndicatorLights,
+    val device: Device,
     val buttons: List<Button>,
 )

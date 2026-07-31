@@ -36,17 +36,19 @@ object Part1 {
 
                 val buttonLights = buttonLightStrings.map { it.toInt() }
 
-                Button(toggledLightIndices = buttonLights)
+                Button(affectedIndices = buttonLights)
             }
 
             MachineSpecification(
-                indicatorLights = IndicatorLights(lights = lights),
+                device = IndicatorLights(lights = lights),
                 buttons = buttons,
             )
         }
 
         return machineSpecifications.sumOf {
-            val searcher = BfsSearcher(machineSpecification = it)
+            val searcher = BfsSearcher(
+                machineSpecification = it,
+                emptyDeviceFactory = { IndicatorLights.emptyOfLength(it.device.size) })
 
             searcher.search()
         }.toLong()

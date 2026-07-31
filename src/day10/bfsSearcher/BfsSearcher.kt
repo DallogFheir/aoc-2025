@@ -1,16 +1,19 @@
 package day10.bfsSearcher
 
 import day10.machineSpecification.Button
-import day10.machineSpecification.IndicatorLights
+import day10.machineSpecification.Device
 import day10.machineSpecification.MachineSpecification
 
 private data class BfsQueueItem(
     val parent: Button?,
-    val indicatorLights: IndicatorLights,
+    val device: Device,
     val pathButtons: List<Button>,
 )
 
-class BfsSearcher(private val machineSpecification: MachineSpecification) {
+class BfsSearcher(
+    private val machineSpecification: MachineSpecification,
+    private val emptyDeviceFactory: () -> Device
+) {
     private val grandparentPathToUsedButtons = mutableMapOf<List<Button>, MutableList<Button>>()
 
     fun search(): Int {
@@ -19,7 +22,7 @@ class BfsSearcher(private val machineSpecification: MachineSpecification) {
         val queue = mutableListOf(
             BfsQueueItem(
                 parent = null,
-                indicatorLights = IndicatorLights.emptyOfLength(machineSpecification.indicatorLights.size),
+                device = emptyDeviceFactory(),
                 pathButtons = listOf(),
             )
         )
@@ -29,7 +32,7 @@ class BfsSearcher(private val machineSpecification: MachineSpecification) {
 
             val previousLevel = queueItem.pathButtons.size
 
-            if (queueItem.indicatorLights == machineSpecification.indicatorLights) {
+            if (queueItem.device == machineSpecification.device) {
                 return previousLevel
             }
 
@@ -41,7 +44,7 @@ class BfsSearcher(private val machineSpecification: MachineSpecification) {
             }.forEach { button ->
                 val newQueueItem = BfsQueueItem(
                     parent = button,
-                    indicatorLights = queueItem.indicatorLights.withToggled(*button.toggledLightIndices.toIntArray()),
+                    device = queueItem.device.withAffectedIndices(*button.affectedIndices.toIntArray()),
                     pathButtons = queueItem.pathButtons + listOf(button),
                 )
 
