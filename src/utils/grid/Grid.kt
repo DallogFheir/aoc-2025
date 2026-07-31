@@ -92,6 +92,18 @@ class Grid<T>(private val grid: Array<Array<T>>) {
         return grid.flatMapIndexed { y, row -> row.mapIndexed { x, item -> callback(Coordinate(x = x, y = y), item) } }
     }
 
+    fun findCoordinateFor(value: T): Coordinate {
+        grid.forEachIndexed { y, row ->
+            row.forEachIndexed { x, item ->
+                if (item == value) {
+                    return Coordinate(x = x, y = y)
+                }
+            }
+        }
+
+        throw IllegalArgumentException("Value $value not found in grid")
+    }
+
     companion object {
         fun fromString(string: String): Grid<Char> {
             val lines = string.split(System.lineSeparator())
