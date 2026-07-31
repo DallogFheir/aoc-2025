@@ -9,54 +9,46 @@ import utils.graphs.DAGNode
 class DAGNodeTest {
     companion object {
         @JvmStatic
-        fun addNeighborCases() = listOf(
-            AddNeighborTestCase(
-                neighborsToAdd = listOf(
-                    DAGNode(value = 1),
-                    DAGNode(value = 2),
-                    DAGNode(value = 3),
-                )
-            )
-        )
-
-        @JvmStatic
         fun aggregateCases() = listOf(
             AggregateTestCase(
-                neighborsToAdd = listOf(),
-                expected = 0,
+                neighborsToAddCount = 0,
             ),
             AggregateTestCase(
-                neighborsToAdd = listOf(
-                    DAGNode(value = 1),
-                ),
-                expected = 1,
+                neighborsToAddCount = 1,
             ),
             AggregateTestCase(
-                neighborsToAdd = listOf(
-                    DAGNode(value = 1),
-                    DAGNode(value = 2),
-                    DAGNode(value = 3),
-                ),
-                expected = 6,
+                neighborsToAddCount = 3,
             ),
         )
-    }
-
-    @ParameterizedTest
-    @MethodSource("addNeighborCases")
-    fun `adds neighbors correctly`(case: AddNeighborTestCase<Int>) {
-        val cut = DAGNode(value = 0)
-
-        case.neighborsToAdd.forEach { cut.addNeighbor(it) }
-
-        Assertions.assertEquals(case.neighborsToAdd, cut.neighbors)
     }
 
     @Test
-    fun `throws if adding a neighbor with a cycle`() {
-        val node1 = DAGNode(value = 1)
-        val node2 = DAGNode(value = 2)
-        val node3 = DAGNode(value = 3)
+    fun `adds neighbors correctly`() {
+        val cut = DAGNode()
+
+        val neighbors = List(3) { DAGNode() }
+
+        neighbors.forEach {
+            cut.addNeighbor(it)
+        }
+
+        Assertions.assertEquals(neighbors, cut.neighbors)
+    }
+
+    @Test
+    fun `throws if trying to add a node to itself`() {
+        val cut = DAGNode()
+
+        Assertions.assertThrows(IllegalArgumentException::class.java) {
+            cut.addNeighbor(cut)
+        }
+    }
+
+    @Test
+    fun `throws if trying to add a neighbor with a cycle`() {
+        val node1 = DAGNode()
+        val node2 = DAGNode()
+        val node3 = DAGNode()
 
         node1.addNeighbor(node2)
         node2.addNeighbor(node3)
@@ -69,12 +61,12 @@ class DAGNodeTest {
     @ParameterizedTest
     @MethodSource("aggregateCases")
     fun `aggregates values from neighbors correctly`(case: AggregateTestCase) {
-        val cut = DAGNode(value = 0)
+        val cut = DAGNode()
 
-        case.neighborsToAdd.forEach { cut.addNeighbor(it) }
+        (1..case.neighborsToAddCount).forEach { cut.addNeighbor(DAGNode()) }
 
-        val result = cut.aggregate({ neighbors -> neighbors.sumOf { it.value } })
+        val result = cut.aggregate({ neighbors -> neighbors.sumOf { 1 } })
 
-        Assertions.assertEquals(case.expected, result)
+        Assertions.assertEquals(case.neighborsToAddCount, result)
     }
 }

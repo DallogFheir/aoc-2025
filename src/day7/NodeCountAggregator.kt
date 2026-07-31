@@ -2,10 +2,10 @@ package day7
 
 import utils.graphs.DAGNode
 
-class NodeCountAggregator<T> {
-    private val alreadyVisited = mutableSetOf<DAGNode<T>>()
+class NodeCountAggregator {
+    private val alreadyVisited = mutableSetOf<DAGNode>()
 
-    fun aggregate(neighbors: List<DAGNode<T>>): Long {
+    fun aggregate(neighbors: List<DAGNode>): Long {
         return 1 + neighbors.sumOf {
             if (alreadyVisited.contains(it)) {
                 return@sumOf 0L
