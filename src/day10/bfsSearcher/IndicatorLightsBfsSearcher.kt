@@ -1,18 +1,17 @@
 package day10.bfsSearcher
 
-import day10.machineSpecification.Button
-import day10.machineSpecification.device.Device
-import day10.machineSpecification.MachineSpecification
+import day10.button.Button
+import day10.machineSpecification.IndicatorLightsMachineSpecification
+import day10.device.IndicatorLights
 
-private data class BfsQueueItem(
+private data class IndicatorLightsBfsQueueItem(
     val parent: Button?,
-    val device: Device,
+    val indicatorLights: IndicatorLights,
     val pathButtons: List<Button>,
 )
 
-class BfsSearcher(
-    private val machineSpecification: MachineSpecification,
-    private val emptyDeviceFactory: () -> Device
+class IndicatorLightsBfsSearcher(
+    private val machineSpecification: IndicatorLightsMachineSpecification,
 ) {
     private val grandparentPathToUsedButtons = mutableMapOf<List<Button>, MutableList<Button>>()
 
@@ -20,9 +19,9 @@ class BfsSearcher(
         grandparentPathToUsedButtons.clear()
 
         val queue = mutableListOf(
-            BfsQueueItem(
+            IndicatorLightsBfsQueueItem(
                 parent = null,
-                device = emptyDeviceFactory(),
+                indicatorLights = IndicatorLights.emptyOfLength(machineSpecification.indicatorLights.size),
                 pathButtons = listOf(),
             )
         )
@@ -32,7 +31,7 @@ class BfsSearcher(
 
             val previousLevel = queueItem.pathButtons.size
 
-            if (queueItem.device == machineSpecification.device) {
+            if (queueItem.indicatorLights == machineSpecification.indicatorLights) {
                 return previousLevel
             }
 
@@ -42,9 +41,9 @@ class BfsSearcher(
             machineSpecification.buttons.filter {
                 !queueItem.pathButtons.contains(it) && !grandparentPathUsedButtons.contains(it)
             }.forEach { button ->
-                val newQueueItem = BfsQueueItem(
+                val newQueueItem = IndicatorLightsBfsQueueItem(
                     parent = button,
-                    device = queueItem.device.withAffectedIndices(*button.affectedIndices.toIntArray()),
+                    indicatorLights = queueItem.indicatorLights.withAffectedIndices(*button.affectedDeviceIndices.toIntArray()),
                     pathButtons = queueItem.pathButtons + listOf(button),
                 )
 

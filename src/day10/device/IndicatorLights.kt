@@ -1,7 +1,7 @@
-package day10.machineSpecification.device
+package day10.device
 
-data class IndicatorLights(val lights: Array<Boolean>) : Device {
-    override val size = lights.size
+data class IndicatorLights(val lights: Array<Boolean>) {
+    val size = lights.size
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -19,7 +19,7 @@ data class IndicatorLights(val lights: Array<Boolean>) : Device {
         return lights.contentHashCode()
     }
 
-    override fun withAffectedIndices(vararg indices: Int): IndicatorLights {
+    fun withAffectedIndices(vararg indices: Int): IndicatorLights {
         val newLights = lights.copyOf()
 
         indices.forEach {
