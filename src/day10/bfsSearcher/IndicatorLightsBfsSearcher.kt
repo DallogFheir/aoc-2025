@@ -18,11 +18,13 @@ class IndicatorLightsBfsSearcher(
     fun search(): Int {
         grandparentPathToUsedButtons.clear()
 
-        val queue = mutableListOf(
-            IndicatorLightsBfsQueueItem(
-                parent = null,
-                indicatorLights = IndicatorLights.emptyOfLength(machineSpecification.indicatorLights.size),
-                pathButtons = listOf(),
+        val queue = ArrayDeque(
+            listOf(
+                IndicatorLightsBfsQueueItem(
+                    parent = null,
+                    indicatorLights = IndicatorLights.emptyOfLength(machineSpecification.indicatorLights.size),
+                    pathButtons = listOf(),
+                )
             )
         )
 
