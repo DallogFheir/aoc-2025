@@ -1,4 +1,4 @@
-package utils.graphs.node
+package utils.graphs.dagNode
 
 import utils.graphs.DAGNode
 

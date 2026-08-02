@@ -1,4 +1,4 @@
-package utils.graphs.node
+package utils.graphs.dagNode
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
