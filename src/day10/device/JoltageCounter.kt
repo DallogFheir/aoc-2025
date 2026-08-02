@@ -1,6 +1,6 @@
 package day10.device
 
-class JoltageCounters(val joltages: Array<Int>) {
+class JoltageCounter(val joltages: Array<Int>) {
     val size = joltages.size
 
     override fun equals(other: Any?): Boolean {
@@ -8,7 +8,7 @@ class JoltageCounters(val joltages: Array<Int>) {
             return true
         }
 
-        if (other !is JoltageCounters) {
+        if (other !is JoltageCounter) {
             return false
         }
 
@@ -19,21 +19,21 @@ class JoltageCounters(val joltages: Array<Int>) {
         return joltages.contentHashCode()
     }
 
-    fun withAffectedIndices(vararg indices: Int): JoltageCounters {
+    fun withAffectedIndices(vararg indices: Int, howManyTimes: Int): JoltageCounter {
         val newJoltages = joltages.copyOf()
 
         indices.forEach {
             require(it < joltages.size) { "Index $it out of range for joltage counters of size ${joltages.size}" }
 
-            newJoltages[it] += 1
+            newJoltages[it] += howManyTimes
         }
 
-        return JoltageCounters(joltages = newJoltages)
+        return JoltageCounter(joltages = newJoltages)
     }
 
     companion object {
-        fun emptyOfLength(length: Int): JoltageCounters {
-            return JoltageCounters(Array(length) { 0 })
+        fun emptyOfLength(length: Int): JoltageCounter {
+            return JoltageCounter(Array(length) { 0 })
         }
     }
 }

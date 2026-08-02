@@ -11,7 +11,7 @@ fun parseButtons(lineParts: List<String>): List<Button> {
         val buttonDeviceStrings =
             buttonString.removePrefix(BUTTON_PREFIX).removeSuffix(BUTTON_SUFFIX).split(BUTTON_LIGHT_SEPARATOR)
 
-        val buttonDevices = buttonDeviceStrings.map { it.toInt() }
+        val buttonDevices = buttonDeviceStrings.map { it.toInt() }.toSet()
 
         Button(affectedDeviceIndices = buttonDevices)
     }

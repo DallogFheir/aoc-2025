@@ -1,8 +1,8 @@
 package day10.bfsSearcher
 
 import day10.button.Button
-import day10.machineSpecification.IndicatorLightsMachineSpecification
 import day10.device.IndicatorLights
+import day10.machineSpecification.IndicatorLightsMachineSpecification
 
 private data class IndicatorLightsBfsQueueItem(
     val parent: Button?,
