@@ -10,15 +10,15 @@ private const val POINT_DIMENSIONALITY = 2
 
 object Part1 {
     fun solve(dayNumber: Int, fileName: String): Long {
-       val points = FileReader(dayNumber = dayNumber, fileName = fileName).readLinesWithParser { line ->
-           val coordinateStrings = line.split(COORDINATE_SEPARATOR)
+        val points = FileReader(dayNumber = dayNumber, fileName = fileName).readLinesWithParser { line ->
+            val coordinateStrings = line.split(COORDINATE_SEPARATOR)
 
-           require(coordinateStrings.size == POINT_DIMENSIONALITY)
+            require(coordinateStrings.size == POINT_DIMENSIONALITY)
 
-           val coordinates = coordinateStrings.map { it.toDouble() }
+            val coordinates = coordinateStrings.map { it.toDouble() }
 
-           Point(*coordinates.toDoubleArray())
-       }
+            Point(*coordinates.toDoubleArray())
+        }
 
         val areas = points.flatMapIndexed { index, point ->
             val otherPoints = points.slice(index + 1..points.lastIndex)

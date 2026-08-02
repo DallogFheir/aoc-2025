@@ -80,6 +80,28 @@ class PointTest {
         )
     }
 
+    @Test
+    fun `points with same coordinates are equal`() {
+        val point1 = Point(0.0)
+        val point2 = Point(0.0)
+
+        val set = setOf(point1)
+
+        val result = set.contains(point2)
+
+        Assertions.assertTrue(result)
+    }
+
+    @Test
+    fun `points are not equal to other objects`() {
+        val point = Point(0.0)
+        val notPoint = listOf<Double>()
+
+        val result = point == notPoint
+
+        Assertions.assertFalse(result)
+    }
+
     @ParameterizedTest
     @MethodSource("toStringCases")
     fun `converts to string correctly`(case: ToStringTestCase) {
