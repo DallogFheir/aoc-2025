@@ -109,4 +109,136 @@ class DAGNodeTest {
 
         Assertions.assertEquals(case.neighborsToAddCount, result)
     }
+
+    @Test
+    fun `counts paths between 2 nodes correctly`() {
+        val node1 = DAGNode()
+        val node2 = DAGNode()
+        val node3 = DAGNode()
+        val node4 = DAGNode()
+        val node5 = DAGNode()
+        val nodes = listOf(node1, node2, node3, node4, node5)
+
+        node1.addNeighbor(node2)
+        node1.addNeighbor(node3)
+        node2.addNeighbor(node3)
+        node3.addNeighbor(node4)
+        node1.addNeighbor(node5)
+
+        val testCases = listOf(
+            CountPathsTestCase(
+                startNode = node1,
+                endNode = node2,
+                expected = 1L,
+            ),
+            CountPathsTestCase(
+                startNode = node1,
+                endNode = node3,
+                expected = 2L,
+            ),
+            CountPathsTestCase(
+                startNode = node1,
+                endNode = node4,
+                expected = 2L,
+            ),
+            CountPathsTestCase(
+                startNode = node1,
+                endNode = node5,
+                expected = 1L,
+            ),
+            CountPathsTestCase(
+                startNode = node2,
+                endNode = node1,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node2,
+                endNode = node3,
+                expected = 1L,
+            ),
+            CountPathsTestCase(
+                startNode = node2,
+                endNode = node4,
+                expected = 1L,
+            ),
+            CountPathsTestCase(
+                startNode = node2,
+                endNode = node5,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node3,
+                endNode = node1,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node3,
+                endNode = node2,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node3,
+                endNode = node4,
+                expected = 1L,
+            ),
+            CountPathsTestCase(
+                startNode = node3,
+                endNode = node5,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node4,
+                endNode = node1,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node4,
+                endNode = node2,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node4,
+                endNode = node3,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node4,
+                endNode = node5,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node5,
+                endNode = node1,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node5,
+                endNode = node2,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node5,
+                endNode = node3,
+                expected = 0L,
+            ),
+            CountPathsTestCase(
+                startNode = node5,
+                endNode = node4,
+                expected = 0L,
+            ),
+        )
+
+        testCases.forEach {
+            val startNodeIndex = nodes.indexOf(it.startNode) + 1
+            val endNodeIndex = nodes.indexOf(it.endNode) + 1
+
+            val result = it.startNode.countPaths(it.endNode)
+
+            Assertions.assertEquals(
+                it.expected,
+                result,
+                "path count between node $startNodeIndex and $endNodeIndex should be ${it.expected}, got $result"
+            )
+        }
+    }
 }
