@@ -3,19 +3,21 @@ package utils.graphs
 open class DAGNode(val neighbors: MutableList<DAGNode> = mutableListOf()) {
     fun addNeighbor(neighbor: DAGNode, shouldEnsureNotCyclic: Boolean = true) {
         if (shouldEnsureNotCyclic) {
-            ensureNeighborNotCyclic(neighbor)
+            ensureNeighborNotCyclicWithCache(neighbor)
         }
 
         neighbors.add(neighbor)
     }
 
     fun ensureNotCyclic() {
+        val cache = mutableSetOf<DAGNode>()
+
         neighbors.forEach {
-            ensureNeighborNotCyclic(it)
+            ensureNeighborNotCyclicWithCache(node = it, cache = cache)
         }
     }
 
-    private fun ensureNeighborNotCyclic(node: DAGNode, cache: MutableSet<DAGNode> = mutableSetOf()) {
+    private fun ensureNeighborNotCyclicWithCache(node: DAGNode, cache: MutableSet<DAGNode> = mutableSetOf()) {
         if (cache.contains(node)) {
             return
         }
@@ -23,7 +25,7 @@ open class DAGNode(val neighbors: MutableList<DAGNode> = mutableListOf()) {
         ensureNotEqualToThis(node)
 
         node.neighbors.forEach {
-            ensureNeighborNotCyclic(node = it, cache = cache)
+            ensureNeighborNotCyclicWithCache(node = it, cache = cache)
         }
 
         cache.add(node)
