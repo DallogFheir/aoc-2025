@@ -35,7 +35,7 @@ class IndicatorLightsBfsSearcher(
                 return previousLevel
             }
 
-            val grandparentPath = queueItem.pathButtons.slice(0..<queueItem.pathButtons.lastIndex)
+            val grandparentPath = queueItem.pathButtons.dropLast(1)
             val grandparentPathUsedButtons = grandparentPathToUsedButtons[grandparentPath] ?: listOf()
 
             machineSpecification.buttons.filter {

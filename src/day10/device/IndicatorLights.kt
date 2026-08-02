@@ -23,7 +23,7 @@ data class IndicatorLights(val lights: Array<Boolean>) {
         val newLights = lights.copyOf()
 
         indices.forEach {
-            require(it < lights.size) { "Index $it out of range for lights of size ${lights.size}" }
+            require(it in 0..<lights.size) { "Index $it out of range for lights of size ${lights.size}" }
 
             newLights[it] = !newLights[it]
         }
