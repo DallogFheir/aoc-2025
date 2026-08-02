@@ -9,7 +9,7 @@ fun main() {
     runAndPrintLineBreak { day8.main() }
 //    runAndPrintLineBreak { day9.main() }
     runAndPrintLineBreak { day10.main() }
-//    runAndPrintLineBreak { day11.main() }
+    runAndPrintLineBreak { day11.main() }
 //    runAndPrintLineBreak { day12.main() }
 }
 
