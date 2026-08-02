@@ -2,39 +2,55 @@ package utils.graphs
 
 open class DAGNode(val neighbors: MutableList<DAGNode> = mutableListOf()) {
     fun addNeighbor(neighbor: DAGNode, shouldEnsureNotCyclic: Boolean = true) {
-        if (shouldEnsureNotCyclic) {
-            ensureNeighborNotCyclicWithCache(neighbor)
-        }
-
         neighbors.add(neighbor)
+
+        if (shouldEnsureNotCyclic) {
+            ensureNotCyclic()
+        }
     }
 
     fun ensureNotCyclic() {
-        val cache = mutableSetOf<DAGNode>()
+        val finishedNodes = mutableSetOf<DAGNode>()
 
         neighbors.forEach {
-            ensureNeighborNotCyclicWithCache(node = it, cache = cache)
+            ensureNeighborNotCyclicWithFinishedNodesAndVisitingStack(node = it, finishedNodes = finishedNodes)
         }
     }
 
-    private fun ensureNeighborNotCyclicWithCache(node: DAGNode, cache: MutableSet<DAGNode> = mutableSetOf()) {
-        if (cache.contains(node)) {
+    private fun ensureNeighborNotCyclicWithFinishedNodesAndVisitingStack(
+        node: DAGNode,
+        finishedNodes: MutableSet<DAGNode>,
+        visitingStack: Set<DAGNode> = setOf()
+    ) {
+        if (finishedNodes.contains(node)) {
             return
+        }
+
+        if (visitingStack.contains(node)) {
+            throwGraphCyclic()
         }
 
         ensureNotEqualToThis(node)
 
         node.neighbors.forEach {
-            ensureNeighborNotCyclicWithCache(node = it, cache = cache)
+            ensureNeighborNotCyclicWithFinishedNodesAndVisitingStack(
+                node = it,
+                finishedNodes = finishedNodes,
+                visitingStack = visitingStack + setOf(node),
+            )
         }
 
-        cache.add(node)
+        finishedNodes.add(node)
     }
 
     private fun ensureNotEqualToThis(node: DAGNode) {
         if (node == this) {
-            throw IllegalArgumentException("Graph is cyclic")
+            throwGraphCyclic()
         }
+    }
+
+    private fun throwGraphCyclic() {
+        throw IllegalStateException("Graph is cyclic")
     }
 
     fun <U> aggregate(aggregator: (List<DAGNode>) -> U): U {

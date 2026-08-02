@@ -3,7 +3,7 @@ package utils.graphs
 class UniqueDAGNode<T>(val id: T, neighbors: MutableList<DAGNode> = mutableListOf()) :
     DAGNode(neighbors = neighbors) {
     override fun equals(other: Any?): Boolean {
-        if (other !is UniqueDAGNode<T>) {
+        if (other !is UniqueDAGNode<*>) {
             return false
         }
 

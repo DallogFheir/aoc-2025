@@ -39,7 +39,7 @@ class DAGNodeTest {
     fun `throws if trying to add a node to itself`() {
         val cut = DAGNode()
 
-        Assertions.assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalStateException::class.java) {
             cut.addNeighbor(cut)
         }
     }
@@ -60,26 +60,13 @@ class DAGNodeTest {
         node1.addNeighbor(node2)
         node2.addNeighbor(node3)
 
-        Assertions.assertThrows(IllegalArgumentException::class.java) {
+        Assertions.assertThrows(IllegalStateException::class.java) {
             node3.addNeighbor(node1)
         }
     }
 
     @Test
     fun `does not throw if trying to add a neighbor with a cycle with check disabled`() {
-        createCyclicGraph()
-    }
-
-    @Test
-    fun `ensures graph is not cyclic`() {
-        val rootNode = createCyclicGraph()
-
-        Assertions.assertThrows(IllegalArgumentException::class.java) {
-            rootNode.ensureNotCyclic()
-        }
-    }
-
-    private fun createCyclicGraph(): DAGNode {
         val node1 = DAGNode()
         val node2 = DAGNode()
         val node3 = DAGNode()
@@ -94,8 +81,23 @@ class DAGNodeTest {
         node1.addNeighbor(node5)
 
         node5.addNeighbor(node1, shouldEnsureNotCyclic = false)
+    }
 
-        return node1
+    @Test
+    fun `ensures graph is not cyclic`() {
+        val node1 = DAGNode()
+        val node2 = DAGNode()
+        val node3 = DAGNode()
+        val node4 = DAGNode()
+
+        node1.addNeighbor(node2)
+        node2.addNeighbor(node3)
+        node3.addNeighbor(node4)
+        node4.addNeighbor(node2, shouldEnsureNotCyclic = false)
+
+        Assertions.assertThrows(IllegalStateException::class.java) {
+            node1.ensureNotCyclic()
+        }
     }
 
     @ParameterizedTest
