@@ -11,6 +11,6 @@ class UniqueDAGNode<T>(val id: T, neighbors: MutableList<DAGNode> = mutableListO
     }
 
     override fun hashCode(): Int {
-        return id.hashCode()
+        return id?.hashCode() ?: 0
     }
 }
