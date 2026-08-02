@@ -1,17 +1,25 @@
 package utils.graphs
 
 open class DAGNode(val neighbors: MutableList<DAGNode> = mutableListOf()) {
-    fun addNeighbor(neighbor: DAGNode) {
-        ensureNotCyclic(neighbor)
+    fun addNeighbor(neighbor: DAGNode, shouldEnsureNotCyclic: Boolean = true) {
+        if (shouldEnsureNotCyclic) {
+            ensureNeighborNotCyclic(neighbor)
+        }
 
         neighbors.add(neighbor)
     }
 
-    private fun ensureNotCyclic(node: DAGNode) {
+    fun ensureNotCyclic() {
+        neighbors.forEach {
+            ensureNeighborNotCyclic(it)
+        }
+    }
+
+    private fun ensureNeighborNotCyclic(node: DAGNode) {
         ensureNotEqualToThis(node)
 
         node.neighbors.forEach {
-            ensureNotCyclic(it)
+            ensureNeighborNotCyclic(it)
         }
     }
 
