@@ -1,5 +1,6 @@
 package day2
 
+import day2.invalidIdAdder.InvalidIdAdder
 import utils.filereader.FileReader
 import utils.range.Range
 import utils.range.SameLengthRange
