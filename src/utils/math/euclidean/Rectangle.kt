@@ -1,6 +1,7 @@
 package utils.math.euclidean
 
 import utils.math.euclidean.point.Point2d
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
@@ -21,6 +22,8 @@ data class Rectangle(val topLeftCorner: Point2d, val bottomRightCorner: Point2d)
             "Top-left corner must be to the left and to the top of the bottom right corner."
         }
     }
+
+    val area = (abs(topLeftCorner.x - bottomRightCorner.x) + 1) * (abs(topLeftCorner.y - bottomRightCorner.y) + 1)
 
     fun doesOverlapWithRectangle(other: Rectangle): Boolean {
         val intersections = getIntersections(other)
@@ -97,6 +100,18 @@ data class Rectangle(val topLeftCorner: Point2d, val bottomRightCorner: Point2d)
             resultSet += Rectangle(
                 topLeftCorner = Point2d(x = left, y = top),
                 bottomRightCorner = Point2d(x = right, y = bottom),
+            )
+        }
+    }
+
+    companion object {
+        fun fromOppositeCorners(corner1: Point2d, corner2: Point2d): Rectangle {
+            val xCoordinates = listOf(corner1.x, corner2.x).sorted()
+            val yCoordinates = listOf(corner1.y, corner2.y).sorted()
+
+            return Rectangle(
+                topLeftCorner = Point2d(x = xCoordinates[0], y = yCoordinates[1]),
+                bottomRightCorner = Point2d(x = xCoordinates[1], y = yCoordinates[0]),
             )
         }
     }

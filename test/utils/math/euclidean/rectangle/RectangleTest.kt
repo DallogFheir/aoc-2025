@@ -42,6 +42,75 @@ class RectangleTest {
         )
 
         @JvmStatic
+        fun fromOppositeCornersCases() = listOf(
+            FromOppositeCornersTestCase(
+                corner1 = Point2d(x = 0.0, y = 4.0),
+                corner2 = Point2d(x = 3.0, y = 0.0),
+                expected = Rectangle(
+                    topLeftCorner = Point2d(x = 0.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+            ),
+            FromOppositeCornersTestCase(
+                corner1 = Point2d(x = 3.0, y = 0.0),
+                corner2 = Point2d(x = 0.0, y = 4.0),
+                expected = Rectangle(
+                    topLeftCorner = Point2d(x = 0.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+            ),
+            FromOppositeCornersTestCase(
+                corner1 = Point2d(x = 0.0, y = 0.0),
+                corner2 = Point2d(x = 3.0, y = 4.0),
+                expected = Rectangle(
+                    topLeftCorner = Point2d(x = 0.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+            ),
+            FromOppositeCornersTestCase(
+                corner1 = Point2d(x = 3.0, y = 4.0),
+                corner2 = Point2d(x = 0.0, y = 0.0),
+                expected = Rectangle(
+                    topLeftCorner = Point2d(x = 0.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+            ),
+            FromOppositeCornersTestCase(
+                corner1 = Point2d(x = 3.0, y = 4.0),
+                corner2 = Point2d(x = 3.0, y = 0.0),
+                expected = Rectangle(
+                    topLeftCorner = Point2d(x = 3.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+            ),
+        )
+
+        @JvmStatic
+        fun areaCases() = listOf(
+            AreaTestCase(
+                rectangle = Rectangle(
+                    topLeftCorner = Point2d(x = 0.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+                expected = 20.0,
+            ),
+            AreaTestCase(
+                rectangle = Rectangle(
+                    topLeftCorner = Point2d(x = 3.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 0.0)
+                ),
+                expected = 5.0,
+            ),
+            AreaTestCase(
+                rectangle = Rectangle(
+                    topLeftCorner = Point2d(x = 3.0, y = 4.0),
+                    bottomRightCorner = Point2d(x = 3.0, y = 4.0)
+                ),
+                expected = 1.0,
+            ),
+        )
+
+        @JvmStatic
         fun doesOverlapWithRectangleCases() = listOf(
             DoesOverlapWithRectangleTestCase(
                 rectangle = Rectangle(
@@ -278,6 +347,23 @@ class RectangleTest {
                 bottomRightCorner = case.bottomRightCorner,
             )
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("fromOppositeCornersCases")
+    fun `creates a rectangle from opposite corners`(case: FromOppositeCornersTestCase) {
+        val result = Rectangle.fromOppositeCorners(case.corner1, case.corner2)
+
+        Assertions.assertEquals(case.expected, result)
+    }
+
+
+    @ParameterizedTest
+    @MethodSource("areaCases")
+    fun `calculates area correctly`(case: AreaTestCase) {
+        val result = case.rectangle.area
+
+        Assertions.assertEquals(case.expected, result)
     }
 
     @Test
