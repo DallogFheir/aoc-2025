@@ -1,6 +1,5 @@
 package utils.math.euclidean.point
 
-import kotlin.collections.sumOf
 import kotlin.math.pow
 import kotlin.math.sqrt
 
