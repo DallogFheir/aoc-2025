@@ -1,4 +1,4 @@
-package day2
+package day2.invalidIdAdder
 
 import utils.math.sequences.GeometricSequence
 import utils.math.wrappers.PositiveIntegerWrapper
