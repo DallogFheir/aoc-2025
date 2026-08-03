@@ -1,9 +1,8 @@
 package utils.math.euclidean
 
+import utils.math.euclidean.point.Point2d
 import kotlin.math.max
 import kotlin.math.min
-
-private const val DIMENSIONALITY = 2
 
 private data class VerticalEdge(
     val xCoordinate: Double,
@@ -15,20 +14,16 @@ private data class VerticalEdge(
     }
 }
 
-class SweeplineDecomposition(coordinates: List<Point>) {
-    private val loopCoordinates: List<Point>
+class SweeplineDecomposition(coordinates: List<Point2d>) {
+    private val loopCoordinates: List<Point2d>
     private val verticalEdges: List<VerticalEdge>
 
     init {
         require(coordinates.isNotEmpty())
 
-        val tempLoopCoordinates = mutableListOf<Point>()
+        val tempLoopCoordinates = mutableListOf<Point2d>()
 
         coordinates.forEach {
-            if (it.dimensionality != DIMENSIONALITY) {
-                throw IllegalArgumentException("All coordinates should have dimensionality of $DIMENSIONALITY")
-            }
-
             val secondToLastCoordinate = tempLoopCoordinates.getOrNull(tempLoopCoordinates.size - 2)
             val lastCoordinate = tempLoopCoordinates.lastOrNull()
 
@@ -64,12 +59,8 @@ class SweeplineDecomposition(coordinates: List<Point>) {
         verticalEdges = buildVerticalEdges()
     }
 
-    private fun areCardinallyCollinear(vararg points: Point): Boolean {
-        if (points.size < 2) {
-            return true
-        }
-
-        return (0..<points[0].dimensionality).any { index ->
+    private fun areCardinallyCollinear(vararg points: Point2d): Boolean {
+        return (0..<points.first().dimensionality).any { index ->
             points.zip(points.slice(1..points.lastIndex)).all { pointPair ->
                 val (previousPoint, currentPoint) = pointPair
 
@@ -83,11 +74,11 @@ class SweeplineDecomposition(coordinates: List<Point>) {
             loopCoordinates.zip(loopCoordinates.slice(1..loopCoordinates.lastIndex)) + listOf(loopCoordinates.last() to loopCoordinates.first())
 
         return pointPairs.mapNotNull { (previousCoordinate, currentCoordinate) ->
-            if (previousCoordinate.coordinates[0] == currentCoordinate.coordinates[0])
+            if (previousCoordinate.x == currentCoordinate.x)
                 return@mapNotNull VerticalEdge(
-                    xCoordinate = previousCoordinate.coordinates[0],
-                    startYCoordinate = min(previousCoordinate.coordinates[1], currentCoordinate.coordinates[1]),
-                    endYCoordinate = max(previousCoordinate.coordinates[1], currentCoordinate.coordinates[1]),
+                    xCoordinate = previousCoordinate.x,
+                    startYCoordinate = min(previousCoordinate.y, currentCoordinate.y),
+                    endYCoordinate = max(previousCoordinate.y, currentCoordinate.y),
                 )
 
             null
@@ -95,7 +86,7 @@ class SweeplineDecomposition(coordinates: List<Point>) {
     }
 
     fun sweep(): Set<Rectangle> {
-        val yCoordinates = loopCoordinates.map { it.coordinates[1] }.toSet().sorted()
+        val yCoordinates = loopCoordinates.map { it.y }.toSet().sorted()
 
         val yCoordinatePairs = yCoordinates.zip(yCoordinates.slice(1..yCoordinates.lastIndex))
 
@@ -110,15 +101,13 @@ class SweeplineDecomposition(coordinates: List<Point>) {
                 null
             }
 
-            require(xCoordinates.size % 2 == 0)
-
             (0..<xCoordinates.size / 2).map {
                 val startXCoordinate = xCoordinates[2 * it]
                 val endXCoordinate = xCoordinates[2 * it + 1]
 
                 Rectangle(
-                    topLeftCorner = Point(startXCoordinate, currentYCoordinate),
-                    bottomRightCorner = Point(endXCoordinate, previousYCoordinate),
+                    topLeftCorner = Point2d(x = startXCoordinate, y = currentYCoordinate),
+                    bottomRightCorner = Point2d(x = endXCoordinate, y = previousYCoordinate),
                 )
             }
         }

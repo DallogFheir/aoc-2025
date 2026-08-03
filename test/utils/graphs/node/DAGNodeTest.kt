@@ -28,6 +28,8 @@ class DAGNodeTest {
 
         val neighbors = List(3) { DAGNode() }
 
+        neighbors.first().addNeighbor(DAGNode())
+
         neighbors.forEach {
             cut.addNeighbor(it)
         }
@@ -63,7 +65,7 @@ class DAGNodeTest {
     fun `aggregates values from neighbors correctly`(case: AggregateTestCase) {
         val cut = DAGNode()
 
-        (1..case.neighborsToAddCount).forEach { cut.addNeighbor(DAGNode()) }
+        (1..case.neighborsToAddCount).forEach { _ -> cut.addNeighbor(DAGNode()) }
 
         val result = cut.aggregate({ neighbors -> neighbors.sumOf { 1 } })
 

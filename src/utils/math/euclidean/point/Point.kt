@@ -1,9 +1,10 @@
-package utils.math.euclidean
+package utils.math.euclidean.point
 
+import kotlin.collections.sumOf
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Point(vararg val coordinates: Double) {
+open class Point(vararg val coordinates: Double) {
     val dimensionality = coordinates.size
 
     init {
@@ -40,5 +41,9 @@ class Point(vararg val coordinates: Double) {
         if (dimensionality != other.dimensionality) {
             throw IllegalArgumentException("Points have different dimensionality")
         }
+    }
+
+    fun isIntegerPoint(): Boolean {
+        return coordinates.all { it % 1.0 == 0.0 }
     }
 }
