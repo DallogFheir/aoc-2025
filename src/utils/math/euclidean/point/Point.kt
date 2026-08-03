@@ -1,13 +1,27 @@
-package utils.math.euclidean
+package utils.math.euclidean.point
 
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Point(vararg val coordinates: Double) {
+open class Point(vararg val coordinates: Double) {
+    val dimensionality = coordinates.size
+
     init {
         require(coordinates.isNotEmpty()) {
             "Point must have at least 1 coordinate"
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is Point) {
+            return false
+        }
+
+        return coordinates.contentEquals(other.coordinates)
+    }
+
+    override fun hashCode(): Int {
+        return coordinates.contentHashCode()
     }
 
     override fun toString(): String {
@@ -23,8 +37,12 @@ class Point(vararg val coordinates: Double) {
     }
 
     private fun ensureSameDimensionality(other: Point) {
-        if (coordinates.size != other.coordinates.size) {
+        if (dimensionality != other.dimensionality) {
             throw IllegalArgumentException("Points have different dimensionality")
         }
+    }
+
+    fun isIntegerPoint(): Boolean {
+        return coordinates.all { it % 1.0 == 0.0 }
     }
 }

@@ -1,10 +1,10 @@
-package utils.math.euclidean.point
+package utils.math.euclidean.point.point
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
-import utils.math.euclidean.Point
+import utils.math.euclidean.point.Point
 import kotlin.math.sqrt
 
 class PointTest {
@@ -78,6 +78,56 @@ class PointTest {
                 otherCoordinates = listOf(0.0),
             )
         )
+
+        @JvmStatic
+        fun isIntegerPointCases() = listOf(
+            IsIntegerPointTestCase(
+                coordinates = listOf(0.0),
+                expected = true,
+            ),
+            IsIntegerPointTestCase(
+                coordinates = listOf(0.5),
+                expected = false,
+            ),
+            IsIntegerPointTestCase(
+                coordinates = listOf(0.0, 0.0),
+                expected = true,
+            ),
+            IsIntegerPointTestCase(
+                coordinates = listOf(0.5, 0.0),
+                expected = false
+            ),
+            IsIntegerPointTestCase(
+                coordinates = listOf(0.0, 0.5),
+                expected = false,
+            ),
+            IsIntegerPointTestCase(
+                coordinates = listOf(1.0, 1.0, 1.0),
+                expected = true,
+            ),
+        )
+    }
+
+    @Test
+    fun `points with same coordinates are equal`() {
+        val point1 = Point(0.0)
+        val point2 = Point(0.0)
+
+        val set = setOf(point1)
+
+        val result = set.contains(point2)
+
+        Assertions.assertTrue(result)
+    }
+
+    @Test
+    fun `points are not equal to other objects`() {
+        val point = Point(0.0)
+        val notPoint = listOf<Double>()
+
+        val result = point == notPoint
+
+        Assertions.assertFalse(result)
     }
 
     @ParameterizedTest
@@ -119,5 +169,15 @@ class PointTest {
         Assertions.assertThrows(IllegalArgumentException::class.java) {
             cut.distanceTo(other)
         }
+    }
+
+    @ParameterizedTest
+    @MethodSource("isIntegerPointCases")
+    fun `returns whether point is an integer point correctly`(case: IsIntegerPointTestCase) {
+        val cut = Point(*case.coordinates.toDoubleArray())
+
+        val result = cut.isIntegerPoint()
+
+        Assertions.assertEquals(case.expected, result)
     }
 }

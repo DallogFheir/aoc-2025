@@ -12,7 +12,8 @@ object Part1 {
 
             val finalCircuits = circuits.getDisjointSets()
 
-            val sortedCircuitSizes = finalCircuits.sortedBy { -it.size }.map { it.size }.slice(0..<3).toMutableList()
+            val sortedCircuitSizes =
+                finalCircuits.sortedByDescending { it.size }.map { it.size }.slice(0..<3).toMutableList()
 
             while (sortedCircuitSizes.size < 3) {
                 sortedCircuitSizes.add(1)

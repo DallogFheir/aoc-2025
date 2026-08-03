@@ -14,7 +14,7 @@ object Part2 {
 
             require(pointPair != null)
 
-            (pointPair.point1.coordinates.first() * pointPair.point2.coordinates.first()).toLong()
+            (pointPair.point1.x * pointPair.point2.x).toLong()
         }
     }
 }
