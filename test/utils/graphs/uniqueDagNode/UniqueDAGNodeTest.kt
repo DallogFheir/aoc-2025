@@ -6,7 +6,7 @@ import utils.graphs.UniqueDAGNode
 
 class UniqueDAGNodeTest {
     @Test
-    fun `nodes with same ID have same identity`() {
+    fun `nodes with same ID are equal`() {
         val nodeSet = mutableSetOf<UniqueDAGNode<Int?>>()
 
         val node = UniqueDAGNode<Int?>(1)
@@ -21,7 +21,7 @@ class UniqueDAGNodeTest {
     }
 
     @Test
-    fun `other objects are not equal to a node`() {
+    fun `nodes are not equal to other objects`() {
         val node = UniqueDAGNode(1)
         val notNode = listOf<Int>()
 

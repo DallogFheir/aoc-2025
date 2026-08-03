@@ -1,13 +1,13 @@
 fun main() {
-    runAndPrintLineBreak { day1.main() }
-    runAndPrintLineBreak { day2.main() }
-    runAndPrintLineBreak { day3.main() }
-    runAndPrintLineBreak { day4.main() }
-    runAndPrintLineBreak { day5.main() }
-    runAndPrintLineBreak { day6.main() }
-    runAndPrintLineBreak { day7.main() }
-    runAndPrintLineBreak { day8.main() }
-//    runAndPrintLineBreak { day9.main() }
+    runAndPrintLineBreak { day01.main() }
+    runAndPrintLineBreak { day02.main() }
+    runAndPrintLineBreak { day03.main() }
+    runAndPrintLineBreak { day04.main() }
+    runAndPrintLineBreak { day05.main() }
+    runAndPrintLineBreak { day06.main() }
+    runAndPrintLineBreak { day07.main() }
+    runAndPrintLineBreak { day08.main() }
+    runAndPrintLineBreak { day09.main() }
     runAndPrintLineBreak { day10.main() }
     runAndPrintLineBreak { day11.main() }
 //    runAndPrintLineBreak { day12.main() }
