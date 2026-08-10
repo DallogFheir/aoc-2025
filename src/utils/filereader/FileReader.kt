@@ -17,17 +17,38 @@ class FileReader(dayNumber: Int, fileName: String) {
         part1Parser: (line: String) -> T,
         part2Parser: (line: String) -> U
     ): Pair<List<T>, List<U>> {
+        return readTwoPartWithParsers(
+            part1Parser = {
+                val lines = it.split(System.lineSeparator())
+
+                lines.map { line ->
+                    part1Parser(line)
+                }
+            },
+            part2Parser = {
+                val lines = it.split(System.lineSeparator())
+
+                lines.map { line ->
+                    part2Parser(line)
+                }
+            },
+        )
+    }
+
+    fun <T, U> readTwoPartWithParsers(
+        part1Parser: (content: String) -> T,
+        part2Parser: (content: String) -> U
+    ): Pair<T, U> {
         val partSeparator = "${System.lineSeparator()}${System.lineSeparator()}"
 
         val text = read()
-        val parts = text.split(partSeparator)
+        val parts = listOf(
+            text.substringBeforeLast(partSeparator),
+            text.substringAfterLast(partSeparator),
+        )
 
-        if (parts.size != 2) {
-            throw IllegalArgumentException("Input must contain 2 parts divided by double line break")
-        }
-
-        val part1 = parts[0].split(System.lineSeparator()).map { part1Parser(it) }
-        val part2 = parts[1].split(System.lineSeparator()).map { part2Parser(it) }
+        val part1 = part1Parser(parts[0])
+        val part2 = part2Parser(parts[1])
 
         return Pair(part1, part2)
     }
