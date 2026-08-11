@@ -23,7 +23,11 @@ object Part1 {
             },
         )
 
-        val presentSizes = presents.map { it.totalArea }
+        val allPresents = presents.flatMap {
+            it.getAllFlippedAndRotated()
+        }.toSet()
+
+        val presentSizes = allPresents.map { it.totalArea }
 
         return christmasTrees.count {
             it.doPresentsFit(presentSizes = presentSizes)
