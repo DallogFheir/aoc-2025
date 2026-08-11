@@ -6,6 +6,8 @@ private const val OCCUPIED_TILE_SYMBOL = '#'
 private const val EMPTY_TILE_SYMBOL = '.'
 
 class Present(private val occupiedPoints: Set<Point2d>) {
+    val totalArea = occupiedPoints.size
+
     companion object {
         fun fromString(string: String): Present {
             val presentLines = string.split(System.lineSeparator())

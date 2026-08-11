@@ -14,6 +14,16 @@ class ChristmasTreeGrid(
 ) {
     val area = width * height
 
+    fun doPresentsFit(presentSizes: List<Int>): Boolean {
+        require(presentSizes.size == requiredPresentCounts.size)
+
+        val presentsTotalArea = presentSizes.zip(requiredPresentCounts).sumOf { (presentSize, requiredPresentCount) ->
+            presentSize * requiredPresentCount
+        }
+
+        return area >= presentsTotalArea
+    }
+
     companion object {
         fun fromString(string: String): ChristmasTreeGrid {
             val parts = string.split(TREE_DEFINITION_SEPARATOR, limit = 2)

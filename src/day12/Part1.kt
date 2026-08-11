@@ -7,7 +7,7 @@ import utils.filereader.FileReader
 
 object Part1 {
     fun solve(dayNumber: Int, fileName: String): Long {
-        val (_, _) = FileReader(
+        val (presents, christmasTrees) = FileReader(
             dayNumber = dayNumber,
             fileName = fileName
         ).readTwoPartWithParsers(
@@ -23,7 +23,11 @@ object Part1 {
             },
         )
 
-        return 0L
+        val presentSizes = presents.map { it.totalArea }
+
+        return christmasTrees.count {
+            it.doPresentsFit(presentSizes = presentSizes)
+        }.toLong()
     }
 
     private fun <T> mapFromStringWithSeparatorCountAndMapper(
