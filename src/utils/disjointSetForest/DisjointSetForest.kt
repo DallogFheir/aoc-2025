@@ -30,7 +30,7 @@ class DisjointSetForest<T> {
     }
 
     fun makeSetFor(element: T) {
-        if (parents.contains(element)) {
+        if (element in parents) {
             return
         }
 

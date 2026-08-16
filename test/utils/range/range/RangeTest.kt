@@ -317,7 +317,7 @@ class RangeTest {
     fun `contains returns whether range contains given value`(case: ContainsTestCase) {
         val cut = Range(start = case.rangeStart, end = case.rangeEnd)
 
-        val result = cut.contains(case.valueToCheck)
+        val result = case.valueToCheck in cut
 
         Assertions.assertEquals(
             case.expected,

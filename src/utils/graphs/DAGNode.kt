@@ -26,11 +26,11 @@ open class DAGNode(val neighbors: MutableList<DAGNode> = mutableListOf()) {
         finishedNodes: MutableSet<DAGNode>,
         visitingStack: Set<DAGNode> = setOf()
     ) {
-        if (finishedNodes.contains(node)) {
+        if (node in finishedNodes) {
             return
         }
 
-        if (visitingStack.contains(node)) {
+        if (node in visitingStack) {
             throwGraphCyclic()
         }
 
@@ -73,7 +73,7 @@ open class DAGNode(val neighbors: MutableList<DAGNode> = mutableListOf()) {
             return 1L
         }
 
-        if (cache.contains(this)) {
+        if (this in cache) {
             return cache[this]!!
         }
 

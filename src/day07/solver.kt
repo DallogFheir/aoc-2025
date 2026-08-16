@@ -51,7 +51,7 @@ fun solveForRootNode(
                 "Tile should be $SPLITTER_TILE_SYMBOL, got $tile"
             }
 
-            val wasAlreadyProcessed = alreadyProcessedSplitterLocations.contains(tachyonBeamCoordinate)
+            val wasAlreadyProcessed = tachyonBeamCoordinate in alreadyProcessedSplitterLocations
 
             val splitterNode =
                 if (wasAlreadyProcessed) alreadyProcessedSplitterLocations[tachyonBeamCoordinate]!! else DAGNode()

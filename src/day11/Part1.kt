@@ -10,7 +10,7 @@ object Part1 {
             fileName = fileName,
             startNodeId = START_NODE_ID
         ) { graph, endNode ->
-            require(graph.contains(START_NODE_ID))
+            require(START_NODE_ID in graph)
 
             graph[START_NODE_ID]!!.countPaths(endNode)
         }

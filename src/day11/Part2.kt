@@ -13,13 +13,13 @@ object Part2 {
             fileName = fileName,
             startNodeId = START_NODE_ID
         ) { graph, endNode ->
-            require(graph.contains(START_NODE_ID))
+            require(START_NODE_ID in graph)
             val startNode = graph[START_NODE_ID]!!
 
-            require(graph.contains(DAC_NODE_ID))
+            require(DAC_NODE_ID in graph)
             val dacNode = graph[DAC_NODE_ID]!!
 
-            require(graph.contains(FFT_NODE_ID))
+            require(FFT_NODE_ID in graph)
             val fftNode = graph[FFT_NODE_ID]!!
 
             val dacToFftPathCount = dacNode.countPaths(fftNode)

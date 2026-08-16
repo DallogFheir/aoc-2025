@@ -41,7 +41,7 @@ object Part2 {
         return machineSpecifications.sumOf { specification ->
             val coefficients = (0..<specification.joltageCounter.size).map { index ->
                 specification.buttons.map { button ->
-                    if (button.affectedDeviceIndices.contains(index)) 1L else 0L
+                    if (index in button.affectedDeviceIndices) 1L else 0L
                 }
             }
             val variableCount = coefficients.first().size

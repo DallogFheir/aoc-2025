@@ -8,7 +8,7 @@ object Part1 {
             callback = { ranges, ingredients ->
                 ingredients.count { ingredient ->
                     ranges.any { range ->
-                        range.contains(ingredient)
+                        ingredient in range
                     }
                 }.toLong()
             }

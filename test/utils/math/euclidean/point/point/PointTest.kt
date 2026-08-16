@@ -115,7 +115,7 @@ class PointTest {
 
         val set = setOf(point1)
 
-        val result = set.contains(point2)
+        val result = point2 in set
 
         Assertions.assertTrue(result)
     }

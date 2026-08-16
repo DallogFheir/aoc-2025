@@ -376,7 +376,7 @@ class RectangleTest {
 
         val set = setOf(rectangle1)
 
-        val result = set.contains(rectangle2)
+        val result = rectangle2 in set
 
         Assertions.assertTrue(result)
     }
