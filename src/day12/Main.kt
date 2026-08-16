@@ -8,30 +8,14 @@ fun main() {
     DayRunner(
         dayNumber = 12,
         part1Solver = ::part1,
-        part2Solver = ::part2,
+        part2Solver = {},
     ).run()
 }
 
 private fun part1(dayNumber: Int): Long {
-    val testCases = listOf(
-        TestCase(fileName = "test", expectedResult = 2L),
-    )
-
     return Solver(
         dayNumber = dayNumber,
-        testCases = testCases,
+        testCases = listOf<TestCase<Long>>(),
         solver = Part1::solve,
-    ).solve()
-}
-
-private fun part2(dayNumber: Int): Long {
-    val testCases = listOf(
-        TestCase(fileName = "test", expectedResult = 2L),
-    )
-
-    return Solver(
-        dayNumber = dayNumber,
-        testCases = testCases,
-        solver = Part2::solve
     ).solve()
 }

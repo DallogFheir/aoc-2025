@@ -1,31 +1,41 @@
-package day12.christmasTreeGrid
-
-import utils.math.euclidean.point.Point2d
+package day12.christmasTree
 
 private const val TREE_DEFINITION_SEPARATOR = ": "
 private const val GRID_DIMENSIONS_SEPARATOR = "x"
 private const val REQUIRED_PRESENT_COUNTS_SEPARATOR = " "
 
-class ChristmasTreeGrid(
+class ChristmasTree(
     val width: Int,
     val height: Int,
     val requiredPresentCounts: List<Int>,
-    val occupiedTiles: Set<Point2d> = setOf()
 ) {
     val area = width * height
 
-    fun doPresentsFit(presentSizes: List<Int>): Boolean {
-        require(presentSizes.size == requiredPresentCounts.size)
+    fun doPresentsFit(
+        presents: List<Present>,
+    ): Boolean {
+        require(presents.size == requiredPresentCounts.size)
 
-        val presentsTotalArea = presentSizes.zip(requiredPresentCounts).sumOf { (presentSize, requiredPresentCount) ->
-            presentSize * requiredPresentCount
+        val threeByThreeRegionCount = (width / 3) * (height / 3)
+
+        val totalPresentCount = requiredPresentCounts.sum()
+
+        if (threeByThreeRegionCount >= totalPresentCount) {
+            return true
         }
 
-        return area >= presentsTotalArea
+        val presentsTotalArea =
+            presents.zip(requiredPresentCounts).sumOf { (present, count) -> present.totalArea * count }
+
+        if (area < presentsTotalArea) {
+            return false
+        }
+
+        throw IllegalStateException("Christmas tree present placement cannot be determined by simple check")
     }
 
     companion object {
-        fun fromString(string: String): ChristmasTreeGrid {
+        fun fromString(string: String): ChristmasTree {
             val parts = string.split(TREE_DEFINITION_SEPARATOR, limit = 2)
 
             require(parts.size == 2)
@@ -40,7 +50,7 @@ class ChristmasTreeGrid(
             val requiredPresentCountsStrings = requiredPresentCountsString.split(REQUIRED_PRESENT_COUNTS_SEPARATOR)
             val requiredPresentCounts = requiredPresentCountsStrings.map { it.toInt() }
 
-            return ChristmasTreeGrid(width = width, height = height, requiredPresentCounts = requiredPresentCounts)
+            return ChristmasTree(width = width, height = height, requiredPresentCounts = requiredPresentCounts)
         }
     }
 }

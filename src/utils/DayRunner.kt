@@ -23,6 +23,9 @@ class DayRunner<T, U>(
         }
 
         val part2Result = part2Solver(dayNumber)
-        println("Part 2: $part2Result")
+
+        if (part2Result != Unit) {
+            println("Part 2: $part2Result")
+        }
     }
 }

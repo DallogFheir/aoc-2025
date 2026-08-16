@@ -1,7 +1,7 @@
 package day12
 
-import day12.christmasTreeGrid.ChristmasTreeGrid
-import day12.present.Present
+import day12.christmasTree.ChristmasTree
+import day12.christmasTree.Present
 import utils.filereader.FileReader
 
 
@@ -18,19 +18,12 @@ object Part1 {
             },
             part2Parser = {
                 mapFromStringWithSeparatorCountAndMapper(content = it, separatorCount = 1) { content ->
-                    ChristmasTreeGrid.fromString(content)
+                    ChristmasTree.fromString(content)
                 }
             },
         )
-
-        val allPresents = presents.flatMap {
-            it.getAllFlippedAndRotated()
-        }.toSet()
-
-        val presentSizes = allPresents.map { it.totalArea }
-
         return christmasTrees.count {
-            it.doPresentsFit(presentSizes = presentSizes)
+            it.doPresentsFit(presents = presents)
         }.toLong()
     }
 
