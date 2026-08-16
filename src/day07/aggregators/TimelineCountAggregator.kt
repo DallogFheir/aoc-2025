@@ -11,7 +11,7 @@ class TimelineCountAggregator {
         require(neighbors.size <= MAX_CHILDREN_COUNT)
 
         val childrenSubcount = neighbors.sumOf {
-            if (nodeToChildrenCount.contains(it)) {
+            if (it in nodeToChildrenCount) {
                 return@sumOf nodeToChildrenCount[it]!!
             }
 

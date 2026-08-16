@@ -125,7 +125,7 @@ open class InvalidIdAdder(range: SameLengthRange) {
         val factors = getFactorsOfNumberLength(number)
 
         val isRepeated = factors.any { factor ->
-            if (!alreadyProcessedGroupSizes.contains(factor)) {
+            if (factor !in alreadyProcessedGroupSizes) {
                 return@any false
             }
 

@@ -10,7 +10,7 @@ fun main() {
     runAndPrintLineBreak { day09.main() }
     runAndPrintLineBreak { day10.main() }
     runAndPrintLineBreak { day11.main() }
-//    runAndPrintLineBreak { day12.main() }
+    runAndPrintLineBreak { day12.main() }
 }
 
 private fun runAndPrintLineBreak(mainFn: () -> Unit) {

@@ -15,9 +15,9 @@ class UniqueDAGNodeTest {
 
         nodeSet.add(node)
 
-        Assertions.assertTrue(nodeSet.contains(node))
-        Assertions.assertTrue(nodeSet.contains(sameNode))
-        Assertions.assertFalse(nodeSet.contains(otherNode))
+        Assertions.assertTrue(node in nodeSet)
+        Assertions.assertTrue(sameNode in nodeSet)
+        Assertions.assertFalse(otherNode in nodeSet)
     }
 
     @Test

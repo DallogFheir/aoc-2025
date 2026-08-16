@@ -23,6 +23,10 @@ open class Range(val start: Long, val end: Long) {
         return "[$start; $end]"
     }
 
+    operator fun contains(value: Long): Boolean {
+        return value in start..end
+    }
+
     fun divideIntoSameLengthSubranges(): List<SameLengthRange> {
         if (startDigitCount == endDigitCount) {
             return listOf(SameLengthRange(start = start, end = end))
@@ -45,10 +49,6 @@ open class Range(val start: Long, val end: Long) {
             addAll(betweenSubranges)
             add(endSubrange)
         }
-    }
-
-    fun contains(value: Long): Boolean {
-        return value in start..end
     }
 
     fun countInRange(): Long {

@@ -7,7 +7,7 @@ class NodeCountAggregator {
 
     fun aggregate(neighbors: List<DAGNode>): Long {
         return 1 + neighbors.sumOf {
-            if (alreadyVisited.contains(it)) {
+            if (it in alreadyVisited) {
                 return@sumOf 0L
             }
 

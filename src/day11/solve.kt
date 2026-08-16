@@ -36,7 +36,7 @@ fun solveWithStartNodeIdForGraphAndEndNode(
 
     startNode.ensureNotCyclic()
 
-    require(graph.contains(END_NODE_ID))
+    require(END_NODE_ID in graph)
 
     return callback(graph, graph[END_NODE_ID]!!)
 }

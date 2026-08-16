@@ -41,7 +41,7 @@ class IndicatorLightsBfsSearcher(
             val grandparentPathUsedButtons = grandparentPathToUsedButtons[grandparentPath] ?: listOf()
 
             machineSpecification.buttons.filter {
-                !queueItem.pathButtons.contains(it) && !grandparentPathUsedButtons.contains(it)
+                it !in queueItem.pathButtons && it !in grandparentPathUsedButtons
             }.forEach { button ->
                 val newQueueItem = IndicatorLightsBfsQueueItem(
                     parent = button,
